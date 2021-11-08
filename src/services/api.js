@@ -51,13 +51,14 @@ api.interceptors.response.use(
       const token = localStorage.getItem("access");
       let error_messages;
       if (token != null) {
+        console.log("aaaaaaaaaaaaa");
         error_messages = "ログインの有効期限切れです．";
       } else {
         error_messages =
           "パスワード・メールアドレスに誤りがあるか，登録されていません．";
       }
       messages = [].concat.apply([], [error_messages]);
-      store.dispatch("auth/logout");
+      store.dispatch("auth/signout");
       store.dispatch("flashMessage/setErrorMessage", { messages: messages });
     } else {
       messages = [].concat.apply([], ["想定外のエラーです．"]);

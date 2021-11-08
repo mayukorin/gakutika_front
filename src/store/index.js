@@ -65,10 +65,14 @@ const authModule = {
       }).then((response) => {
         localStorage.setItem("access", response.data.access);
         return context.dispatch("renew");
-      });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     },
     signout(context) {
-      console.log(context);
+      localStorage.removeItem("access");
+      context.commit("reset");
     },
   },
 };
