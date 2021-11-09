@@ -43,6 +43,7 @@ api.interceptors.response.use(
     let messages;
     if (status === 400) {
       messages = [].concat.apply([], Object.values(error.response.data));
+      console.log(error.response.data);
       store.dispatch("flashMessage/setWarningMessages", { messages: messages });
     } else if (status === 403) {
       messages = [].concat.apply([], ["権限がありません．"]);

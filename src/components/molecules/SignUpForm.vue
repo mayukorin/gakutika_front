@@ -65,7 +65,7 @@
             prepend-icon="mdi-lock"
           ></v-text-field>
         </validation-provider>
-        <Button @click="handleClick()">作成</Button>
+        <Button :loading="loadFlag" @click="handleClick()">作成</Button>
       </form>
     </validation-observer>
   </v-form>
@@ -89,20 +89,27 @@ export default {
       name: "",
       password: "",
       password_confirmation: "",
+      loadFlag: false,
     };
   },
   methods: {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.$nextTick(() => {
-            this.onsignup({
-              email: this.email,
-              name: this.name,
-              password: this.password,
-              password_confirmation: this.password_confirmation,
+          this.loadFlag = true;
+          this.$nextTick()
+            .then(() => {
+              console.log(this.loadFlag);
+              return this.onsignup({
+                email: this.email,
+                name: this.name,
+                password: this.password,
+                password_confirmation: this.password_confirmation,
+              });
+            })
+            .then(() => {
+              this.loadFlag = false;
             });
-          });
         }
       });
     },

@@ -35,7 +35,7 @@
             prepend-icon="mdi-lock"
           ></v-text-field>
         </validation-provider>
-        <Button @click="handleClick()">ログイン</Button>
+        <Button :loading="loadFlag" @click="handleClick()">ログイン</Button>
       </form>
     </validation-observer>
   </v-form>
@@ -57,15 +57,24 @@ export default {
     return {
       email: "",
       password: "",
+      loadFlag: false,
     };
   },
   methods: {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.$nextTick(() => {
-            this.onsignin({ email: this.email, password: this.password });
-          });
+          this.loadFlag = true;
+          this.$nextTick()
+            .then(() => {
+              return this.onsignin({
+                email: this.email,
+                password: this.password,
+              });
+            })
+            .then(() => {
+              this.loadFlag = false;
+            });
         }
       });
     },
