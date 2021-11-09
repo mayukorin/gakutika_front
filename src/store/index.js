@@ -36,11 +36,6 @@ const authModule = {
             password_confirmation: payload.password_confirmation,
           },
         },
-      }).then(() => {
-        return context.dispatch("signin", {
-          email: payload.email,
-          password: payload.password,
-        });
       });
     },
     renew(context) {
@@ -62,13 +57,14 @@ const authModule = {
             password: payload.password,
           },
         },
-      }).then((response) => {
-        localStorage.setItem("access", response.data.access);
-        return context.dispatch("renew");
       })
-      .catch((error) => {
-        console.log(error);
-      })
+        .then((response) => {
+          localStorage.setItem("access", response.data.access);
+          return context.dispatch("renew");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     signout(context) {
       localStorage.removeItem("access");

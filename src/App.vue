@@ -18,7 +18,7 @@ import Navbar from "@/components/organisms/Navbar";
 export default {
   name: "App",
   components: {
-    Navbar
+    Navbar,
   },
   data: () => ({
     //

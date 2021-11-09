@@ -51,7 +51,6 @@ api.interceptors.response.use(
       const token = localStorage.getItem("access");
       let error_messages;
       if (token != null) {
-        console.log("aaaaaaaaaaaaa");
         error_messages = "ログインの有効期限切れです．";
       } else {
         error_messages =

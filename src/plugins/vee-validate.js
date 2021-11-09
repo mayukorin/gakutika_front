@@ -7,7 +7,6 @@ import {
 } from "vee-validate";
 import Vue from "vue";
 
-
 setInteractionMode("eager");
 
 extend("required", {
@@ -31,9 +30,9 @@ extend("email", {
 });
 
 extend("confirmed", {
-    ...confirmed,
-    message: "パスワードが一致しません"
+  ...confirmed,
+  message: "パスワードが一致しません",
 });
 
-Vue.component('ValidationObserver', ValidationObserver);
-Vue.component('ValidationProvider', ValidationProvider);
+Vue.component("ValidationObserver", ValidationObserver);
+Vue.component("ValidationProvider", ValidationProvider);
