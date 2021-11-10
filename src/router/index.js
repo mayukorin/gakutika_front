@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "@/components/templates/HomeView";
 import SignUp from "@/components/templates/SignUpView";
 import SignIn from "@/components/templates/SignInView";
 import store from "../store";

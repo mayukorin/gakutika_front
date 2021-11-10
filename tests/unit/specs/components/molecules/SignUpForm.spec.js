@@ -26,6 +26,18 @@ describe("SignUpForm.vue", () => {
               expect(error).toBe("メールアドレス を入力してください");
             });
           });
+          describe("入力されている", () => {
+            it("emailがvalidであること", async () => {
+              const wrapper = mount(SignUpForm, {
+                localVue,
+                vuetify,
+              });
+              await wrapper.setData({ email: "test@example.com" });
+              await wrapper.vm.$refs.observer.validate();
+              const errorCnt = wrapper.vm.$refs.emailProvider.errors.length;
+              expect(errorCnt).toBe(0);
+            });
+          });
         });
       });
     });
