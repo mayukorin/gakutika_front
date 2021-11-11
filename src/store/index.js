@@ -118,10 +118,40 @@ const flashMessageModule = {
   },
 };
 
+const gakutikaModule = {
+  namespaced: true,
+  state: {
+    gakutikas: [],
+  },
+  mutations: {
+    set(state, payload) {
+      state.gakutikas = payload.gakutikas;
+    },
+    clear(state) {
+      state.gakutiaks = [];
+    },
+  },
+  actions: {
+    fetchGakutikaList(context) {
+      return api({
+        method: "get",
+        url: "/gakutikas",
+      })
+      .then((response) => {
+        return context.commit("set", { gakutikas: response.data });
+      })
+    },
+    setGakutikaList(context, payload) {
+      return context.commit("set", { gakutikas: payload.sortedGakutikas });
+    }
+  }
+}
+
 const store = new Vuex.Store({
   modules: {
     auth: authModule,
     flashMessage: flashMessageModule,
+    gakutikas: gakutikaModule,
   },
 });
 
