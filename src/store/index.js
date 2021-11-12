@@ -122,6 +122,14 @@ const gakutikaModule = {
   namespaced: true,
   state: {
     gakutikas: [],
+    sortProp: "id",
+  },
+  getters: {
+    getGakutikasSorted(state) {
+      return state.gakutikas
+        .slice()
+        .sort((a, b) => (a[state.sortProp] < b[state.sortProp] ? -1 : 1));
+    },
   },
   mutations: {
     set(state, payload) {
@@ -130,22 +138,28 @@ const gakutikaModule = {
     clear(state) {
       state.gakutiaks = [];
     },
+    setSortProp(state, payload) {
+      state.sortProp = payload.sortProp;
+    },
   },
   actions: {
     fetchGakutikaList(context) {
       return api({
         method: "get",
         url: "/gakutikas",
-      })
-      .then((response) => {
+      }).then((response) => {
+        console.log(response.data);
         return context.commit("set", { gakutikas: response.data });
-      })
+      });
     },
     setGakutikaList(context, payload) {
       return context.commit("set", { gakutikas: payload.sortedGakutikas });
-    }
-  }
-}
+    },
+    setSortProp(context, payload) {
+      return context.commit("setSortProp", { sortProp: payload.sortProp });
+    },
+  },
+};
 
 const store = new Vuex.Store({
   modules: {
