@@ -19,7 +19,12 @@
         <span>学チカを頑張り順で並べる</span>
       </v-tooltip>
     </v-row>
-    <GakutikaSortedList :gakutikas="getGakutikas" v-show="!loading" />
+    <GakutikaSortedList 
+      :gakutikas="getGakutikas" 
+      v-show="!loading" 
+      :on-update-tough-rank="handleUpdateToughRank"
+      :on-set-sort-prop-tough-rank="setSortProp"
+    />
   </div>
 </template>
 <script>
@@ -47,6 +52,15 @@ export default {
     setSortProp(prop) {
       this.$store.dispatch("gakutikas/setSortProp", { sortProp: prop });
     },
+    handleUpdateToughRank: function(id_and_new_tough_rank_info) {
+      console.log("handle");
+      console.log(id_and_new_tough_rank_info);
+      this.loading = true;
+      return this.$store.dispatch("gakutikas/updateToughRank", id_and_new_tough_rank_info)
+      .then(() => {
+        this.loading = false;
+      });
+    }
   },
   computed: {
     getGakutikas: {

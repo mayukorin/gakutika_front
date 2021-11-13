@@ -59,6 +59,7 @@ api.interceptors.response.use(
       }
       messages = [].concat.apply([], [error_messages]);
       store.dispatch("auth/signout");
+      console.log("メッセージセット");
       store.dispatch("flashMessage/setErrorMessage", { messages: messages });
     } else {
       messages = [].concat.apply([], ["想定外のエラーです．"]);
@@ -68,5 +69,7 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+
 
 export default api;

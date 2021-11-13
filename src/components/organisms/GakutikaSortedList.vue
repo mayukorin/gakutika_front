@@ -40,6 +40,12 @@ export default {
     gakutikas: {
       default: [],
     },
+    onUpdateToughRank: {
+      type: Function
+    },
+    onSetSortPropToughRank: {
+      type: Function
+    }
   },
   data() {
     return {
@@ -63,14 +69,21 @@ export default {
   methods: {
     setOrder: function () {
       this.orderFlag = false;
-      this.gakutikas.map((gakutika, index) => {
-        gakutika.order = index + 1;
+      let id_and_new_tough_rank = {};
+      this.sortedGakutikas.forEach((gakutika, index) => {
+        id_and_new_tough_rank[gakutika.id] = index + 1;
+      });
+      console.log("okkkkkkkkkkkkkkkkkkkkk");
+      console.log(id_and_new_tough_rank);
+      return this.onUpdateToughRank({
+        id_and_new_tough_rank: id_and_new_tough_rank
       });
     },
     pageChange: function (pageNumber) {
       this.page = pageNumber;
     },
     startOrder: function () {
+      this.onSetSortPropToughRank('tough_rank');
       this.orderFlag = true;
     },
   },

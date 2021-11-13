@@ -12,6 +12,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: { requiresAuth: true },
   },
   {
     path: "/about",
@@ -74,7 +75,7 @@ router.beforeEach((to, from, next) => {
 function forceToLoginPage(to) {
   console.log("ログイン画面へリダイレクトします");
   router.replace({
-    path: "/login",
+    path: "/sign-in",
     query: { next: to.fullPath },
   });
 }

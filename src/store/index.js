@@ -158,6 +158,21 @@ const gakutikaModule = {
     setSortProp(context, payload) {
       return context.commit("setSortProp", { sortProp: payload.sortProp });
     },
+    updateToughRank(context, payload) {
+      console.log("あああああああ");
+      console.log(payload);
+      console.log(payload.id_and_new_tough_rank);
+      console.log("いいい");
+      return api({
+        method: "post",
+        url: "/update-tough-rank",
+        data: {
+          id_and_new_tough_rank: payload.id_and_new_tough_rank
+        }
+      }).then((response) => {
+        return context.commit("set", { gakutikas: response.data });
+      })
+    }
   },
 };
 
