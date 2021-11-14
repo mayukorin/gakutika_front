@@ -7,7 +7,9 @@
       <SignInForm :onsignin="handleSignin" />
       <v-divider class="mt-3 mb-3"></v-divider>
       アカウントをお持ちではない方は
-      <Button @click="goToSignUpPage">アカウント登録</Button>
+      <v-row>
+        <Button @click="goToSignUpPage">アカウント登録</Button>
+      </v-row>
     </v-card-text>
   </v-card>
 </template>

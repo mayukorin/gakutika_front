@@ -65,7 +65,9 @@
             prepend-icon="mdi-lock"
           ></v-text-field>
         </validation-provider>
-        <Button :loading="loadFlag" @click="handleClick()">作成</Button>
+        <v-row>
+          <Button :loading="loadFlag" @click="handleClick()">作成</Button>
+        </v-row>
       </form>
     </validation-observer>
   </v-form>

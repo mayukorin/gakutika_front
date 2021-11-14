@@ -4,39 +4,33 @@
       <form @submit.prevent="submit">
         <validation-provider
           v-slot="{ errors }"
-          name="メールアドレス"
-          rules="required|email|max:255"
-          ref="emailProvider"
+          name="タイトル"
+          rules="required|max:50"
         >
           <v-text-field
-            v-model="email"
-            :counter="255"
+            v-model="title"
+            :counter="50"
             :error-messages="errors"
-            label="メールアドレス"
+            label="タイトル"
             required
-            id="email"
-            prepend-icon="mdi-email"
+            prepend-icon="mdi-folder"
           ></v-text-field>
         </validation-provider>
         <validation-provider
           v-slot="{ errors }"
-          name="パスワード"
-          rules="required|min:6"
-          vid="password"
-          ref="passwordProvider"
+          name="詳細"
+          rules="required"
         >
-          <v-text-field
-            v-model="password"
+          <v-textarea
+            v-model="content"
+            label="詳細"
+            prepend-icon="mdi-pencil"
             :error-messages="errors"
-            label="パスワード"
-            required
-            type="password"
-            ref="password"
-            prepend-icon="mdi-lock"
-          ></v-text-field>
+            ></v-textarea>
         </validation-provider>
+        <DatePicker :date="startDate" :field="'startDate'" @input="handleDateSet"/>
         <v-row>
-          <Button :loading="loadFlag" @click="handleClick()">ログイン</Button>
+          <Button :loading="loadFlag" @click="handleClick()">作成</Button>
         </v-row>
       </form>
     </validation-observer>
@@ -44,22 +38,26 @@
 </template>
 <script>
 import Button from "@/components/atoms/Button.vue";
+import DatePicker from "@/components/atoms/DatePicker.vue";
 
 export default {
-  name: "SignInForm",
+  name: "GakutikaCreateForm",
   components: {
     Button,
+    DatePicker,
   },
   props: {
-    onsignin: {
+    oncreate: {
       type: Function,
     },
   },
   data() {
     return {
-      email: "",
-      password: "",
+      title: "",
+      content: "",
       loadFlag: false,
+      menu: false,
+      startDate: new Date().toISOString().substr(0, 7),
     };
   },
   methods: {
@@ -69,9 +67,10 @@ export default {
           this.loadFlag = true;
           this.$nextTick()
             .then(() => {
-              return this.onsignin({
-                email: this.email,
-                password: this.password,
+              console.log(this.loadFlag);
+              return this.oncreate({
+                title: this.title,
+                content: this.content,
               });
             })
             .then(() => {
@@ -80,6 +79,13 @@ export default {
         }
       });
     },
+    handleDateSet: function(...args) {
+      let [field, value] = args;
+      console.log(field);
+      console.log(value);
+      this[field] = value;
+      console.log(this.startDate);
+    }
   },
 };
 </script>

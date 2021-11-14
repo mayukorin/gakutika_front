@@ -1,7 +1,5 @@
 <template>
   <div>
-    <Button @click="startOrder" v-show="!orderFlag">並び替え開始</Button>
-    <Button @click="setOrder" v-show="orderFlag">並び替え完了</Button>
     <v-expansion-panels accordion>
       <draggable
         :options="options"
@@ -28,24 +26,23 @@
 <script>
 import Gakutika from "@/components/molecules/Gakutika";
 import draggable from "vuedraggable";
-import Button from "@/components/atoms/Button.vue";
+
 export default {
   name: "GakutikaSortedList",
   components: {
     Gakutika,
     draggable,
-    Button,
   },
   props: {
     gakutikas: {
       default: [],
     },
+    orderFlag: {
+      type: Boolean
+    },
     onUpdateToughRank: {
       type: Function
     },
-    onSetSortPropToughRank: {
-      type: Function
-    }
   },
   data() {
     return {
@@ -53,9 +50,7 @@ export default {
         animation: 200,
       },
       page: 1,
-      orderFlag: false,
       sortedGakutikas: [],
-      dragGakutikas: [],
       pageSize: 2,
       length: 0,
     };
@@ -65,26 +60,21 @@ export default {
       this.sortedGakutikas = newGakutikas;
       this.length = Math.ceil(this.sortedGakutikas.length / this.pageSize);
     },
+    orderFlag: function (flag) {
+      if (!flag) {
+        let id_and_new_tough_rank = {};
+        this.sortedGakutikas.forEach((gakutika, index) => {
+          id_and_new_tough_rank[gakutika.id] = index + 1;
+        });
+        return this.onUpdateToughRank({
+          id_and_new_tough_rank: id_and_new_tough_rank
+        });
+      }
+    }
   },
   methods: {
-    setOrder: function () {
-      this.orderFlag = false;
-      let id_and_new_tough_rank = {};
-      this.sortedGakutikas.forEach((gakutika, index) => {
-        id_and_new_tough_rank[gakutika.id] = index + 1;
-      });
-      console.log("okkkkkkkkkkkkkkkkkkkkk");
-      console.log(id_and_new_tough_rank);
-      return this.onUpdateToughRank({
-        id_and_new_tough_rank: id_and_new_tough_rank
-      });
-    },
     pageChange: function (pageNumber) {
       this.page = pageNumber;
-    },
-    startOrder: function () {
-      this.onSetSortPropToughRank('tough_rank');
-      this.orderFlag = true;
     },
   },
   computed: {
