@@ -159,10 +159,6 @@ const gakutikaModule = {
       return context.commit("setSortProp", { sortProp: payload.sortProp });
     },
     updateToughRank(context, payload) {
-      console.log("あああああああ");
-      console.log(payload);
-      console.log(payload.id_and_new_tough_rank);
-      console.log("いいい");
       return api({
         method: "post",
         url: "/update-tough-rank",
@@ -172,6 +168,28 @@ const gakutikaModule = {
       }).then((response) => {
         return context.commit("set", { gakutikas: response.data });
       })
+    },
+    createGakutika(context, payload) {
+      console.log(payload.title);
+      console.log(payload.content);
+      console.log(payload.startMonth);
+      console.log(payload.endMonth);
+      return api({
+        method: "post",
+        url: "/gakutikas",
+        data: {
+          gakutika: {
+            title: payload.title,
+            content: payload.content,
+            start_month: payload.startMonth,
+            end_month: payload.endMonth,
+            tough_rank: 0,
+          },
+        },
+      }).then((response) => {
+        console.log(context);
+        console.log(response);
+      });
     }
   },
 };

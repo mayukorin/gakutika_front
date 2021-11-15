@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     handleCreate: function (gakutikaInfo) {
-        console.log(gakutikaInfo);
+      this.$store.dispatch("gakutikas/createGakutika", gakutikaInfo);
     },
   },
 };

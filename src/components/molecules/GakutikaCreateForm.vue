@@ -28,7 +28,20 @@
             :error-messages="errors"
             ></v-textarea>
         </validation-provider>
-        <DatePicker :date="startDate" :field="'startDate'" @input="handleDateSet"/>
+        <v-row>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <MonthPicker :month="startMonth" :field="'startMonth'" :labelName="'開始年月'" @input="handleMonthSet"/>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="6"
+          >
+            <MonthPicker :month="endMonth" :field="'endMonth'" :labelName="'終了年月'" @input="handleMonthSet"/>
+          </v-col>
+        </v-row>
         <v-row>
           <Button :loading="loadFlag" @click="handleClick()">作成</Button>
         </v-row>
@@ -38,13 +51,13 @@
 </template>
 <script>
 import Button from "@/components/atoms/Button.vue";
-import DatePicker from "@/components/atoms/DatePicker.vue";
+import MonthPicker from "@/components/atoms/MonthPicker.vue";
 
 export default {
   name: "GakutikaCreateForm",
   components: {
     Button,
-    DatePicker,
+    MonthPicker,
   },
   props: {
     oncreate: {
@@ -57,7 +70,8 @@ export default {
       content: "",
       loadFlag: false,
       menu: false,
-      startDate: new Date().toISOString().substr(0, 7),
+      startMonth: new Date().toISOString().substr(0, 7),
+      endMonth: new Date().toISOString().substr(0, 7),
     };
   },
   methods: {
@@ -71,6 +85,8 @@ export default {
               return this.oncreate({
                 title: this.title,
                 content: this.content,
+                startMonth: this.startMonth,
+                endMonth: this.endMonth,
               });
             })
             .then(() => {
@@ -79,12 +95,13 @@ export default {
         }
       });
     },
-    handleDateSet: function(...args) {
+    handleMonthSet: function(...args) {
+      console.log("why..");
       let [field, value] = args;
       console.log(field);
       console.log(value);
       this[field] = value;
-      console.log(this.startDate);
+      console.log(this.startMonth);
     }
   },
 };

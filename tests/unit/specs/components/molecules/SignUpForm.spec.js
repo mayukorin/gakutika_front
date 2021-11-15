@@ -95,6 +95,53 @@ describe("SignUpForm.vue", () => {
           });
         });
       });
+
+      describe("password", () => {
+        describe("required", () => {
+          it("何も入力されていない", async () => {
+            const wrapper = mount(SignUpForm, {
+              localVue,
+              vuetify,
+            });
+            await wrapper.setData({ password: " " });
+            await wrapper.vm.$refs.observer.validate();
+            const error = wrapper.vm.$refs.passwordProvider.errors[0];
+            expect(error).toBe("パスワード を入力してください");
+          });
+          it("入力されている", async () => {
+            const wrapper = mount(SignUpForm, {
+              localVue,
+              vuetify,
+            });
+            await wrapper.setData({ password: "abcabcabc" });
+            await wrapper.vm.$refs.observer.validate();
+            const errorCnt = wrapper.vm.$refs.passwordProvider.errors.length;
+            expect(errorCnt).toBe(0);
+          });
+        });
+        describe("min", () => {
+          it("passwordが6文字未満", async () => {
+            const wrapper = mount(SignUpForm, {
+              localVue,
+              vuetify,
+            });
+            await wrapper.setData({ password: "abcbb" });
+            await wrapper.vm.$refs.observer.validate();
+            const error = wrapper.vm.$refs.passwordProvider.errors[0];
+            expect(error).toBe("パスワード は 6 文字以上で入力してください");
+          });
+          it("passwordが6文字以上", async () => {
+            const wrapper = mount(SignUpForm, {
+              localVue,
+              vuetify,
+            });
+            await wrapper.setData({ password: "abcbbb" });
+            await wrapper.vm.$refs.observer.validate();
+            const errorCnt = wrapper.vm.$refs.passwordProvider.errors.length;
+            expect(errorCnt).toBe(0);
+          });
+        });
+      });
     });
   });
 });

@@ -3,6 +3,7 @@
         ref="menu"
         v-model="menu"
         :close-on-content-click="false"
+        :return-value.sync="changeMonth"
         transition="scale-transition"
         offset-y
         max-width="290px"
@@ -10,8 +11,8 @@
     >
         <template v-slot:activator="{ on, attrs }">
         <v-text-field
-            v-model="changeDate"
-            label="開始年月"
+            v-model="changeMonth"
+            :label="labelName"
             prepend-icon="mdi-calendar"
             readonly
             v-bind="attrs"
@@ -19,10 +20,11 @@
         ></v-text-field>
         </template>
         <v-date-picker
-        v-model="changeDate"
+        v-model="changeMonth"
         type="month"
         no-title
         scrollable
+        color="green lighten-1"
         >
         <v-spacer></v-spacer>
         <v-btn
@@ -35,7 +37,7 @@
         <v-btn
             text
             class="success"
-            @click="handleDateSet()"
+            @click="handleMonthSet()"
         >
             OK
         </v-btn>
@@ -44,33 +46,39 @@
 </template>
 <script>
 export default {
-  name: "DatePicker",
+  name: "MonthPicker",
   data() {
       return {
           menu: false,
-          changeDate: new Date().toISOString().substr(0, 7),
+          changeMonth: new Date().toISOString().substr(0, 7),
       }
   },
   props: {
-    date: {
+    month: {
       type: String,
     },
     field: {
       type: String,
     },
+    labelName: {
+      type: String
+    }
   },
   methods: {
-    handleDateSet() {
+    handleMonthSet() {
+      console.log("もううう");
+      console.log(this.changeMonth);
+      this.$refs.menu.save(this.changeMonth);
       this.menu = false;
-      this.$emit("input", this.field, this.changeDate);
+      this.$emit("input", this.field, this.changeMonth);
     },
   },
   watch: {
-    date: function (newDate) {
+    month: function (newMonth) {
       console.log("okkk");
-      console.log(newDate);
-      this.changeDate = newDate;
-      console.log(this.changeDate);
+      console.log(newMonth);
+      this.changeMonth = newMonth;
+      console.log(this.changeMonth);
     }
   },
 };
