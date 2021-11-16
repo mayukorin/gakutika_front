@@ -2,16 +2,19 @@
   <div>
     <ProgressCircular v-show="loading" />
     <v-row class="ma-0 mb-3" v-show="!loading">
-      <Tooltip
-        :textFlag="!isSortProp('tough_rank')"
-        :colorString="'grey'"
-        :classString="'mt-2 ml-1'"
-        @click="setSortProp('tough_rank')"
-        :iconName="'mdi-folder'"
-        :iconCaption="'頑張り順'"
-        :iconExplain="'頑張り順で並び替え'"
-      />
-      <Tooltip
+      <Tooltip>
+        <Button 
+          slot="btn"
+          @click="setSortProp('tough_rank')"
+          :textFlag="!isSortProp('tough_rank')"
+          :classString="'mt-2 ml-1'"
+          :colorString="'grey'"
+          :smallFlag="true"
+        >
+          ああああ
+        </Button>
+      </Tooltip>
+      <Tooltip2
         :textFlag="!isSortProp('tough_rank')"
         :colorString="'grey'"
         :classString="'mt-2 ml-1'"
@@ -39,14 +42,29 @@
       :on-update-tough-rank="handleUpdateToughRank"
       :order-flag="orderFlag"
     />
+    <form-dialog
+      :propsDialog.sync="propsDialog"
+    >
+      <Button
+        :classString="'success ml-1 mt-2'"
+        slot="btn"
+        @click="propsDialog=true"
+      >
+        学チカ新規作成
+      </Button>
+      <GakutikaCreateCard slot="formCard" />
+    </form-dialog>
   </div>
 </template>
 <script>
 import GakutikaSortedList from "@/components/organisms/GakutikaSortedList";
 import ProgressCircular from "@/components/atoms/ProgressCircular.vue";
 import Button from "@/components/atoms/Button.vue";
-import Tooltip from "@/components/atoms/Tooltip.vue";
+import Tooltip2 from "@/components/atoms/Tooltip2.vue";
+import Tooltip from "@/components/molecules/Tooltip.vue";
 import GakutikaCreatePopupPlusButton from "@/components/molecules/GakutikaCreatePopupPlusButton.vue";
+import FormDialog from "@/components/organisms/FormDialog";
+import GakutikaCreateCard from "@/components/organisms/GakutikaCreateCard";
 
 export default {
   name: "GakutikaList",
@@ -55,12 +73,16 @@ export default {
     ProgressCircular,
     Button,
     Tooltip,
-    GakutikaCreatePopupPlusButton
+    GakutikaCreatePopupPlusButton,
+    GakutikaCreateCard,
+    FormDialog,
+    Tooltip2,
   },
   data() {
     return {
       loading: false,
       orderFlag: false,
+      propsDialog: false,
     };
   },
   created: function () {

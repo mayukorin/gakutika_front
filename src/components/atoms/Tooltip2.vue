@@ -22,7 +22,7 @@
 </template>
 <script>
 export default {
-  name: "Tooltip",
+  name: "Tooltip2",
   props: {
     textFlag: {
       type: Boolean,
