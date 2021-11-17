@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on, attrs }">
       <slot name="btn" v-bind="attrs" v-on="on" ></slot>
     </template>
-    <slot name="formCard"></slot>
+    <slot name="formCard" ></slot>
   </v-dialog>
 </template>
 <script>
@@ -27,7 +27,8 @@ export default {
               return this.propsDialog;
           },
           set: function(newValue) {
-              this.$emit('update:propsDialog', newValue);
+            console.log("更新完了");
+            this.$emit('update:propsDialog', newValue);
           }
       }
   }

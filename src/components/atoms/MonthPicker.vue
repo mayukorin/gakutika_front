@@ -3,7 +3,7 @@
         ref="menu"
         v-model="menu"
         :close-on-content-click="false"
-        :return-value.sync="changeMonth"
+        :return-value.sync="month"
         transition="scale-transition"
         offset-y
         max-width="290px"
@@ -11,7 +11,7 @@
     >
         <template v-slot:activator="{ on, attrs }">
         <v-text-field
-            v-model="changeMonth"
+            v-model="month"
             :label="labelName"
             prepend-icon="mdi-calendar"
             readonly
@@ -20,7 +20,7 @@
         ></v-text-field>
         </template>
         <v-date-picker
-        v-model="changeMonth"
+        v-model="month"
         type="month"
         no-title
         scrollable
@@ -54,10 +54,7 @@ export default {
       }
   },
   props: {
-    month: {
-      type: String,
-    },
-    field: {
+    propsMonth: {
       type: String,
     },
     labelName: {
@@ -66,19 +63,18 @@ export default {
   },
   methods: {
     handleMonthSet() {
-      console.log("もううう");
-      console.log(this.changeMonth);
-      this.$refs.menu.save(this.changeMonth);
       this.menu = false;
-      this.$emit("input", this.field, this.changeMonth);
+      this.$refs.menu.save(this.month);
     },
   },
-  watch: {
-    month: function (newMonth) {
-      console.log("okkk");
-      console.log(newMonth);
-      this.changeMonth = newMonth;
-      console.log(this.changeMonth);
+  computed: {
+    month: {
+      get: function() {
+        return this.propsMonth;
+      },
+      set: function(newValue) {
+        this.$emit("update:propsMonth", newValue);
+      }
     }
   },
 };

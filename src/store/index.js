@@ -123,12 +123,15 @@ const gakutikaModule = {
   state: {
     gakutikas: [],
     sortProp: "id",
+    reverseFlag: true,
   },
   getters: {
     getGakutikasSorted(state) {
-      return state.gakutikas
+      let sortedGakutikas = state.gakutikas
         .slice()
         .sort((a, b) => (a[state.sortProp] < b[state.sortProp] ? -1 : 1));
+      if (state.reverseFlag) return sortedGakutikas.reverse();
+      else return sortedGakutikas;
     },
   },
   mutations: {
@@ -138,8 +141,12 @@ const gakutikaModule = {
     clear(state) {
       state.gakutiaks = [];
     },
-    setSortProp(state, payload) {
+    setSortPropAndReverseFlag(state, payload) {
       state.sortProp = payload.sortProp;
+      state.reverseFlag = payload.reverseFlag;
+    },
+    pushNewGakutika(state, payload) {
+      state.gakutikas.push(payload.newGakutika);
     },
   },
   actions: {
@@ -155,25 +162,21 @@ const gakutikaModule = {
     setGakutikaList(context, payload) {
       return context.commit("set", { gakutikas: payload.sortedGakutikas });
     },
-    setSortProp(context, payload) {
-      return context.commit("setSortProp", { sortProp: payload.sortProp });
+    setSortPropAndReverseFlag(context, payload) {
+      return context.commit("setSortPropAndReverseFlag", { sortProp: payload.sortProp, reverseFlag: payload.reverseFlag });
     },
     updateToughRank(context, payload) {
       return api({
         method: "post",
         url: "/update-tough-rank",
         data: {
-          id_and_new_tough_rank: payload.id_and_new_tough_rank
-        }
+          id_and_new_tough_rank: payload.id_and_new_tough_rank,
+        },
       }).then((response) => {
         return context.commit("set", { gakutikas: response.data });
       })
     },
     createGakutika(context, payload) {
-      console.log(payload.title);
-      console.log(payload.content);
-      console.log(payload.startMonth);
-      console.log(payload.endMonth);
       return api({
         method: "post",
         url: "/gakutikas",
@@ -187,8 +190,8 @@ const gakutikaModule = {
           },
         },
       }).then((response) => {
-        console.log(context);
-        console.log(response);
+        console.log(response.data);
+        return context.commit("pushNewGakutika", { newGakutika: response.data });
       });
     }
   },

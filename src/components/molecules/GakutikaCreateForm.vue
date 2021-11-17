@@ -33,13 +33,13 @@
             cols="12"
             sm="6"
           >
-            <MonthPicker2 :propsMonth.sync="startMonth"  :labelName="'開始年月'" @input="handleMonthSet"/>
+            <MonthPicker :propsMonth.sync="startMonth"  :labelName="'開始年月'" @input="handleMonthSet"/>
           </v-col>
           <v-col
             cols="12"
             sm="6"
           >
-            <MonthPicker2 :propsMonth.sync="endMonth"  :labelName="'終了年月'" @input="handleMonthSet"/>
+            <MonthPicker :propsMonth.sync="endMonth"  :labelName="'終了年月'" @input="handleMonthSet"/>
           </v-col>
         </v-row>
         <v-row>
@@ -51,13 +51,13 @@
 </template>
 <script>
 import Button from "@/components/atoms/Button.vue";
-import MonthPicker2 from "@/components/atoms/MonthPicker2.vue";
+import MonthPicker from "@/components/atoms/MonthPicker.vue";
 
 export default {
   name: "GakutikaCreateForm",
   components: {
     Button,
-    MonthPicker2,
+    MonthPicker,
   },
   props: {
     oncreate: {
@@ -96,10 +96,7 @@ export default {
       });
     },
     handleMonthSet: function(...args) {
-      console.log("why..");
       let [field, value] = args;
-      console.log(field);
-      console.log(value);
       this[field] = value;
       console.log(this.startMonth);
     }

@@ -2,23 +2,20 @@
   <div>
     <ProgressCircular v-show="loading" />
     <v-row class="ma-0 mb-3" v-show="!loading">
-      <Tooltip>
-        <Button 
-          slot="btn"
-          @click="setSortProp('tough_rank')"
-          :textFlag="!isSortProp('tough_rank')"
-          :classString="'mt-2 ml-1'"
-          :colorString="'grey'"
-          :smallFlag="true"
-        >
-          ああああ
-        </Button>
-      </Tooltip>
+      <Tooltip2
+        :textFlag="!isSortProp('id')"
+        :colorString="'grey'"
+        :classString="'mt-2 ml-1'"
+        @click="setSortPropAndReverseFlag('id', true)"
+        :iconName="'mdi-folder'"
+        :iconCaption="'作成順'"
+        :iconExplain="'作成順で並び替え'"
+      />
       <Tooltip2
         :textFlag="!isSortProp('tough_rank')"
         :colorString="'grey'"
         :classString="'mt-2 ml-1'"
-        @click="setSortProp('tough_rank')"
+        @click="setSortPropAndReverseFlag('tough_rank', false)"
         :iconName="'mdi-folder'"
         :iconCaption="'頑張り順'"
         :iconExplain="'頑張り順で並び替え'"
@@ -52,7 +49,7 @@
       >
         学チカ新規作成
       </Button>
-      <GakutikaCreateCard slot="formCard" />
+      <GakutikaCreateCard slot="formCard" @uploaded="propsDialog=false" />
     </form-dialog>
   </div>
 </template>
@@ -61,7 +58,6 @@ import GakutikaSortedList from "@/components/organisms/GakutikaSortedList";
 import ProgressCircular from "@/components/atoms/ProgressCircular.vue";
 import Button from "@/components/atoms/Button.vue";
 import Tooltip2 from "@/components/atoms/Tooltip2.vue";
-import Tooltip from "@/components/molecules/Tooltip.vue";
 import GakutikaCreatePopupPlusButton from "@/components/molecules/GakutikaCreatePopupPlusButton.vue";
 import FormDialog from "@/components/organisms/FormDialog";
 import GakutikaCreateCard from "@/components/organisms/GakutikaCreateCard";
@@ -72,7 +68,6 @@ export default {
     GakutikaSortedList,
     ProgressCircular,
     Button,
-    Tooltip,
     GakutikaCreatePopupPlusButton,
     GakutikaCreateCard,
     FormDialog,
@@ -100,8 +95,8 @@ export default {
     });
   },
   methods: {
-    setSortProp(prop) {
-      this.$store.dispatch("gakutikas/setSortProp", { sortProp: prop });
+    setSortPropAndReverseFlag(prop, reverseFlag) {
+      this.$store.dispatch("gakutikas/setSortPropAndReverseFlag", { sortProp: prop, reverseFlag: reverseFlag });
     },
     handleUpdateToughRank: function(id_and_new_tough_rank_info) {
       this.loading = true;
@@ -120,7 +115,7 @@ export default {
     },
     changeOrderFlag: function() {
         this.orderFlag = !this.orderFlag;
-        if (this.orderFlag) this.setSortProp('tough_rank');
+        if (this.orderFlag) this.setSortPropAndReverseFlag('tough_rank', false);
     }
   },
   computed: {
