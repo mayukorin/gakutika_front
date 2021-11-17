@@ -11,6 +11,7 @@
           v-for="gakutika in displayGakutikas"
           :key="gakutika.title"
           :gakutika="gakutika"
+          :on-fetch-gakutika="handleFetchGakutika"
         />
       </draggable>
     </v-expansion-panels>
@@ -42,6 +43,9 @@ export default {
     },
     onUpdateToughRank: {
       type: Function
+    },
+    onFetchGakutika: {
+      type: Function,
     },
   },
   data() {
@@ -75,6 +79,9 @@ export default {
   methods: {
     pageChange: function (pageNumber) {
       this.page = pageNumber;
+    },
+    handleFetchGakutika: function(gakutikaId) {
+      return this.onFetchGakutika(gakutikaId);
     },
   },
   computed: {

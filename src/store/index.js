@@ -124,6 +124,7 @@ const gakutikaModule = {
     gakutikas: [],
     sortProp: "id",
     reverseFlag: true,
+    gakutika: null,
   },
   getters: {
     getGakutikasSorted(state) {
@@ -137,6 +138,9 @@ const gakutikaModule = {
   mutations: {
     set(state, payload) {
       state.gakutikas = payload.gakutikas;
+    },
+    setGakutika(state, payload) {
+      state.gakutia = payload.gakutika;
     },
     clear(state) {
       state.gakutiaks = [];
@@ -158,6 +162,16 @@ const gakutikaModule = {
         console.log(response.data);
         return context.commit("set", { gakutikas: response.data });
       });
+    },
+    fetchGakutika(context, payload) {
+      return api({
+        method: "get",
+        url: "/gakutikas/" + payload.id,
+      }).then((response) => {
+        console.log(response);
+        return context.commit("setGakutika", { gakutika: response.data });
+
+      })
     },
     setGakutikaList(context, payload) {
       return context.commit("set", { gakutikas: payload.sortedGakutikas });

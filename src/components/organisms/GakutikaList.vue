@@ -38,6 +38,7 @@
       v-show="!loading" 
       :on-update-tough-rank="handleUpdateToughRank"
       :order-flag="orderFlag"
+      :on-fetch-gakutika="handleFetchGakutika"
     />
     <form-dialog
       :propsDialog.sync="propsDialog"
@@ -116,6 +117,10 @@ export default {
     changeOrderFlag: function() {
         this.orderFlag = !this.orderFlag;
         if (this.orderFlag) this.setSortPropAndReverseFlag('tough_rank', false);
+    },
+    handleFetchGakutika: function(gakutikaId) {
+      return this.$store.dispatch("gakutikas/fetchGakutika", gakutikaId);
+      // この後，ページ遷移
     }
   },
   computed: {
