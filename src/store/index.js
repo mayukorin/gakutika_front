@@ -140,7 +140,7 @@ const gakutikaModule = {
       state.gakutikas = payload.gakutikas;
     },
     setGakutika(state, payload) {
-      state.gakutia = payload.gakutika;
+      state.gakutika = payload.gakutika;
     },
     clear(state) {
       state.gakutiaks = [];

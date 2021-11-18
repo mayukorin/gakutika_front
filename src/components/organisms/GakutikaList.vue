@@ -119,8 +119,9 @@ export default {
         if (this.orderFlag) this.setSortPropAndReverseFlag('tough_rank', false);
     },
     handleFetchGakutika: function(gakutikaId) {
-      return this.$store.dispatch("gakutikas/fetchGakutika", gakutikaId);
+      // return this.$store.dispatch("gakutikas/fetchGakutika", gakutikaId);
       // この後，ページ遷移
+      this.$router.replace("/gakutika/"+gakutikaId.id);
     }
   },
   computed: {
