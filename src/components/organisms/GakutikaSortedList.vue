@@ -36,7 +36,7 @@ export default {
   },
   props: {
     gakutikas: {
-      default: [],
+      type: Array,
     },
     orderFlag: {
       type: Boolean
@@ -62,7 +62,6 @@ export default {
   watch: {
     gakutikas: function (newGakutikas) {
       this.sortedGakutikas = newGakutikas;
-      this.length = Math.ceil(this.sortedGakutikas.length / this.pageSize);
     },
     orderFlag: function (flag) {
       if (!flag) {
@@ -86,6 +85,7 @@ export default {
   },
   computed: {
     displayGakutikas: function () {
+      console.log(this.sortedGakutikas);
       if (this.orderFlag) return this.sortedGakutikas;
       else
         return this.sortedGakutikas.slice(

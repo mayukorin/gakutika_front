@@ -4,7 +4,7 @@
       <span class="headline">学チカ更新</span>
     </v-card-title>
     <v-card-text>
-      <GakutikaUpdateForm :onupdate="handleUpdate" :editGakutika="gakutika" />
+      <GakutikaUpdateForm :onupdate="handleUpdate" :gakutika="gakutika" />
     </v-card-text>
   </v-card>
 </template>

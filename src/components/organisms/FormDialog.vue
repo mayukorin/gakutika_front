@@ -1,5 +1,5 @@
 <template>
-  <v-dialog max-width="600px" v-model="dialog">
+  <v-dialog max-width="600px" v-model="formShowFlag">
     <template v-slot:activator="{ on, attrs }">
       <slot name="btn" v-bind="attrs" v-on="on" ></slot>
     </template>
@@ -11,7 +11,7 @@
 export default {
   name: "FormDialog",
   props: {
-    propsDialog: {
+    propsFormShowFlag: {
         type: Boolean,
         default: false,
     },
@@ -22,13 +22,12 @@ export default {
     },
   },
   computed: {
-      dialog: {
+      formShowFlag: {
           get: function() {
-              return this.propsDialog;
+              return this.propsFormShowFlag;
           },
           set: function(newValue) {
-            console.log("更新完了");
-            this.$emit('update:propsDialog', newValue);
+            this.$emit('update:propsFormShowFlagg', newValue);
           }
       }
   }

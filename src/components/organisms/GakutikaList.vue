@@ -41,16 +41,16 @@
       :on-fetch-gakutika="handleFetchGakutika"
     />
     <form-dialog
-      :propsDialog.sync="propsDialog"
+      :propsFormShowFlag.sync="formShowFlag"
     >
       <Button
         :classString="'success ml-1 mt-2'"
         slot="btn"
-        @click="propsDialog=true"
+        @click="dformShowFlag=true"
       >
         学チカ新規作成
       </Button>
-      <GakutikaCreateCard slot="formCard" @uploaded="propsDialog=false" />
+      <GakutikaCreateCard slot="formCard" @uploaded="formShowFlag=false" />
     </form-dialog>
   </div>
 </template>
@@ -78,7 +78,7 @@ export default {
     return {
       loading: false,
       orderFlag: false,
-      propsDialog: false,
+      formShowFlag: false,
     };
   },
   created: function () {
@@ -127,6 +127,7 @@ export default {
   computed: {
     getGakutikas: {
       get() {
+        console.log("変更");
         return this.$store.getters["gakutikas/getGakutikasSorted"];
       },
     },

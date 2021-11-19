@@ -2,18 +2,19 @@
     <div>
         <ProgressCircular v-show="loading" />
         <form-dialog
-        :propsDialog.sync="propsDialog"
+        :propsFormShowFlag.sync="formShowFlag"
+        v-show="!loading"
         >
             <Button
                 :classString="'success ml-1 mt-2'"
                 slot="btn"
-                @click="propsDialog=true"
+                @click="formShowFlag=true"
             >
                 学チカ編集
             </Button>
-            <GakutikaUpdateCard slot="formCard" @uploaded="propsDialog=false" :gakutika="getGakutika" />
+            <GakutikaUpdateCard slot="formCard" @uploaded="formShowFlag=false" :gakutika="gakutika" />
         </form-dialog>
-        <GakutikaBasicShowCard :gakutika="getGakutika" v-show="!loading" />
+        <GakutikaBasicShowCard :gakutika="gakutika" v-show="!loading" />
     </div>
 </template>
 <script>
@@ -35,22 +36,19 @@ export default {
     data() {
         return {
             loading: false,
-            propsDialog: false,
+            formShowFlag: false,
         }
     },
     created: function() {
         this.loading = true;
         this.$store.dispatch("gakutikas/fetchGakutika", {id: this.$route.params.id })
         .then(() => {
-            console.log("更新完了");
             this.loading = false;
         })
     },
     computed: {
-        getGakutika:  {
+        gakutika:  {
             get() {
-                console.log(this.$store.state.gakutikas.gakutika);
-                console.log("paro");
                 return this.$store.state.gakutikas.gakutika;
             }
         }

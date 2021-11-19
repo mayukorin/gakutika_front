@@ -8,7 +8,7 @@
           rules="required|max:50"
         >
           <v-text-field
-            v-model="title"
+            v-model="editedGakutika.title"
             :counter="50"
             :error-messages="errors"
             label="タイトル"
@@ -22,7 +22,7 @@
           rules="required"
         >
           <v-textarea
-            v-model="content"
+            v-model="editedGakutika.content"
             label="詳細"
             prepend-icon="mdi-pencil"
             :error-messages="errors"
@@ -33,13 +33,13 @@
             cols="12"
             sm="6"
           >
-            <MonthPicker :propsMonth.sync="startMonth"  :labelName="'開始年月'" @input="handleMonthSet"/>
+            <MonthPicker :propsMonth.sync="editedGakutika.startMonth"  :labelName="'開始年月'" @input="handleMonthSet"/>
           </v-col>
           <v-col
             cols="12"
             sm="6"
           >
-            <MonthPicker :propsMonth.sync="endMonth"  :labelName="'終了年月'" @input="handleMonthSet"/>
+            <MonthPicker :propsMonth.sync="editedGakutika.endMonth"  :labelName="'終了年月'" @input="handleMonthSet"/>
           </v-col>
         </v-row>
         <v-row>
@@ -64,18 +64,23 @@ export default {
     onupdate: {
       type: Function,
     },
-    editGakutika: {
+    gakutika: {
         type: Object,
     },
   },
   data() {
     return {
-      title: this.editGakutika.title,
-      content: this.editGakutika.content,
+      /*
+      title: this.gakutika.title,
+      content: this.gakutika.content,
+      */
       loadFlag: false,
       menu: false,
-      startMonth: this.editGakutika.startMonth,
-      endMonth: this.editGakutika.endMonth,
+      /*
+      startMonth: this.gakutika.startMonth,
+      endMonth: this.gakutika.endMonth,
+      */
+      editedGakutika: this.gakutika,
     };
   },
   methods: {
@@ -87,10 +92,10 @@ export default {
             .then(() => {
               console.log(this.loadFlag);
               return this.onupdate({
-                title: this.title,
-                content: this.content,
-                startMonth: this.startMonth,
-                endMonth: this.endMonth,
+                title: this.editedGakutika.title,
+                content: this.editedGakutika.content,
+                startMonth: this.editedGakutika.startMonth,
+                endMonth: this.editedGakutika.endMonth,
               });
             })
             .then(() => {
@@ -101,9 +106,14 @@ export default {
     },
     handleMonthSet: function(...args) {
       let [field, value] = args;
-      this[field] = value;
-      console.log(this.startMonth);
+      this.editedGakutika[field] = value;
+      console.log(this.editedGakutika.startMonth);
     }
   },
+  watch: {
+    gakutika: function (newGakutika) {
+      this.editedGakutika = newGakutika;
+    },
+  }
 };
 </script>
