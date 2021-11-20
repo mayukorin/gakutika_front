@@ -37,7 +37,7 @@
       <Button
         :classString="'success ml-1 mt-2'"
         slot="btn"
-        @click="dformShowFlag = true"
+        @click="formShowFlag = true"
       >
         学チカ新規作成
       </Button>
