@@ -11,7 +11,7 @@
 <script>
 import GakutikaUpdateForm from "@/components/molecules/GakutikaUpdateForm";
 export default {
-  name: "GakutikaCreateCard",
+  name: "GakutikaUpdateCard",
   props: {
     gakutika: {
       type: Object,
@@ -23,6 +23,8 @@ export default {
   methods: {
     handleUpdate: function (gakutikaInfo) {
       console.log(gakutikaInfo);
+      return this.$store
+        .dispatch("gakutikas/updateGakutika", gakutikaInfo);
     },
   },
 };

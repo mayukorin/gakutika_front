@@ -103,6 +103,7 @@ export default {
           this.loading = false;
         })
         .catch((error) => {
+          this.loading = false;
           if (error.response.status === 401) {
             this.$router.replace({
               path: "/sign-in",
