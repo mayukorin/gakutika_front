@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/components/templates/HomeView";
 import SignUp from "@/components/templates/SignUpView";
 import SignIn from "@/components/templates/SignInView";
+import GakutikaShow from "@/components/templates/GakutikaShowView";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -32,6 +33,11 @@ const routes = [
     path: "/sign-in",
     name: "SignIn",
     component: SignIn,
+  },
+  {
+    path: "/gakutika/:id",
+    name: "GakutikaShow",
+    component: GakutikaShow,
   },
 ];
 

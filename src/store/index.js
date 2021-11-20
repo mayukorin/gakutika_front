@@ -123,23 +123,34 @@ const gakutikaModule = {
   state: {
     gakutikas: [],
     sortProp: "id",
+    reverseFlag: true,
+    gakutika: null,
   },
   getters: {
     getGakutikasSorted(state) {
-      return state.gakutikas
+      let sortedGakutikas = state.gakutikas
         .slice()
         .sort((a, b) => (a[state.sortProp] < b[state.sortProp] ? -1 : 1));
+      if (state.reverseFlag) return sortedGakutikas.reverse();
+      else return sortedGakutikas;
     },
   },
   mutations: {
     set(state, payload) {
       state.gakutikas = payload.gakutikas;
     },
+    setGakutika(state, payload) {
+      state.gakutika = payload.gakutika;
+    },
     clear(state) {
       state.gakutiaks = [];
     },
-    setSortProp(state, payload) {
+    setSortPropAndReverseFlag(state, payload) {
       state.sortProp = payload.sortProp;
+      state.reverseFlag = payload.reverseFlag;
+    },
+    pushNewGakutika(state, payload) {
+      state.gakutikas.push(payload.newGakutika);
     },
   },
   actions: {
@@ -152,27 +163,55 @@ const gakutikaModule = {
         return context.commit("set", { gakutikas: response.data });
       });
     },
+    fetchGakutika(context, payload) {
+      return api({
+        method: "get",
+        url: "/gakutikas/" + payload.id,
+      }).then((response) => {
+        console.log(response);
+        return context.commit("setGakutika", { gakutika: response.data });
+      });
+    },
     setGakutikaList(context, payload) {
       return context.commit("set", { gakutikas: payload.sortedGakutikas });
     },
-    setSortProp(context, payload) {
-      return context.commit("setSortProp", { sortProp: payload.sortProp });
+    setSortPropAndReverseFlag(context, payload) {
+      return context.commit("setSortPropAndReverseFlag", {
+        sortProp: payload.sortProp,
+        reverseFlag: payload.reverseFlag,
+      });
     },
     updateToughRank(context, payload) {
-      console.log("あああああああ");
-      console.log(payload);
-      console.log(payload.id_and_new_tough_rank);
-      console.log("いいい");
       return api({
         method: "post",
         url: "/update-tough-rank",
         data: {
-          id_and_new_tough_rank: payload.id_and_new_tough_rank
-        }
+          id_and_new_tough_rank: payload.id_and_new_tough_rank,
+        },
       }).then((response) => {
         return context.commit("set", { gakutikas: response.data });
-      })
-    }
+      });
+    },
+    createGakutika(context, payload) {
+      return api({
+        method: "post",
+        url: "/gakutikas",
+        data: {
+          gakutika: {
+            title: payload.title,
+            content: payload.content,
+            start_month: payload.startMonth,
+            end_month: payload.endMonth,
+            tough_rank: 0,
+          },
+        },
+      }).then((response) => {
+        console.log(response.data);
+        return context.commit("pushNewGakutika", {
+          newGakutika: response.data,
+        });
+      });
+    },
   },
 };
 

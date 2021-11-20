@@ -11,6 +11,7 @@
           v-for="gakutika in displayGakutikas"
           :key="gakutika.title"
           :gakutika="gakutika"
+          :on-fetch-gakutika="handleFetchGakutika"
         />
       </draggable>
     </v-expansion-panels>
@@ -35,13 +36,16 @@ export default {
   },
   props: {
     gakutikas: {
-      default: [],
+      type: Array,
     },
     orderFlag: {
-      type: Boolean
+      type: Boolean,
     },
     onUpdateToughRank: {
-      type: Function
+      type: Function,
+    },
+    onFetchGakutika: {
+      type: Function,
     },
   },
   data() {
@@ -58,7 +62,6 @@ export default {
   watch: {
     gakutikas: function (newGakutikas) {
       this.sortedGakutikas = newGakutikas;
-      this.length = Math.ceil(this.sortedGakutikas.length / this.pageSize);
     },
     orderFlag: function (flag) {
       if (!flag) {
@@ -67,18 +70,22 @@ export default {
           id_and_new_tough_rank[gakutika.id] = index + 1;
         });
         return this.onUpdateToughRank({
-          id_and_new_tough_rank: id_and_new_tough_rank
+          id_and_new_tough_rank: id_and_new_tough_rank,
         });
       }
-    }
+    },
   },
   methods: {
     pageChange: function (pageNumber) {
       this.page = pageNumber;
     },
+    handleFetchGakutika: function (gakutikaId) {
+      return this.onFetchGakutika(gakutikaId);
+    },
   },
   computed: {
     displayGakutikas: function () {
+      console.log(this.sortedGakutikas);
       if (this.orderFlag) return this.sortedGakutikas;
       else
         return this.sortedGakutikas.slice(

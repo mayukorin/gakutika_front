@@ -17,7 +17,14 @@ export default {
   },
   methods: {
     handleCreate: function (gakutikaInfo) {
-        console.log(gakutikaInfo);
+      return this.$store
+        .dispatch("gakutikas/createGakutika", gakutikaInfo)
+        .then(() => {
+          this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["新しい学チカを保存しました"],
+          });
+          this.$emit("uploaded");
+        });
     },
   },
 };
