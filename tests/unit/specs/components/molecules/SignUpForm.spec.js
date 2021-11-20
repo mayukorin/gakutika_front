@@ -20,7 +20,7 @@ describe("SignUpForm.vue", () => {
                 localVue,
                 vuetify,
               });
-              await wrapper.setData({name: " "});
+              await wrapper.setData({ name: " " });
               await wrapper.vm.$refs.observer.validate();
               const error = wrapper.vm.$refs.usernameProvider.errors[0];
               expect(error).toBe("ユーザ名 を入力してください");
@@ -32,7 +32,7 @@ describe("SignUpForm.vue", () => {
                 localVue,
                 vuetify,
               });
-              await wrapper.setData({name: "aaaaaa"});
+              await wrapper.setData({ name: "aaaaaa" });
               await wrapper.vm.$refs.observer.validate();
               const errorCnt = wrapper.vm.$refs.usernameProvider.errors.length;
               expect(errorCnt).toBe(0);
@@ -48,7 +48,7 @@ describe("SignUpForm.vue", () => {
               });
               let longName = "";
               for (let i = 0; i < 51; i++) longName += "a";
-              await wrapper.setData({name: longName });
+              await wrapper.setData({ name: longName });
               await wrapper.vm.$refs.observer.validate();
               const error = wrapper.vm.$refs.usernameProvider.errors[0];
               expect(error).toBe("ユーザ名 は 50 文字以下で入力してください");
@@ -62,7 +62,7 @@ describe("SignUpForm.vue", () => {
               });
               let safeName = "";
               for (let i = 0; i < 50; i++) safeName += "a";
-              await wrapper.setData({name: safeName });
+              await wrapper.setData({ name: safeName });
               await wrapper.vm.$refs.observer.validate();
               const errorCnt = wrapper.vm.$refs.usernameProvider.errors.length;
               expect(errorCnt).toBe(0);
@@ -107,7 +107,9 @@ describe("SignUpForm.vue", () => {
               await wrapper.setData({ email: "aaaaaaa" });
               await wrapper.vm.$refs.observer.validate();
               const error = wrapper.vm.$refs.emailProvider.errors[0];
-              expect(error).toBe("メールアドレスを正しい形式で入力してください");
+              expect(error).toBe(
+                "メールアドレスを正しい形式で入力してください"
+              );
             });
           });
           describe("emailの形式が正しい", () => {
@@ -136,7 +138,9 @@ describe("SignUpForm.vue", () => {
               await wrapper.setData({ email: longEmail });
               await wrapper.vm.$refs.observer.validate();
               const error = wrapper.vm.$refs.emailProvider.errors[0];
-              expect(error).toBe("メールアドレス は 255 文字以下で入力してください");
+              expect(error).toBe(
+                "メールアドレス は 255 文字以下で入力してください"
+              );
             });
           });
           describe("emailの形式が正しい", () => {
@@ -210,7 +214,8 @@ describe("SignUpForm.vue", () => {
             });
             await wrapper.setData({ password_confirmation: " " });
             await wrapper.vm.$refs.observer.validate();
-            const error = wrapper.vm.$refs.passwordConfirmationProvider.errors[0];
+            const error =
+              wrapper.vm.$refs.passwordConfirmationProvider.errors[0];
             expect(error).toBe("パスワード（再入力） を入力してください");
           });
           it("入力されている", async () => {
@@ -218,9 +223,13 @@ describe("SignUpForm.vue", () => {
               localVue,
               vuetify,
             });
-            await wrapper.setData({ password: "abcabcabc",  password_confirmation: "abcabcabc" });
+            await wrapper.setData({
+              password: "abcabcabc",
+              password_confirmation: "abcabcabc",
+            });
             await wrapper.vm.$refs.observer.validate();
-            const errorCnt = wrapper.vm.$refs.passwordConfirmationProvider.errors.length;
+            const errorCnt =
+              wrapper.vm.$refs.passwordConfirmationProvider.errors.length;
             expect(errorCnt).toBe(0);
           });
         });

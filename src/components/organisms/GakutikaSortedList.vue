@@ -39,10 +39,10 @@ export default {
       type: Array,
     },
     orderFlag: {
-      type: Boolean
+      type: Boolean,
     },
     onUpdateToughRank: {
-      type: Function
+      type: Function,
     },
     onFetchGakutika: {
       type: Function,
@@ -70,16 +70,16 @@ export default {
           id_and_new_tough_rank[gakutika.id] = index + 1;
         });
         return this.onUpdateToughRank({
-          id_and_new_tough_rank: id_and_new_tough_rank
+          id_and_new_tough_rank: id_and_new_tough_rank,
         });
       }
-    }
+    },
   },
   methods: {
     pageChange: function (pageNumber) {
       this.page = pageNumber;
     },
-    handleFetchGakutika: function(gakutikaId) {
+    handleFetchGakutika: function (gakutikaId) {
       return this.onFetchGakutika(gakutikaId);
     },
   },

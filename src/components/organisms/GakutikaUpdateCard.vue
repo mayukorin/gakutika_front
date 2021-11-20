@@ -14,8 +14,8 @@ export default {
   name: "GakutikaCreateCard",
   props: {
     gakutika: {
-        type: Object
-    }
+      type: Object,
+    },
   },
   components: {
     GakutikaUpdateForm,

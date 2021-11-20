@@ -170,14 +170,16 @@ const gakutikaModule = {
       }).then((response) => {
         console.log(response);
         return context.commit("setGakutika", { gakutika: response.data });
-
-      })
+      });
     },
     setGakutikaList(context, payload) {
       return context.commit("set", { gakutikas: payload.sortedGakutikas });
     },
     setSortPropAndReverseFlag(context, payload) {
-      return context.commit("setSortPropAndReverseFlag", { sortProp: payload.sortProp, reverseFlag: payload.reverseFlag });
+      return context.commit("setSortPropAndReverseFlag", {
+        sortProp: payload.sortProp,
+        reverseFlag: payload.reverseFlag,
+      });
     },
     updateToughRank(context, payload) {
       return api({
@@ -188,7 +190,7 @@ const gakutikaModule = {
         },
       }).then((response) => {
         return context.commit("set", { gakutikas: response.data });
-      })
+      });
     },
     createGakutika(context, payload) {
       return api({
@@ -205,9 +207,11 @@ const gakutikaModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        return context.commit("pushNewGakutika", { newGakutika: response.data });
+        return context.commit("pushNewGakutika", {
+          newGakutika: response.data,
+        });
       });
-    }
+    },
   },
 };
 

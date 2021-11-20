@@ -1,19 +1,18 @@
 <template>
   <v-dialog max-width="600px" v-model="formShowFlag">
     <template v-slot:activator="{ on, attrs }">
-      <slot name="btn" v-bind="attrs" v-on="on" ></slot>
+      <slot name="btn" v-bind="attrs" v-on="on"></slot>
     </template>
-    <slot name="formCard" ></slot>
+    <slot name="formCard"></slot>
   </v-dialog>
 </template>
 <script>
-
 export default {
   name: "FormDialog",
   props: {
     propsFormShowFlag: {
-        type: Boolean,
-        default: false,
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
@@ -22,14 +21,14 @@ export default {
     },
   },
   computed: {
-      formShowFlag: {
-          get: function() {
-              return this.propsFormShowFlag;
-          },
-          set: function(newValue) {
-            this.$emit('update:propsFormShowFlagg', newValue);
-          }
-      }
-  }
+    formShowFlag: {
+      get: function () {
+        return this.propsFormShowFlag;
+      },
+      set: function (newValue) {
+        this.$emit("update:propsFormShowFlagg", newValue);
+      },
+    },
+  },
 };
 </script>

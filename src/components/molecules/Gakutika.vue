@@ -7,8 +7,8 @@
           <div>{{ gakutika.title }}</div>
         </v-col>
         <v-col cols="6" md="2" @click.stop="handleClick">
-            <div class="caption grey--text">詳細</div>
-            <v-icon>mdi-magnify-plus</v-icon>
+          <div class="caption grey--text">詳細</div>
+          <v-icon>mdi-magnify-plus</v-icon>
         </v-col>
         <v-col cols="6" md="2">
           <div class="caption grey--text">削除</div>
@@ -34,8 +34,8 @@ export default {
   },
   methods: {
     handleClick: function () {
-      this.onFetchGakutika({id: this.gakutika.id } );
-    }
-  }
+      this.onFetchGakutika({ id: this.gakutika.id });
+    },
+  },
 };
 </script>

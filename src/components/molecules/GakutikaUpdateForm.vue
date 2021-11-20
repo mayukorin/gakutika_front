@@ -16,30 +16,28 @@
             prepend-icon="mdi-folder"
           ></v-text-field>
         </validation-provider>
-        <validation-provider
-          v-slot="{ errors }"
-          name="詳細"
-          rules="required"
-        >
+        <validation-provider v-slot="{ errors }" name="詳細" rules="required">
           <v-textarea
             v-model="editedGakutika.content"
             label="詳細"
             prepend-icon="mdi-pencil"
             :error-messages="errors"
-            ></v-textarea>
+          ></v-textarea>
         </validation-provider>
         <v-row>
-          <v-col
-            cols="12"
-            sm="6"
-          >
-            <MonthPicker :propsMonth.sync="editedGakutika.startMonth"  :labelName="'開始年月'" @input="handleMonthSet"/>
+          <v-col cols="12" sm="6">
+            <MonthPicker
+              :propsMonth.sync="editedGakutika.startMonth"
+              :labelName="'開始年月'"
+              @input="handleMonthSet"
+            />
           </v-col>
-          <v-col
-            cols="12"
-            sm="6"
-          >
-            <MonthPicker :propsMonth.sync="editedGakutika.endMonth"  :labelName="'終了年月'" @input="handleMonthSet"/>
+          <v-col cols="12" sm="6">
+            <MonthPicker
+              :propsMonth.sync="editedGakutika.endMonth"
+              :labelName="'終了年月'"
+              @input="handleMonthSet"
+            />
           </v-col>
         </v-row>
         <v-row>
@@ -53,19 +51,18 @@
 import Button from "@/components/atoms/Button.vue";
 import MonthPicker from "@/components/atoms/MonthPicker.vue";
 
-
 export default {
   name: "GakutikaUpdateForm",
   components: {
     Button,
-    MonthPicker
+    MonthPicker,
   },
   props: {
     onupdate: {
       type: Function,
     },
     gakutika: {
-        type: Object,
+      type: Object,
     },
   },
   data() {
@@ -104,16 +101,16 @@ export default {
         }
       });
     },
-    handleMonthSet: function(...args) {
+    handleMonthSet: function (...args) {
       let [field, value] = args;
       this.editedGakutika[field] = value;
       console.log(this.editedGakutika.startMonth);
-    }
+    },
   },
   watch: {
     gakutika: function (newGakutika) {
       this.editedGakutika = newGakutika;
     },
-  }
+  },
 };
 </script>

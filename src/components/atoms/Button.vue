@@ -25,7 +25,7 @@ export default {
     },
     classString: {
       type: String,
-      default: "success mt-3 mx-auto mb-3"
+      default: "success mt-3 mx-auto mb-3",
     },
     colorString: {
       type: String,
