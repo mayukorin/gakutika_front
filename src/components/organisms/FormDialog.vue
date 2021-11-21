@@ -26,7 +26,7 @@ export default {
         return this.propsFormShowFlag;
       },
       set: function (newValue) {
-        this.$emit("update:propsFormShowFlagg", newValue);
+        this.$emit("update:propsFormShowFlag", newValue);
       },
     },
   },
