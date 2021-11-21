@@ -62,6 +62,7 @@ export default {
   watch: {
     gakutikas: function (newGakutikas) {
       this.sortedGakutikas = newGakutikas;
+      this.length = Math.ceil(this.sortedGakutikas.length / this.pageSize);
     },
     orderFlag: function (flag) {
       if (!flag) {

@@ -24,7 +24,13 @@ export default {
     handleUpdate: function (gakutikaInfo) {
       console.log(gakutikaInfo);
       return this.$store
-        .dispatch("gakutikas/updateGakutika", gakutikaInfo);
+        .dispatch("gakutikas/updateGakutika", gakutikaInfo)
+        .then(() => {
+          this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["学チカを更新しました"],
+          });
+          this.$emit("uploaded");
+        })
     },
   },
 };

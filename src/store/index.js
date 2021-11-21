@@ -226,8 +226,7 @@ const gakutikaModule = {
           },
         },
       }).then((response) => {
-        console.log(response.data);
-        console.log(context);
+        return context.commit("setGakutika", { gakutika: response.data });
       });
     },
   },

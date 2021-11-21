@@ -99,9 +99,6 @@ export default {
       this.loading = true;
       return this.$store
         .dispatch("gakutikas/updateToughRank", id_and_new_tough_rank_info)
-        .then(() => {
-          this.loading = false;
-        })
         .catch((error) => {
           this.loading = false;
           if (error.response.status === 401) {
@@ -110,6 +107,9 @@ export default {
               query: { next: "/" },
             });
           }
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     changeOrderFlag: function () {

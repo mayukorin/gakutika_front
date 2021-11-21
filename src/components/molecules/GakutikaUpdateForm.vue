@@ -97,7 +97,7 @@ export default {
                 toughRank: this.editedGakutika.tough_rank,
               });
             })
-            .then(() => {
+            .finally(() => {
               this.loadFlag = false;
             });
         }
