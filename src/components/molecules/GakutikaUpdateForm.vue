@@ -89,13 +89,15 @@ export default {
             .then(() => {
               console.log(this.loadFlag);
               return this.onupdate({
+                id: this.editedGakutika.id,
                 title: this.editedGakutika.title,
                 content: this.editedGakutika.content,
                 startMonth: this.editedGakutika.startMonth,
                 endMonth: this.editedGakutika.endMonth,
+                toughRank: this.editedGakutika.tough_rank,
               });
             })
-            .then(() => {
+            .finally(() => {
               this.loadFlag = false;
             });
         }

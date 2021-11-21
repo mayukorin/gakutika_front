@@ -87,7 +87,7 @@ export default {
                 endMonth: this.endMonth,
               });
             })
-            .then(() => {
+            .finally(() => {
               this.loadFlag = false;
             });
         }

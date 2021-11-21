@@ -44,7 +44,7 @@ export default {
     this.loading = true;
     this.$store
       .dispatch("gakutikas/fetchGakutika", { id: this.$route.params.id })
-      .then(() => {
+      .finally(() => {
         this.loading = false;
       });
   },

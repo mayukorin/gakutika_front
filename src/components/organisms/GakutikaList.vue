@@ -37,7 +37,7 @@
       <Button
         :classString="'success ml-1 mt-2'"
         slot="btn"
-        @click="dformShowFlag = true"
+        @click="formShowFlag = true"
       >
         学チカ新規作成
       </Button>
@@ -99,16 +99,17 @@ export default {
       this.loading = true;
       return this.$store
         .dispatch("gakutikas/updateToughRank", id_and_new_tough_rank_info)
-        .then(() => {
-          this.loading = false;
-        })
         .catch((error) => {
+          this.loading = false;
           if (error.response.status === 401) {
             this.$router.replace({
               path: "/sign-in",
               query: { next: "/" },
             });
           }
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     changeOrderFlag: function () {

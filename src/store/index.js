@@ -143,7 +143,7 @@ const gakutikaModule = {
       state.gakutika = payload.gakutika;
     },
     clear(state) {
-      state.gakutiaks = [];
+      state.gakutikas = [];
     },
     setSortPropAndReverseFlag(state, payload) {
       state.sortProp = payload.sortProp;
@@ -210,6 +210,23 @@ const gakutikaModule = {
         return context.commit("pushNewGakutika", {
           newGakutika: response.data,
         });
+      });
+    },
+    updateGakutika(context, payload) {
+      return api({
+        method: "patch",
+        url: "/gakutikas/" + payload.id,
+        data: {
+          gakutika: {
+            title: payload.title,
+            content: payload.content,
+            start_month: payload.startMonth,
+            end_month: payload.endMonth,
+            tough_rank: payload.toughRank,
+          },
+        },
+      }).then((response) => {
+        return context.commit("setGakutika", { gakutika: response.data });
       });
     },
   },
