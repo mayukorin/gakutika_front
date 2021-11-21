@@ -202,7 +202,7 @@ const gakutikaModule = {
             content: payload.content,
             start_month: payload.startMonth,
             end_month: payload.endMonth,
-            tough_rank: 0,
+            tough_rank: "0",
           },
         },
       }).then((response) => {
