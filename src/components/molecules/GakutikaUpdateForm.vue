@@ -94,7 +94,7 @@ export default {
                 content: this.editedGakutika.content,
                 startMonth: this.editedGakutika.startMonth,
                 endMonth: this.editedGakutika.endMonth,
-                toughRank: this.editedGakutika.tough_rank,
+                toughRank: this.editedGakutika.toughRank,
               });
             })
             .finally(() => {
