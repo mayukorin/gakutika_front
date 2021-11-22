@@ -22,8 +22,6 @@ export default {
   computed: {
     contentDividedByNewLine: {
       get() {
-        console.log(this.gakutika.content.split("\n"));
-        console.log("okk");
         return this.gakutika.content.split("\n");
       },
     },

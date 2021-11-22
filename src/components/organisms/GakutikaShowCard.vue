@@ -16,6 +16,8 @@
       />
     </form-dialog>
     <GakutikaBasicShowCard :gakutika="gakutika" v-show="!loading" />
+    <br />
+    <QuestionList />
   </div>
 </template>
 <script>
@@ -24,6 +26,7 @@ import GakutikaBasicShowCard from "@/components/organisms/GakutikaBasicShowCard"
 import ProgressCircular from "@/components/atoms/ProgressCircular.vue";
 import FormDialog from "@/components/organisms/FormDialog";
 import GakutikaUpdateCard from "@/components/organisms/GakutikaUpdateCard";
+import QuestionList from "@/components/organisms/QuestionList";
 
 export default {
   name: "GakutikaShowCard",
@@ -33,6 +36,7 @@ export default {
     ProgressCircular,
     FormDialog,
     GakutikaUpdateCard,
+    QuestionList,
   },
   data() {
     return {
