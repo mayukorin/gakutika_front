@@ -17,6 +17,16 @@
     </form-dialog>
     <GakutikaBasicShowCard :gakutika="gakutika" v-show="!loading" />
     <br />
+    <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
+      <Button
+        :classString="'success ml-1 mt-2'"
+        slot="btn"
+        @click="questionFormShowFlag = true"
+      >
+        質問新規作成
+      </Button>
+      <QuestionCreateCard slot="formCard" @uploaded="questionFormShowFlag = false" />
+    </form-dialog>
     <QuestionList />
   </div>
 </template>
@@ -27,6 +37,7 @@ import ProgressCircular from "@/components/atoms/ProgressCircular.vue";
 import FormDialog from "@/components/organisms/FormDialog";
 import GakutikaUpdateCard from "@/components/organisms/GakutikaUpdateCard";
 import QuestionList from "@/components/organisms/QuestionList";
+import QuestionCreateCard from "@/components/organisms/QuestionCreateCard";
 
 export default {
   name: "GakutikaShowCard",
@@ -37,11 +48,13 @@ export default {
     FormDialog,
     GakutikaUpdateCard,
     QuestionList,
+    QuestionCreateCard,
   },
   data() {
     return {
       loading: false,
       formShowFlag: false,
+      questionFormShowFlag: false,
     };
   },
   created: function () {
