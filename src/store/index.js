@@ -232,11 +232,48 @@ const gakutikaModule = {
   },
 };
 
+const questionModule = {
+  namespaced: true,
+  state: {
+    questions: [],
+  },
+  mutations: {
+    setQuestions(state, payload) {
+      state.questions = payload.questions;
+    },
+    pushQuestions(state, payload) {
+      state.questions.push(payload.newQuestion);
+    },
+  },
+  actions: {
+    createQuestion(context, payload) {
+      console.log(payload);
+      return api({
+        method: "post",
+        url: "/questions",
+        data: {
+          question: {
+            query: payload.query,
+            answer: payload.answer,
+            company_name: payload.companyName,
+            day: payload.day,
+            gakutika_id: payload.gakutikaId,
+          },
+        },
+      }).then((response) => {
+        console.log(response.data);
+        return context.commit("pushQuestions", {newQuestion : response.data});
+      });
+    }
+  }
+}
+
 const store = new Vuex.Store({
   modules: {
     auth: authModule,
     flashMessage: flashMessageModule,
     gakutikas: gakutikaModule,
+    questions: questionModule,
   },
 });
 

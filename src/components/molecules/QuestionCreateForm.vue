@@ -11,16 +11,16 @@
             v-model="query"
             :counter="50"
             :error-messages="errors"
-            label="タイトル"
+            label="質問内容"
             required
-            prepend-icon="mdi-folder"
+            prepend-icon="mdi-help"
           ></v-text-field>
         </validation-provider>
         <validation-provider v-slot="{ errors }" name="解答" rules="required">
           <v-textarea
             v-model="answer"
             label="解答"
-            prepend-icon="mdi-pencil"
+            prepend-icon="mdi-forum"
             :error-messages="errors"
           ></v-textarea>
         </validation-provider>
@@ -28,7 +28,7 @@
           <v-text-field
             v-model="companyName"
             label="質問された企業"
-            prepend-icon="mdi-pencil"
+            prepend-icon="mdi-domain"
             :error-messages="errors"
           ></v-text-field>
         </validation-provider>
@@ -38,6 +38,13 @@
               :propsDay.sync="day"
               :labelName="'質問された日'"
               @input="handleDaySet"
+            />
+          </v-col>
+          <v-col cols="12" sm="6">
+            <MonthPicker
+              :propsMonth.sync="startMonth"
+              :labelName="'開始年月'"
+              @input="handleMonthSet"
             />
           </v-col>
         </v-row>
@@ -51,12 +58,14 @@
 <script>
 import Button from "@/components/atoms/Button.vue";
 import DayPicker from "@/components/atoms/DayPicker.vue";
+import MonthPicker from "@/components/atoms/MonthPicker.vue";
 
 export default {
   name: "QuestionCreateForm",
   components: {
     Button,
     DayPicker,
+    MonthPicker,
   },
   props: {
     oncreate: {
@@ -71,6 +80,7 @@ export default {
       menu: false,
       companyName: "",
       day: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      startMonth: new Date().toISOString().substr(0, 7),
     };
   },
   methods: {
@@ -86,6 +96,7 @@ export default {
                 answer: this.answer,
                 companyName: this.companyName,
                 day: this.day,
+                gakutikaId: this.$route.params.id,
               });
             })
             .finally(() => {
@@ -97,6 +108,11 @@ export default {
     handleDaySet: function (...args) {
       let [field, value] = args;
       this[field] = value;
+    },
+    handleMonthSet: function (...args) {
+      let [field, value] = args;
+      this[field] = value;
+      console.log(this.startMonth);
     },
   },
 };
