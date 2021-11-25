@@ -18,12 +18,10 @@ export default {
   components: {
     Question,
   },
-  data() {
-    return {
-      questions: [
-          {id: 1, query: 'なんでですか？', answer: 'だからですすす', day: '2021 12-24', company: { name: 'リクルート' } }
-      ]
-    };
+  props: {
+    questions: {
+      type: Array,
+    },
   },
 };
 </script>

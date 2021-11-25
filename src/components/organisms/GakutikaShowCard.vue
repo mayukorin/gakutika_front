@@ -27,7 +27,7 @@
       </Button>
       <QuestionCreateCard slot="formCard" @uploaded="questionFormShowFlag = false" />
     </form-dialog>
-    <QuestionList />
+    <QuestionList :questions="questions" />
   </div>
 </template>
 <script>
@@ -71,6 +71,11 @@ export default {
         return this.$store.state.gakutikas.gakutika;
       },
     },
+    questions: {
+      get() {
+        return this.$store.getters["questions/getQuestionsSortedByDay"];
+      }
+    }
   },
 };
 </script>

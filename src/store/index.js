@@ -140,7 +140,13 @@ const gakutikaModule = {
       state.gakutikas = payload.gakutikas;
     },
     setGakutika(state, payload) {
-      state.gakutika = payload.gakutika;
+      state.gakutika = {};
+      state.gakutika.content = payload.gakutika.content;
+      state.gakutika.endMonth = payload.gakutika.endMonth;
+      state.gakutika.id = payload.gakutika.id;
+      state.gakutika.startMonth = payload.gakutika.startMonth;
+      state.gakutika.title = payload.gakutika.title;
+      state.gakutika.toughRank = payload.gakutika.toughRank;
     },
     clear(state) {
       state.gakutikas = [];
@@ -169,7 +175,8 @@ const gakutikaModule = {
         url: "/gakutikas/" + payload.id,
       }).then((response) => {
         console.log(response);
-        return context.commit("setGakutika", { gakutika: response.data });
+        context.commit("setGakutika", { gakutika: response.data });
+        return context.dispatch("questions/fetchQuestions", { questions: response.data.questions }, { root: true });
       });
     },
     setGakutikaList(context, payload) {
@@ -226,7 +233,7 @@ const gakutikaModule = {
           },
         },
       }).then((response) => {
-        return context.commit("setGakutika", { gakutika: response.data });
+        context.commit("setGakutika", { gakutika: response.data });
       });
     },
   },
@@ -240,10 +247,20 @@ const questionModule = {
   mutations: {
     setQuestions(state, payload) {
       state.questions = payload.questions;
+      console.log("ここまでは？");
+      console.log(state.questions);
     },
     pushQuestions(state, payload) {
       state.questions.push(payload.newQuestion);
     },
+  },
+  getters: {
+    getQuestionsSortedByDay(state) {
+      console.log("question getters");
+      return state.questions
+        .slice()
+        .sort((a, b) => (a["day"] < b["day"] ? -1 : 1));
+    }
   },
   actions: {
     createQuestion(context, payload) {
@@ -264,6 +281,9 @@ const questionModule = {
         console.log(response.data);
         return context.commit("pushQuestions", {newQuestion : response.data});
       });
+    },
+    fetchQuestions(context, payload) {
+      return context.commit("setQuestions", { questions: payload.questions });
     }
   }
 }

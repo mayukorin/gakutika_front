@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="12" md="7">
             <div class="font-weight-bold"> {{ question.day }}</div>
-            <div class="font-weight-bold"> {{ question.company.name }}</div>
+            <div class="font-weight-bold"> {{ question.companyName }}</div>
             <div>{{ question.query }}</div>
         </v-col>
         <v-col cols="6" md="2">
