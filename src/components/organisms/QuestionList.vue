@@ -4,7 +4,7 @@
         <Question
           v-for="question in questions"
           :key="question.id"
-          :question="question"
+          :question="question"      
         />
     </v-expansion-panels>
   </div>

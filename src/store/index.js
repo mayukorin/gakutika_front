@@ -247,12 +247,17 @@ const questionModule = {
   mutations: {
     setQuestions(state, payload) {
       state.questions = payload.questions;
-      console.log("ここまでは？");
-      console.log(state.questions);
     },
     pushQuestions(state, payload) {
       state.questions.push(payload.newQuestion);
     },
+    setUpdatedQuestion(state, payload) {
+      const question = state.questions.find(question => question.id == payload.updatedQuestion.id);
+      question.query = payload.updatedQuestion.query;
+      question.answer = payload.updatedQuestion.answer;
+      question.day = payload.updatedQuestion.day;
+      question.companyName = payload.updatedQuestion.companyName;
+    }
   },
   getters: {
     getQuestionsSortedByDay(state) {
@@ -284,6 +289,24 @@ const questionModule = {
     },
     fetchQuestions(context, payload) {
       return context.commit("setQuestions", { questions: payload.questions });
+    },
+    updateQuestion(context, payload) {
+      console.log(payload);
+      return api({
+        method: "patch",
+        url: "/questions/" + payload.id,
+        data: {
+          question: {
+            query: payload.query,
+            answer: payload.answer,
+            company_name: payload.companyName,
+            day: payload.day,
+            gakutika_id: payload.gakutikaId,
+          }
+        }
+      }).then((response) => {
+        return context.commit("setUpdatedQuestion", { updatedQuestion: response.data });
+      })
     }
   }
 }
