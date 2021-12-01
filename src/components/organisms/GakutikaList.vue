@@ -12,10 +12,10 @@
         :iconExplain="'作成順で並び替え'"
       />
       <Tooltip2
-        :textFlag="!isSortProp('tough_rank')"
+        :textFlag="!isSortProp('toughRank')"
         :colorString="'grey'"
         :classString="'mt-2 ml-1'"
-        @click="setSortPropAndReverseFlag('tough_rank', false)"
+        @click="setSortPropAndReverseFlag('toughRank', false)"
         :iconName="'mdi-folder'"
         :iconCaption="'頑張り順'"
         :iconExplain="'頑張り順で並び替え'"
@@ -114,7 +114,7 @@ export default {
     },
     changeOrderFlag: function () {
       this.orderFlag = !this.orderFlag;
-      if (this.orderFlag) this.setSortPropAndReverseFlag("tough_rank", false);
+      if (this.orderFlag) this.setSortPropAndReverseFlag("toughRank", false);
     },
     handleFetchGakutika: function (gakutikaId) {
       // return this.$store.dispatch("gakutikas/fetchGakutika", gakutikaId);

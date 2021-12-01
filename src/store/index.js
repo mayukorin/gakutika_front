@@ -140,7 +140,13 @@ const gakutikaModule = {
       state.gakutikas = payload.gakutikas;
     },
     setGakutika(state, payload) {
-      state.gakutika = payload.gakutika;
+      state.gakutika = {};
+      state.gakutika.content = payload.gakutika.content;
+      state.gakutika.endMonth = payload.gakutika.endMonth;
+      state.gakutika.id = payload.gakutika.id;
+      state.gakutika.startMonth = payload.gakutika.startMonth;
+      state.gakutika.title = payload.gakutika.title;
+      state.gakutika.toughRank = payload.gakutika.toughRank;
     },
     clear(state) {
       state.gakutikas = [];
@@ -169,7 +175,12 @@ const gakutikaModule = {
         url: "/gakutikas/" + payload.id,
       }).then((response) => {
         console.log(response);
-        return context.commit("setGakutika", { gakutika: response.data });
+        context.commit("setGakutika", { gakutika: response.data });
+        return context.dispatch(
+          "questions/fetchQuestions",
+          { questions: response.data.questions },
+          { root: true }
+        );
       });
     },
     setGakutikaList(context, payload) {
@@ -226,7 +237,83 @@ const gakutikaModule = {
           },
         },
       }).then((response) => {
-        return context.commit("setGakutika", { gakutika: response.data });
+        context.commit("setGakutika", { gakutika: response.data });
+      });
+    },
+  },
+};
+
+const questionModule = {
+  namespaced: true,
+  state: {
+    questions: [],
+  },
+  mutations: {
+    setQuestions(state, payload) {
+      state.questions = payload.questions;
+    },
+    pushQuestions(state, payload) {
+      state.questions.push(payload.newQuestion);
+    },
+    setUpdatedQuestion(state, payload) {
+      const question = state.questions.find(
+        (question) => question.id == payload.updatedQuestion.id
+      );
+      question.query = payload.updatedQuestion.query;
+      question.answer = payload.updatedQuestion.answer;
+      question.day = payload.updatedQuestion.day;
+      question.companyName = payload.updatedQuestion.companyName;
+    },
+  },
+  getters: {
+    getQuestionsSortedByDay(state) {
+      console.log("question getters");
+      return state.questions
+        .slice()
+        .sort((a, b) => (a["day"] < b["day"] ? -1 : 1));
+    },
+  },
+  actions: {
+    createQuestion(context, payload) {
+      console.log(payload);
+      return api({
+        method: "post",
+        url: "/questions",
+        data: {
+          question: {
+            query: payload.query,
+            answer: payload.answer,
+            company_name: payload.companyName,
+            day: payload.day,
+            gakutika_id: payload.gakutikaId,
+          },
+        },
+      }).then((response) => {
+        console.log(response.data);
+        return context.commit("pushQuestions", { newQuestion: response.data });
+      });
+    },
+    fetchQuestions(context, payload) {
+      return context.commit("setQuestions", { questions: payload.questions });
+    },
+    updateQuestion(context, payload) {
+      console.log(payload);
+      return api({
+        method: "patch",
+        url: "/questions/" + payload.id,
+        data: {
+          question: {
+            query: payload.query,
+            answer: payload.answer,
+            company_name: payload.companyName,
+            day: payload.day,
+            gakutika_id: payload.gakutikaId,
+          },
+        },
+      }).then((response) => {
+        return context.commit("setUpdatedQuestion", {
+          updatedQuestion: response.data,
+        });
       });
     },
   },
@@ -237,6 +324,7 @@ const store = new Vuex.Store({
     auth: authModule,
     flashMessage: flashMessageModule,
     gakutikas: gakutikaModule,
+    questions: questionModule,
   },
 });
 

@@ -30,7 +30,7 @@ export default {
             messages: ["学チカを更新しました"],
           });
           this.$emit("uploaded");
-        })
+        });
     },
   },
 };
