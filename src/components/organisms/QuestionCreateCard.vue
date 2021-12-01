@@ -17,13 +17,14 @@ export default {
   },
   methods: {
     handleCreate: function (questionInfo) {
-      return this.$store.dispatch("questions/createQuestion", questionInfo)
-      .then(() => {
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
+      return this.$store
+        .dispatch("questions/createQuestion", questionInfo)
+        .then(() => {
+          this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["新しい質問を保存しました"],
           });
           this.$emit("uploaded");
-      });
+        });
     },
   },
 };

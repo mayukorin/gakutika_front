@@ -18,12 +18,7 @@
         v-on="on"
       ></v-text-field>
     </template>
-    <v-date-picker
-      v-model="day"
-      no-title
-      scrollable
-      color="green lighten-1"
-    >
+    <v-date-picker v-model="day" no-title scrollable color="green lighten-1">
       <v-spacer></v-spacer>
       <v-btn text class="success" @click="menu = false"> Cancel </v-btn>
       <v-btn text class="success" @click="handleDaySet()"> OK </v-btn>
@@ -36,7 +31,9 @@ export default {
   data() {
     return {
       menu: false,
-      changeDay: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      changeDay: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
     };
   },
   props: {

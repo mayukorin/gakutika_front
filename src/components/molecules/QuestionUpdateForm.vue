@@ -24,7 +24,11 @@
             :error-messages="errors"
           ></v-textarea>
         </validation-provider>
-        <validation-provider v-slot="{ errors }" name="質問された企業" rules="required">
+        <validation-provider
+          v-slot="{ errors }"
+          name="質問された企業"
+          rules="required"
+        >
           <v-text-field
             v-model="editedQuestion.companyName"
             label="質問された企業"

@@ -31,7 +31,7 @@ export default {
             messages: ["質問を更新しました"],
           });
           this.$emit("uploaded");
-        })
+        });
     },
   },
 };

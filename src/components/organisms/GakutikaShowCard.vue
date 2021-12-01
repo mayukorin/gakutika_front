@@ -25,7 +25,10 @@
       >
         質問新規作成
       </Button>
-      <QuestionCreateCard slot="formCard" @uploaded="questionFormShowFlag = false" />
+      <QuestionCreateCard
+        slot="formCard"
+        @uploaded="questionFormShowFlag = false"
+      />
     </form-dialog>
     <QuestionList :questions="questions" />
   </div>
@@ -74,8 +77,8 @@ export default {
     questions: {
       get() {
         return this.$store.getters["questions/getQuestionsSortedByDay"];
-      }
-    }
+      },
+    },
   },
 };
 </script>

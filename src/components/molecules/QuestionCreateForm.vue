@@ -24,7 +24,11 @@
             :error-messages="errors"
           ></v-textarea>
         </validation-provider>
-        <validation-provider v-slot="{ errors }" name="質問された企業" rules="required">
+        <validation-provider
+          v-slot="{ errors }"
+          name="質問された企業"
+          rules="required"
+        >
           <v-text-field
             v-model="companyName"
             label="質問された企業"
@@ -79,7 +83,9 @@ export default {
       loadFlag: false,
       menu: false,
       companyName: "",
-      day: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      day: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
       startMonth: new Date().toISOString().substr(0, 7),
     };
   },

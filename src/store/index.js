@@ -176,7 +176,11 @@ const gakutikaModule = {
       }).then((response) => {
         console.log(response);
         context.commit("setGakutika", { gakutika: response.data });
-        return context.dispatch("questions/fetchQuestions", { questions: response.data.questions }, { root: true });
+        return context.dispatch(
+          "questions/fetchQuestions",
+          { questions: response.data.questions },
+          { root: true }
+        );
       });
     },
     setGakutikaList(context, payload) {
@@ -252,12 +256,14 @@ const questionModule = {
       state.questions.push(payload.newQuestion);
     },
     setUpdatedQuestion(state, payload) {
-      const question = state.questions.find(question => question.id == payload.updatedQuestion.id);
+      const question = state.questions.find(
+        (question) => question.id == payload.updatedQuestion.id
+      );
       question.query = payload.updatedQuestion.query;
       question.answer = payload.updatedQuestion.answer;
       question.day = payload.updatedQuestion.day;
       question.companyName = payload.updatedQuestion.companyName;
-    }
+    },
   },
   getters: {
     getQuestionsSortedByDay(state) {
@@ -265,7 +271,7 @@ const questionModule = {
       return state.questions
         .slice()
         .sort((a, b) => (a["day"] < b["day"] ? -1 : 1));
-    }
+    },
   },
   actions: {
     createQuestion(context, payload) {
@@ -284,7 +290,7 @@ const questionModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        return context.commit("pushQuestions", {newQuestion : response.data});
+        return context.commit("pushQuestions", { newQuestion: response.data });
       });
     },
     fetchQuestions(context, payload) {
@@ -302,14 +308,16 @@ const questionModule = {
             company_name: payload.companyName,
             day: payload.day,
             gakutika_id: payload.gakutikaId,
-          }
-        }
+          },
+        },
       }).then((response) => {
-        return context.commit("setUpdatedQuestion", { updatedQuestion: response.data });
-      })
-    }
-  }
-}
+        return context.commit("setUpdatedQuestion", {
+          updatedQuestion: response.data,
+        });
+      });
+    },
+  },
+};
 
 const store = new Vuex.Store({
   modules: {
