@@ -264,6 +264,12 @@ const questionModule = {
       question.day = payload.updatedQuestion.day;
       question.companyName = payload.updatedQuestion.companyName;
     },
+    deleteQuestion(state, payload) {
+      const question = state.questions.find(
+        (question) => question.id == payload.deleteQuestionId
+      );
+      state.questions.splice(state.questions.indexOf(question), 1);
+    }
   },
   getters: {
     getQuestionsSortedByDay(state) {
@@ -316,6 +322,18 @@ const questionModule = {
         });
       });
     },
+    destoryQuestion(context, payload) {
+      return api({
+        method: "delete",
+        url: "/questions/" + payload.id,
+      }).then((response) => {
+        console.log(response);
+        console.log(context);
+        return context.commit("deleteQuestion", {
+          deleteQuestionId: payload.id
+        });
+      })
+    }
   },
 };
 

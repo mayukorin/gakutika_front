@@ -3,7 +3,9 @@
     <v-expansion-panel-header>
       <v-row>
         <v-col cols="12" md="7">
-          <div class="caption grey--text">タイトル</div>
+          <div class="caption grey--text">
+            {{ gakutika.startMonth }} ~ {{ gakutika.endMonth }}
+          </div>
           <div>{{ gakutika.title }}</div>
         </v-col>
         <v-col cols="6" md="2" @click.stop="handleClick">
@@ -17,7 +19,8 @@
       </v-row>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
-      {{ gakutika.content }}
+      <div class="caption grey--text">詳細</div>
+      <div>{{ gakutika.content }}</div>
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>

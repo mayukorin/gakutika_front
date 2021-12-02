@@ -3,7 +3,7 @@
     <ProgressCircular v-show="loading" />
     <form-dialog :propsFormShowFlag.sync="formShowFlag" v-show="!loading">
       <Button
-        :classString="'success ml-1 mt-2'"
+        :classString="'success ml-1 mt-2 mb-2'"
         slot="btn"
         @click="formShowFlag = true"
       >
@@ -19,7 +19,7 @@
     <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button
-        :classString="'success ml-1 mt-2'"
+        :classString="'success ml-1 mt-2 mb-2'"
         slot="btn"
         @click="questionFormShowFlag = true"
       >
@@ -30,7 +30,7 @@
         @uploaded="questionFormShowFlag = false"
       />
     </form-dialog>
-    <QuestionList :questions="questions" />
+    <QuestionList :questions="questions" :ondelete="handleDeleteQuestion" />
   </div>
 </template>
 <script>
@@ -80,5 +80,15 @@ export default {
       },
     },
   },
+  methods: {
+    handleDeleteQuestion: function(deleteQuestionId) {
+      return this.$store.dispatch("questions/destoryQuestion", {id: deleteQuestionId })
+      .then(() => {
+          this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["質問を削除しました"],
+          });
+      });
+    }
+  }
 };
 </script>
