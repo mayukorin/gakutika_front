@@ -12,7 +12,7 @@
           <div class="caption grey--text">詳細</div>
           <v-icon>mdi-magnify-plus</v-icon>
         </v-col>
-        <v-col cols="6" md="2">
+        <v-col cols="6" md="2" @click.stop="ondelete(gakutika.id)">
           <div class="caption grey--text">削除</div>
           <v-icon>mdi-delete</v-icon>
         </v-col>
@@ -32,6 +32,9 @@ export default {
       type: Object,
     },
     onFetchGakutika: {
+      type: Function,
+    },
+    ondelete: {
       type: Function,
     },
   },

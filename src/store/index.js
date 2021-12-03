@@ -158,6 +158,12 @@ const gakutikaModule = {
     pushNewGakutika(state, payload) {
       state.gakutikas.push(payload.newGakutika);
     },
+    deleteGakutika(state, payload) {
+      const gakutika = state.gakutikas.find(
+        (gakutika) => gakutika.id == payload.deleteGakutikaId
+      );
+      state.gakutikas.splice(state.gakutikas.indexOf(gakutika), 1);
+    }
   },
   actions: {
     fetchGakutikaList(context) {
@@ -182,6 +188,18 @@ const gakutikaModule = {
           { root: true }
         );
       });
+    },
+    destoryGakutika(context, payload) {
+      return api({
+        method: "delete",
+        url: "/gakutikas/" + payload.id,
+      }).then((response) => {
+        console.log(response);
+        console.log(context);
+        return context.commit("deleteGakutika", {
+          deleteGakutikaId: payload.id
+        });
+      })
     },
     setGakutikaList(context, payload) {
       return context.commit("set", { gakutikas: payload.sortedGakutikas });

@@ -32,6 +32,7 @@
       :on-update-tough-rank="handleUpdateToughRank"
       :order-flag="orderFlag"
       :on-fetch-gakutika="handleFetchGakutika"
+      :ondelete="handleDeleteGakutika"
     />
     <form-dialog :propsFormShowFlag.sync="formShowFlag">
       <Button
@@ -121,6 +122,14 @@ export default {
       // この後，ページ遷移
       this.$router.replace("/gakutika/" + gakutikaId.id);
     },
+    handleDeleteGakutika: function(gakutikaId) {
+      return this.$store.dispatch("gakutikas/destoryGakutika", {id: gakutikaId })
+      .then(() => {
+          this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["学チカを削除しました"],
+          });
+      });
+    }
   },
   computed: {
     getGakutikas: {

@@ -12,6 +12,7 @@
           :key="gakutika.title"
           :gakutika="gakutika"
           :on-fetch-gakutika="handleFetchGakutika"
+          :ondelete="ondelete"
         />
       </draggable>
     </v-expansion-panels>
@@ -45,6 +46,9 @@ export default {
       type: Function,
     },
     onFetchGakutika: {
+      type: Function,
+    },
+    ondelete: {
       type: Function,
     },
   },
