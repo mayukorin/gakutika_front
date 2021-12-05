@@ -12,17 +12,17 @@
         v-on="on"
       >
         <v-icon left small>
-          {{ iconName }}
+          {{ icon }}
         </v-icon>
-        <span class="caption text-lowercase">{{ iconCaption }}</span>
+        <span class="caption text-lowercase">{{ caption }}</span>
       </v-btn>
     </template>
-    <span>{{ iconExplain }}</span>
+    <span>{{ explain }}</span>
   </v-tooltip>
 </template>
 <script>
 export default {
-  name: "Tooltip2",
+  name: "Tooltip",
   props: {
     textFlag: {
       type: Boolean,
@@ -36,13 +36,13 @@ export default {
       type: String,
       default: "",
     },
-    iconCaption: {
+    caption: {
       type: String,
     },
-    iconName: {
+    icon: {
       type: String,
     },
-    iconExplain: {
+    explain: {
       type: String,
     },
   },

@@ -2,29 +2,28 @@
   <div>
     <ProgressCircular v-show="loading" />
     <v-row class="ma-0 mb-3" v-show="!loading">
-      <Tooltip2
+      <Tooltip
         :textFlag="!isSortProp('id')"
         :colorString="'grey'"
         :classString="'mt-2 ml-1'"
         @click="setSortPropAndReverseFlag('id', true)"
-        :iconName="'mdi-folder'"
-        :iconCaption="'作成順'"
-        :iconExplain="'作成順で並び替え'"
+        :icon="'mdi-folder'"
+        :caption="'作成順'"
+        :explain="'作成順で並び替え'"
       />
-      <Tooltip2
+      <Tooltip
         :textFlag="!isSortProp('toughRank')"
         :colorString="'grey'"
         :classString="'mt-2 ml-1'"
         @click="setSortPropAndReverseFlag('toughRank', false)"
-        :iconName="'mdi-folder'"
-        :iconCaption="'頑張り順'"
-        :iconExplain="'頑張り順で並び替え'"
+        :icon="'mdi-cards-heart'"
+        :caption="'頑張り順'"
+        :explain="'頑張り順で並び替え'"
       />
       <Button :classString="'success ml-1 mt-2'" @click="changeOrderFlag">
-        <div v-show="!orderFlag">並び替え開始</div>
-        <div v-show="orderFlag">並び替え完了</div>
+        <div v-show="!orderFlag">頑張り順を変更</div>
+        <div v-show="orderFlag">変更完了</div>
       </Button>
-      <GakutikaCreatePopupPlusButton />
     </v-row>
     <GakutikaSortedList
       :gakutikas="getGakutikas"
@@ -50,8 +49,7 @@
 import GakutikaSortedList from "@/components/organisms/GakutikaSortedList";
 import ProgressCircular from "@/components/atoms/ProgressCircular.vue";
 import Button from "@/components/atoms/Button.vue";
-import Tooltip2 from "@/components/atoms/Tooltip2.vue";
-import GakutikaCreatePopupPlusButton from "@/components/molecules/GakutikaCreatePopupPlusButton.vue";
+import Tooltip from "@/components/atoms/Tooltip.vue";
 import FormDialog from "@/components/organisms/FormDialog";
 import GakutikaCreateCard from "@/components/organisms/GakutikaCreateCard";
 
@@ -61,10 +59,9 @@ export default {
     GakutikaSortedList,
     ProgressCircular,
     Button,
-    GakutikaCreatePopupPlusButton,
     GakutikaCreateCard,
     FormDialog,
-    Tooltip2,
+    Tooltip,
   },
   data() {
     return {
