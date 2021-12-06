@@ -26,11 +26,11 @@
       </Button>
     </v-row>
     <GakutikaSortedList
-      :gakutikas="getGakutikas"
+      :gakutikas="gakutikas"
       v-show="!loading"
       :on-update-tough-rank="handleUpdateToughRank"
       :order-flag="orderFlag"
-      :on-fetch-gakutika="handleFetchGakutika"
+      :onfetch-gakutika="handleFetchGakutika"
       :ondelete="handleDeleteGakutika"
     />
     <form-dialog :propsFormShowFlag.sync="formShowFlag">
@@ -117,7 +117,8 @@ export default {
     handleFetchGakutika: function (gakutikaId) {
       // return this.$store.dispatch("gakutikas/fetchGakutika", gakutikaId);
       // この後，ページ遷移
-      this.$router.replace("/gakutika/" + gakutikaId.id);
+      console.log(gakutikaId);
+      this.$router.replace("/gakutika/" + gakutikaId);
     },
     handleDeleteGakutika: function(gakutikaId) {
       return this.$store.dispatch("gakutikas/destoryGakutika", {id: gakutikaId })
@@ -129,9 +130,8 @@ export default {
     }
   },
   computed: {
-    getGakutikas: {
+    gakutikas: {
       get() {
-        console.log("変更");
         return this.$store.getters["gakutikas/getGakutikasSorted"];
       },
     },

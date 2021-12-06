@@ -5,7 +5,7 @@
         v-for="question in questions"
         :key="question.id"
         :question="question"
-        :ondelete="ondelete"
+        @delete="ondelete"
       />
     </v-expansion-panels>
   </div>

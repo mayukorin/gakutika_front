@@ -22,7 +22,7 @@
           </form-dialog>
         </v-col>
         <v-col cols="6" md="2">
-          <div @click.stop="ondelete(question.id)">
+          <div @click.stop="$emit('delete', question.id)">
             <div class="caption grey--text">削除</div>
             <v-icon>mdi-delete</v-icon>
           </div>
@@ -47,9 +47,6 @@ export default {
   props: {
     question: {
       type: Object,
-    },
-    ondelete: {
-      type: Function,
     },
   },
   data() {

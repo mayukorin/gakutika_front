@@ -3,7 +3,7 @@
     <v-expansion-panels accordion>
       <draggable
         :options="options"
-        class="ww"
+        class="width_all"
         v-model="sortedGakutikas"
         :disabled="!orderFlag"
       >
@@ -11,8 +11,8 @@
           v-for="gakutika in displayGakutikas"
           :key="gakutika.title"
           :gakutika="gakutika"
-          :on-fetch-gakutika="handleFetchGakutika"
-          :ondelete="ondelete"
+          @show="onfetchGakutika"
+          @delete="ondelete"
         />
       </draggable>
     </v-expansion-panels>
@@ -45,7 +45,7 @@ export default {
     onUpdateToughRank: {
       type: Function,
     },
-    onFetchGakutika: {
+    onfetchGakutika: {
       type: Function,
     },
     ondelete: {
@@ -90,7 +90,6 @@ export default {
   },
   computed: {
     displayGakutikas: function () {
-      console.log(this.sortedGakutikas);
       if (this.orderFlag) return this.sortedGakutikas;
       else
         return this.sortedGakutikas.slice(
@@ -102,7 +101,7 @@ export default {
 };
 </script>
 <style scoped>
-.ww {
+.width_all {
   width: 100%;
 }
 </style>
