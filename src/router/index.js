@@ -38,6 +38,7 @@ const routes = [
     path: "/gakutika/:id",
     name: "GakutikaAndQuestionShow",
     component: GakutikaAndQuestionShow,
+    meta: { requiresAuth: true },
   },
 ];
 

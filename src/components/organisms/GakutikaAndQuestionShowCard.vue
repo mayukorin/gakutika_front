@@ -64,8 +64,14 @@ export default {
     this.loading = true;
     this.$store
       .dispatch("gakutikas/fetchGakutika", { id: this.$route.params.id })
-      .finally(() => {
+      .then(() => {
         this.loading = false;
+      })
+      .catch(() => {
+        // sign in してなかったら，前の時点で error でるよね
+        this.$router.replace({
+          path: "/",
+        });
       });
   },
   computed: {
