@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/components/templates/HomeView";
 import SignUp from "@/components/templates/SignUpView";
 import SignIn from "@/components/templates/SignInView";
+import CompanyList from "@/components/templates/CompanyListView";
 import GakutikaAndQuestionShow from "@/components/templates/GakutikaAndQuestionShowView";
 import store from "../store";
 
@@ -40,6 +41,12 @@ const routes = [
     component: GakutikaAndQuestionShow,
     meta: { requiresAuth: true },
   },
+  {
+    path: "/companies",
+    name: "CompanyList",
+    components: CompanyList,
+    meta: { requiresAuth: true },
+  }
 ];
 
 const router = new VueRouter({
