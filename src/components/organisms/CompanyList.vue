@@ -17,6 +17,16 @@ export default {
   components: {
     Company,
   },
+  data() {
+      return {
+          loading: false,
+      }
+    },
+  created: function () {
+    this.loading = true;
+    this.$store
+      .dispatch("companies/fetchCompanyList");
+  },
   computed: {
       companies: {
           get() {

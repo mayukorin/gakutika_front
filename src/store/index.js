@@ -355,12 +355,42 @@ const questionModule = {
   },
 };
 
+const companyModule = {
+  namespaced: true,
+  state: {
+    companies: [],
+  },
+  getters: {
+    getCompanies(state) {
+      return state.companies; 
+    }
+  },
+  mutations: {
+    setCompanies(state, payload) {
+      state.companies = payload.companies;
+    },
+  },
+  actions: {
+    fetchCompanyList(context) {
+      return api({
+        method: "get",
+        url: "/companies/",
+      }).then((response) => {
+        context.commit("setCompanies", {
+          companies: response.data
+        });
+      });
+    }
+  }
+};
+
 const store = new Vuex.Store({
   modules: {
     auth: authModule,
     flashMessage: flashMessageModule,
     gakutikas: gakutikaModule,
     questions: questionModule,
+    companies: companyModule,
   },
 });
 
