@@ -44,7 +44,7 @@ const routes = [
   {
     path: "/companies",
     name: "CompanyList",
-    components: CompanyList,
+    component: CompanyList,
     meta: { requiresAuth: true },
   }
 ];

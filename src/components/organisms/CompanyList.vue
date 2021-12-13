@@ -2,9 +2,9 @@
   <div>
     <v-expansion-panels accordion>
       <Company
-        v-for="company in companies"
-        :key="company.id"
-        :company="company"
+        v-for="userAndCompany in useAndCompanies"
+        :key="userAndCompany.id"
+        :userAndCompany="userAndCompany"
       />
     </v-expansion-panels>
   </div>
@@ -23,12 +23,13 @@ export default {
       }
     },
   created: function () {
+    console.log("created");
     this.loading = true;
     this.$store
       .dispatch("companies/fetchCompanyList");
   },
   computed: {
-      companies: {
+      useAndCompanies: {
           get() {
               return this.$store.getters["companies/getCompanies"];
           }

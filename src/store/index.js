@@ -358,16 +358,16 @@ const questionModule = {
 const companyModule = {
   namespaced: true,
   state: {
-    companies: [],
+    userAndCompanies: [],
   },
   getters: {
     getCompanies(state) {
-      return state.companies; 
+      return state.userAndCompanies; 
     }
   },
   mutations: {
     setCompanies(state, payload) {
-      state.companies = payload.companies;
+      state.userAndCompanies = payload.userAndCompanies;
     },
   },
   actions: {
@@ -376,8 +376,10 @@ const companyModule = {
         method: "get",
         url: "/companies/",
       }).then((response) => {
+        console.log(response);
+        console.log(response.data);
         context.commit("setCompanies", {
-          companies: response.data
+          userAndCompanies: response.data,
         });
       });
     }
