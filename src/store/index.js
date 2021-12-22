@@ -140,6 +140,7 @@ const gakutikaModule = {
       state.gakutikas = payload.gakutikas;
     },
     setGakutika(state, payload) {
+      /*
       state.gakutika = {};
       state.gakutika.content = payload.gakutika.content;
       state.gakutika.endMonth = payload.gakutika.endMonth;
@@ -147,6 +148,8 @@ const gakutikaModule = {
       state.gakutika.startMonth = payload.gakutika.startMonth;
       state.gakutika.title = payload.gakutika.title;
       state.gakutika.toughRank = payload.gakutika.toughRank;
+      */
+     state.gakutika = payload.gakutika;
     },
     clear(state) {
       state.gakutikas = [];
@@ -180,7 +183,8 @@ const gakutikaModule = {
         method: "get",
         url: "/gakutikas/" + payload.id,
       }).then((response) => {
-        console.log(response);
+        console.log("api");
+        console.log(response.data);
         context.commit("setGakutika", { gakutika: response.data });
         return context.dispatch(
           "questions/fetchQuestions",

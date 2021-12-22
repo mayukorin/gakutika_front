@@ -77,14 +77,15 @@ export default {
   computed: {
     gakutika: {
       get() {
+        console.log(this.$store.state.gakutikas.gakutika);
         return this.$store.state.gakutikas.gakutika;
       },
     },
     questions: {
       get() {
-        return this.$store.getters["questions/getQuestionsSortedByDay"];
-      },
-    },
+        return this.$store.state.gakutikas.gakutika.questions;
+      }
+    }
   },
   methods: {
     handleDeleteQuestion: function(deleteQuestionId) {

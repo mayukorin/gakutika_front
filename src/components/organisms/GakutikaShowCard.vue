@@ -8,6 +8,9 @@
       <div v-for="(text, index) in contentDividedByNewLine" :key="index">
         {{ text }}
       </div>
+      <div v-for="uca in gakutika.companies" :key="uca.id">
+        {{ uca }}
+      </div>
     </v-card-text>
   </v-card>
 </template>
