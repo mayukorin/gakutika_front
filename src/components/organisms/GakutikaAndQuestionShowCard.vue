@@ -17,6 +17,8 @@
     </form-dialog>
     <GakutikaShowCard :gakutika="gakutika" v-show="!loading" />
     <br />
+    <CompanyList :companies="gakutika.companies" v-show="!loading" />
+    <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button
         :classString="'success ml-1 mt-2 mb-2'"
@@ -30,7 +32,7 @@
         @uploaded="questionFormShowFlag = false"
       />
     </form-dialog>
-    <QuestionList :questions="questions" :ondelete="handleDeleteQuestion" />
+    <QuestionList :questions="gakutika.questions" :ondelete="handleDeleteQuestion" v-show="!loading" />
   </div>
 </template>
 <script>
@@ -41,6 +43,7 @@ import FormDialog from "@/components/organisms/FormDialog";
 import GakutikaUpdateCard from "@/components/organisms/GakutikaUpdateCard";
 import QuestionList from "@/components/organisms/QuestionList";
 import QuestionCreateCard from "@/components/organisms/QuestionCreateCard";
+import CompanyList from "@/components/organisms/CompanyList";
 
 export default {
   name: "GakutikaAndQuestionShowCard",
@@ -52,6 +55,7 @@ export default {
     GakutikaUpdateCard,
     QuestionList,
     QuestionCreateCard,
+    CompanyList,
   },
   data() {
     return {
