@@ -21,7 +21,12 @@
         v-for="gakutika in company.gakutikas"
         :key="gakutika.id"
       >
-        {{ gakutika.title }}&nbsp;詳細
+        <div>
+          {{ gakutika.title }}
+        </div>
+        <div>
+          <router-link :to="{name: 'GakutikaAndQuestionShow', params: { id: gakutika.id }}">詳細</router-link>&nbsp;話す学チカから削除
+        </div>
       </div>
     </v-expansion-panel-content>
   </v-expansion-panel>
