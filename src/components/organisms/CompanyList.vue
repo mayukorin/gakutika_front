@@ -2,9 +2,9 @@
   <div>
     <v-expansion-panels accordion>
       <Company
-        v-for="company in companies"
-        :key="company.id"
-        :company="company"
+        v-for="user_and_company in user_and_companies"
+        :key="user_and_company.id"
+        :user_and_company="user_and_company"
       />
     </v-expansion-panels>
   </div>
@@ -18,7 +18,7 @@ export default {
     Company,
   },
   props: {
-    companies: {
+    user_and_companies: {
       type: Array,
     }
   },

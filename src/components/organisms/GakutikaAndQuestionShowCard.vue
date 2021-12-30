@@ -17,7 +17,7 @@
     </form-dialog>
     <GakutikaShowCard :gakutika="gakutika" v-show="!loading" />
     <br />
-    <CompanyList :companies="gakutika.companies" v-show="!loading" />
+    <CompanyList :user_and_companies="gakutika.user_and_companies" v-show="!loading" />
     <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button

@@ -390,6 +390,21 @@ const companyModule = {
   }
 };
 
+const userAndComanyAndGakutikaModule = {
+  namespaced: true,
+  actions: {
+    destroyUserAndCompanyAndGakutika(context, payload) {
+      return api({
+        method: "delete",
+        url: "/user_and_companies/" + payload.id,
+      }).then((response) => {
+        console.log(response);
+        console.log(context);
+      })
+    }
+  }
+}
+
 const store = new Vuex.Store({
   modules: {
     auth: authModule,
@@ -397,6 +412,7 @@ const store = new Vuex.Store({
     gakutikas: gakutikaModule,
     questions: questionModule,
     companies: companyModule,
+    userAndCompanyAndGakutikas: userAndComanyAndGakutikaModule,
   },
 });
 
