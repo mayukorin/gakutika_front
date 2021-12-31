@@ -17,7 +17,7 @@
     </form-dialog>
     <GakutikaShowCard :gakutika="gakutika" v-show="!loading" />
     <br />
-    <CompanyList :user_and_companies="gakutika.user_and_companies" v-show="!loading" />
+    <CompanyList :user_and_companies="gakutika.user_and_companies" :onUserAndCompanyAndGakutikaDelete="handleDeleteUserAndCompanyAndGakutika" v-show="!loading" />
     <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button
@@ -87,7 +87,8 @@ export default {
     },
     questions: {
       get() {
-        return this.$store.state.gakutikas.gakutika.questions;
+        // return this.$store.state.gakutikas.gakutika.questions;
+        return this.$store.state.questions.questions;
       }
     }
   },
@@ -99,6 +100,14 @@ export default {
             messages: ["質問を削除しました"],
           });
       });
+    },
+    handleDeleteUserAndCompanyAndGakutika: function(deleteUserAndCompanyAndGakutikaId) {
+      return this.$store.dispatch("userAndCompanyAndGakutikas/destroyUserAndCompanyAndGakutika", {id: deleteUserAndCompanyAndGakutikaId})
+      .then(() => {
+        this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["話す学チカから削除しました"],
+          });
+      })
     }
   }
 };

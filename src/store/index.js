@@ -268,13 +268,18 @@ const gakutikaModule = {
 const questionModule = {
   namespaced: true,
   state: {
-    questions: [],
+    questions: ["abc"],
   },
   mutations: {
     setQuestions(state, payload) {
+      console.log("こっちはデテキルヨ");
+      console.log(state.questions);
       state.questions = payload.questions;
     },
     pushQuestions(state, payload) {
+      console.log("年迎えたい");
+      console.log(payload.newQuestion);
+      console.log(state.questions);
       state.questions.push(payload.newQuestion);
     },
     setUpdatedQuestion(state, payload) {
@@ -396,7 +401,7 @@ const userAndComanyAndGakutikaModule = {
     destroyUserAndCompanyAndGakutika(context, payload) {
       return api({
         method: "delete",
-        url: "/user_and_companies/" + payload.id,
+        url: "/user_and_company_and_gakutikas/" + payload.id,
       }).then((response) => {
         console.log(response);
         console.log(context);
