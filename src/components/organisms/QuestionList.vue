@@ -5,6 +5,7 @@
         v-for="question in questions"
         :key="question.id"
         :question="question"
+        @delete="ondelete"
       />
     </v-expansion-panels>
   </div>
@@ -20,6 +21,9 @@ export default {
   props: {
     questions: {
       type: Array,
+    },
+    ondelete: {
+      type: Function,
     },
   },
 };

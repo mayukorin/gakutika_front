@@ -3,7 +3,9 @@
     <v-expansion-panel-header>
       <v-row>
         <v-col cols="12" md="7">
-          <div>{{ question.day }} {{ question.companyName }}</div>
+          <div class="caption grey--text">
+            <div>{{ question.day }}&nbsp;{{ question.companyName }}</div>
+          </div>
           <div>{{ question.query }}</div>
         </v-col>
         <v-col cols="6" md="2">
@@ -20,8 +22,10 @@
           </form-dialog>
         </v-col>
         <v-col cols="6" md="2">
-          <div class="caption grey--text">削除</div>
-          <v-icon>mdi-delete</v-icon>
+          <div @click.stop="$emit('delete', question.id)">
+            <div class="caption grey--text">削除</div>
+            <v-icon>mdi-delete</v-icon>
+          </div>
         </v-col>
       </v-row>
     </v-expansion-panel-header>
@@ -50,5 +54,14 @@ export default {
       formShowFlag: false,
     };
   },
+  /*
+  methods: {
+    onDelete(deleteQuestionId) {
+      console.log("kokokara");
+      console.log(deleteQuestionId);
+      return this.ondelete(deleteQuestionId);
+    }
+  }
+  */
 };
 </script>

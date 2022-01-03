@@ -140,6 +140,7 @@ const gakutikaModule = {
       state.gakutikas = payload.gakutikas;
     },
     setGakutika(state, payload) {
+      /*
       state.gakutika = {};
       state.gakutika.content = payload.gakutika.content;
       state.gakutika.endMonth = payload.gakutika.endMonth;
@@ -147,6 +148,8 @@ const gakutikaModule = {
       state.gakutika.startMonth = payload.gakutika.startMonth;
       state.gakutika.title = payload.gakutika.title;
       state.gakutika.toughRank = payload.gakutika.toughRank;
+      */
+     state.gakutika = payload.gakutika;
     },
     clear(state) {
       state.gakutikas = [];
@@ -158,6 +161,12 @@ const gakutikaModule = {
     pushNewGakutika(state, payload) {
       state.gakutikas.push(payload.newGakutika);
     },
+    deleteGakutika(state, payload) {
+      const gakutika = state.gakutikas.find(
+        (gakutika) => gakutika.id == payload.deleteGakutikaId
+      );
+      state.gakutikas.splice(state.gakutikas.indexOf(gakutika), 1);
+    }
   },
   actions: {
     fetchGakutikaList(context) {
@@ -174,7 +183,8 @@ const gakutikaModule = {
         method: "get",
         url: "/gakutikas/" + payload.id,
       }).then((response) => {
-        console.log(response);
+        console.log("api");
+        console.log(response.data);
         context.commit("setGakutika", { gakutika: response.data });
         return context.dispatch(
           "questions/fetchQuestions",
@@ -182,6 +192,18 @@ const gakutikaModule = {
           { root: true }
         );
       });
+    },
+    destoryGakutika(context, payload) {
+      return api({
+        method: "delete",
+        url: "/gakutikas/" + payload.id,
+      }).then((response) => {
+        console.log(response);
+        console.log(context);
+        return context.commit("deleteGakutika", {
+          deleteGakutikaId: payload.id
+        });
+      })
     },
     setGakutikaList(context, payload) {
       return context.commit("set", { gakutikas: payload.sortedGakutikas });
@@ -246,13 +268,18 @@ const gakutikaModule = {
 const questionModule = {
   namespaced: true,
   state: {
-    questions: [],
+    questions: ["abc"],
   },
   mutations: {
     setQuestions(state, payload) {
+      console.log("こっちはデテキルヨ");
+      console.log(state.questions);
       state.questions = payload.questions;
     },
     pushQuestions(state, payload) {
+      console.log("年迎えたい");
+      console.log(payload.newQuestion);
+      console.log(state.questions);
       state.questions.push(payload.newQuestion);
     },
     setUpdatedQuestion(state, payload) {
@@ -264,6 +291,12 @@ const questionModule = {
       question.day = payload.updatedQuestion.day;
       question.companyName = payload.updatedQuestion.companyName;
     },
+    deleteQuestion(state, payload) {
+      const question = state.questions.find(
+        (question) => question.id == payload.deleteQuestionId
+      );
+      state.questions.splice(state.questions.indexOf(question), 1);
+    }
   },
   getters: {
     getQuestionsSortedByDay(state) {
@@ -316,8 +349,66 @@ const questionModule = {
         });
       });
     },
+    destoryQuestion(context, payload) {
+      return api({
+        method: "delete",
+        url: "/questions/" + payload.id,
+      }).then((response) => {
+        console.log(response);
+        console.log(context);
+        return context.commit("deleteQuestion", {
+          deleteQuestionId: payload.id
+        });
+      })
+    }
   },
 };
+
+const companyModule = {
+  namespaced: true,
+  state: {
+    userAndCompanies: [],
+  },
+  getters: {
+    getCompanies(state) {
+      return state.userAndCompanies; 
+    }
+  },
+  mutations: {
+    setCompanies(state, payload) {
+      state.userAndCompanies = payload.userAndCompanies;
+    },
+  },
+  actions: {
+    fetchCompanyList(context) {
+      return api({
+        method: "get",
+        url: "/companies/",
+      }).then((response) => {
+        console.log(response);
+        console.log(response.data);
+        context.commit("setCompanies", {
+          userAndCompanies: response.data,
+        });
+      });
+    }
+  }
+};
+
+const userAndComanyAndGakutikaModule = {
+  namespaced: true,
+  actions: {
+    destroyUserAndCompanyAndGakutika(context, payload) {
+      return api({
+        method: "delete",
+        url: "/user_and_company_and_gakutikas/" + payload.id,
+      }).then((response) => {
+        console.log(response);
+        console.log(context);
+      })
+    }
+  }
+}
 
 const store = new Vuex.Store({
   modules: {
@@ -325,6 +416,8 @@ const store = new Vuex.Store({
     flashMessage: flashMessageModule,
     gakutikas: gakutikaModule,
     questions: questionModule,
+    companies: companyModule,
+    userAndCompanyAndGakutikas: userAndComanyAndGakutikaModule,
   },
 });
 

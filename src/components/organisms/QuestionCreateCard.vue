@@ -17,6 +17,8 @@ export default {
   },
   methods: {
     handleCreate: function (questionInfo) {
+      console.log("質問");
+      console.log(this.$store.state.questions.questions);
       return this.$store
         .dispatch("questions/createQuestion", questionInfo)
         .then(() => {
