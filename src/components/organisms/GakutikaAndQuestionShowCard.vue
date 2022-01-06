@@ -32,7 +32,7 @@
         @uploaded="questionFormShowFlag = false"
       />
     </form-dialog>
-    <QuestionList :questions="gakutika.questions" :ondelete="handleDeleteQuestion" v-show="!loading" />
+    <QuestionList :questions="questions" :ondelete="handleDeleteQuestion" v-show="!loading" />
   </div>
 </template>
 <script>
@@ -67,7 +67,7 @@ export default {
   created: function () {
     this.loading = true;
     this.$store
-      .dispatch("gakutikas/fetchGakutika", { id: this.$route.params.id })
+      .dispatch("gakutika/fetchGakutika", { id: this.$route.params.id })
       .then(() => {
         this.loading = false;
       })
@@ -87,13 +87,12 @@ export default {
     },
     questions: {
       get() {
-        // return this.$store.state.gakutikas.gakutika.questions;
         return this.$store.getters["gakutika/getQuestionsSortedByDay"];
       }
     },
     userAndCompanies: {
       get() {
-        return this.$store.state.questions.questions;
+        return this.$store.getters["userAndCompanies/getUserAndCompanies"];
       }
     }
   },
@@ -106,8 +105,11 @@ export default {
           });
       });
     },
-    handleDeleteUserAndCompanyAndGakutika: function(deleteUserAndCompanyAndGakutikaId) {
-      return this.$store.dispatch("userAndCompanyAndGakutikas/destroyUserAndCompanyAndGakutika", {id: deleteUserAndCompanyAndGakutikaId})
+    handleDeleteUserAndCompanyAndGakutika: function(...args) {
+
+      const [deleteUserAndCompanyAndGakutikaId, userAndCompanyId] = args;
+
+      return this.$store.dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId, userAndCompanyId: userAndCompanyId})
       .then(() => {
         this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["話す学チカから削除しました"],

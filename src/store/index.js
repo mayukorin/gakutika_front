@@ -430,6 +430,9 @@ const gakutikaModule = {
       return state.gakutika;
     },
     getQuestionsSortedByDay(state) {
+      console.log("question get");
+      console.log(state.gakutika);
+      console.log(state.gakutika.questions);
       return state.gakutika.questions
         .slice()
         .sort((a, b) => (a["day"] < b["day"] ? -1 : 1));
@@ -445,7 +448,7 @@ const gakutikaModule = {
         url: "/gakutikas/" + payload.id,
       }).then((response) => {
         context.commit("setGakutika", { gakutika: response.data });
-        context.commit("userAndCompanies/setUserAndCompanies", { userAndCompanies: response.data.user_and_companies });
+        context.commit("userAndCompanies/setUserAndCompanies", { userAndCompanies: response.data.user_and_companies }, {root: true });
       });
     },
     createQuestion(context, payload) {
@@ -515,15 +518,35 @@ const userAndComaniesModule = {
     setUserAndCompanies(state, payload) {
       state.userAndCompanies = payload.userAndCompanies;
     },
+    deleteUserAndCompanyAndGakutika(state, payload) {
+      const user_and_company = state.userAndCompanies.find(
+        (user_and_company) => user_and_company.id == payload.userAndCompanyId
+      );
+      const user_and_company_and_gakutika = user_and_company.user_and_company_and_gakutikas.find(
+        (user_and_company_and_gakutika) => user_and_company_and_gakutika.id == payload.userAndCompanyAndGakutikaId
+      );
+      user_and_company.user_and_company_and_gakutikas.splice(user_and_company.user_and_company_and_gakutikas.indexOf(user_and_company_and_gakutika), 1);
+      if(user_and_company.user_and_company_and_gakutikas.length == 0) {
+        state.userAndCompanies.splice(state.userAndCompanies.indexOf(user_and_company));
+      }
+    }
+  },
+  getters: {
+    getUserAndCompanies(state) {
+      return state.userAndCompanies;
+    }
   },
   actions: {
     destroyUserAndCompanyAndGakutika(context, payload) {
       return api({
         method: "delete",
-        url: "/user_and_company_and_gakutikas/" + payload.id,
+        url: "/user_and_company_and_gakutikas/" + payload.userAndCompanyAndGakutikaId,
       }).then((response) => {
         console.log(response);
-        console.log(context);
+        context.commit("deleteUserAndCompanyAndGakutika", {
+          userAndCompanyAndGakutikaId: payload.userAndCompanyAndGakutikaId,
+          userAndCompanyId: payload.userAndCompanyId
+        });
       })
     }
   }
