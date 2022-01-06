@@ -17,7 +17,7 @@
     </form-dialog>
     <GakutikaShowCard :gakutika="gakutika" v-show="!loading" />
     <br />
-    <CompanyList :user_and_companies="gakutika.user_and_companies" :onUserAndCompanyAndGakutikaDelete="handleDeleteUserAndCompanyAndGakutika" v-show="!loading" />
+    <CompanyList :user_and_companies="userAndCompanies" :onUserAndCompanyAndGakutikaDelete="handleDeleteUserAndCompanyAndGakutika" v-show="!loading" />
     <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button
@@ -82,12 +82,17 @@ export default {
     gakutika: {
       get() {
         console.log(this.$store.state.gakutikas.gakutika);
-        return this.$store.state.gakutikas.gakutika;
+        return this.$store.getters["gakutika/getGakutika"];
       },
     },
     questions: {
       get() {
         // return this.$store.state.gakutikas.gakutika.questions;
+        return this.$store.getters["gakutika/getQuestionsSortedByDay"];
+      }
+    },
+    userAndCompanies: {
+      get() {
         return this.$store.state.questions.questions;
       }
     }
