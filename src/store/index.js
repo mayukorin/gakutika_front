@@ -543,10 +543,7 @@ const userAndComaniesModule = {
         url: "/user_and_company_and_gakutikas/" + payload.userAndCompanyAndGakutikaId,
       }).then((response) => {
         console.log(response);
-        context.commit("deleteUserAndCompanyAndGakutika", {
-          userAndCompanyAndGakutikaId: payload.userAndCompanyAndGakutikaId,
-          userAndCompanyId: payload.userAndCompanyId
-        });
+        context.dispatch("gakutika/fetchGakutika", {id: payload.gakutikaId},{ root: true });
       })
     }
   }
