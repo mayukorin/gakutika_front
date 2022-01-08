@@ -465,7 +465,8 @@ const gakutikaModule = {
           },
         },
       }).then((response) => {
-        return context.commit("pushQuestion", { newQuestion: response.data });
+        console.log(response.data);
+        context.dispatch("gakutika/fetchGakutika", {id: payload.gakutikaId },{ root: true });
       });
     },
     updateQuestion(context, payload) {
