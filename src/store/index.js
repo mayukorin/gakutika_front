@@ -445,7 +445,7 @@ const gakutikaModule = {
     fetchGakutika(context, payload) {
       return api({
         method: "get",
-        url: "/gakutikas/" + payload.id,
+        url: "/gakutikas/" + payload.gakutikaId,
       }).then((response) => {
         context.commit("setGakutika", { gakutika: response.data });
         context.commit("userAndCompanies/setUserAndCompanies", { userAndCompanies: response.data.user_and_companies }, {root: true });
@@ -466,7 +466,7 @@ const gakutikaModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        context.dispatch("gakutika/fetchGakutika", {id: payload.gakutikaId },{ root: true });
+        context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
     updateQuestion(context, payload) {
@@ -484,7 +484,7 @@ const gakutikaModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        context.dispatch("gakutika/fetchGakutika", {id: payload.gakutikaId },{ root: true });
+        context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
     destoryQuestion(context, payload) {
@@ -493,7 +493,7 @@ const gakutikaModule = {
         url: "/questions/" + payload.id,
       }).then((response) => {
         console.log(response);
-        context.dispatch("gakutika/fetchGakutika", {id: payload.gakutikaId },{ root: true });
+        context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
     destroyUserAndCompanyAndGakutika(context, payload) {
@@ -541,7 +541,7 @@ const userAndComaniesModule = {
         url: "/user_and_company_and_gakutikas/" + payload.userAndCompanyAndGakutikaId,
       }).then((response) => {
         console.log(response);
-        context.dispatch(payload.actionName, {id: payload.gakutikaId},{ root: true });
+        context.dispatch(payload.actionName, payload, { root: true });
       })
     }
   }

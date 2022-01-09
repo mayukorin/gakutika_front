@@ -67,7 +67,7 @@ export default {
   created: function () {
     this.loading = true;
     this.$store
-      .dispatch("gakutika/fetchGakutika", { id: this.$route.params.id })
+      .dispatch("gakutika/fetchGakutika", { gakutikaId: this.$route.params.id })
       .then(() => {
         this.loading = false;
       })
