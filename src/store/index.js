@@ -493,9 +493,7 @@ const gakutikaModule = {
         url: "/questions/" + payload.id,
       }).then((response) => {
         console.log(response);
-        return context.commit("deleteQuestion", {
-          deleteQuestionId: payload.id
-        });
+        context.dispatch("gakutika/fetchGakutika", {id: payload.gakutikaId },{ root: true });
       });
     },
     destroyUserAndCompanyAndGakutika(context, payload) {

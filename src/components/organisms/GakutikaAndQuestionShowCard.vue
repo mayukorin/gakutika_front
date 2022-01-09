@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     handleDeleteQuestion: function(deleteQuestionId) {
-      return this.$store.dispatch("questions/destoryQuestion", {id: deleteQuestionId })
+      return this.$store.dispatch("gakutika/destoryQuestion", {id: deleteQuestionId, gakutikaId: this.gakutika.id })
       .then(() => {
           this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["質問を削除しました"],
