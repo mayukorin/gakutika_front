@@ -543,7 +543,7 @@ const userAndComaniesModule = {
         url: "/user_and_company_and_gakutikas/" + payload.userAndCompanyAndGakutikaId,
       }).then((response) => {
         console.log(response);
-        context.dispatch("gakutika/fetchGakutika", {id: payload.gakutikaId},{ root: true });
+        context.dispatch(payload.actionName, {id: payload.gakutikaId},{ root: true });
       })
     }
   }

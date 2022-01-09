@@ -28,7 +28,7 @@
           <router-link :to="{name: 'GakutikaAndQuestionShow', params: { id: user_and_company_and_gakutika.gakutika.id }}">
             詳細
           </router-link>&nbsp;
-          <span @click.stop="$emit('deleteUserAndCompanyAndGakutika', user_and_company_and_gakutika.id, user_and_company_and_gakutika.gakutika.id )">話す学チカから削除</span>
+          <span @click.stop="$emit('deleteUserAndCompanyAndGakutika', user_and_company_and_gakutika.id, user_and_company_and_gakutika.gakutika.id, 'gakutika/fetchGakutika' )">話す学チカから削除</span>
         </div>
       </div>
     </v-expansion-panel-content>

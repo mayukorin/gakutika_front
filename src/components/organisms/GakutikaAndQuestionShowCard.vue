@@ -107,9 +107,9 @@ export default {
     },
     handleDeleteUserAndCompanyAndGakutika: function(...args) {
 
-      const [deleteUserAndCompanyAndGakutikaId, gakutikaId] = args;
+      const [deleteUserAndCompanyAndGakutikaId, gakutikaId, actionName] = args;
 
-      return this.$store.dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId, gakutikaId: gakutikaId})
+      return this.$store.dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId, gakutikaId: gakutikaId, actionName })
       .then(() => {
         this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["話す学チカから削除しました"],
