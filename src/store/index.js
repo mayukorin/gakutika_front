@@ -507,7 +507,7 @@ const gakutikaModule = {
     },
   }
 }
-const userAndComaniesModule = {
+const userAndCompaniesModule = {
   namespaced: true,
   state: {
     userAndCompanies: [],
@@ -542,8 +542,24 @@ const userAndComaniesModule = {
       }).then((response) => {
         console.log(response);
         context.dispatch(payload.actionName, payload, { root: true });
+      });
+    },
+    createUserAndCompanyAndGakutika(context, payload) {
+      return api({
+        method: "post",
+        url: "/user_and_company_and_gakutikas",
+        data: {
+          user_and_company_and_gakutika: {
+            company_name: payload.companyName,
+            gakutika_id: payload.gakutikaId,
+          },
+        },
+      }).then((response) => {
+        console.log(response);
+        context.dispatch(payload.actionName, payload, { root: true });
       })
     }
+
   }
 }
 
@@ -555,7 +571,7 @@ const store = new Vuex.Store({
     gakutika: gakutikaModule,
     questions: questionModule,
     companies: companyModule,
-    userAndCompanies: userAndComaniesModule,
+    userAndCompanies: userAndCompaniesModule,
   },
 });
 
