@@ -107,7 +107,8 @@ export default {
     },
     handleDeleteUserAndCompanyAndGakutika: function(...args) {
 
-      const [deleteUserAndCompanyAndGakutikaId, gakutikaId, actionName] = args;
+      const [deleteUserAndCompanyAndGakutikaId, gakutikaId] = args;
+      let actionName = 'gakutika/fetchGakutika';
 
       return this.$store.dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId, gakutikaId: gakutikaId, actionName })
       .then(() => {

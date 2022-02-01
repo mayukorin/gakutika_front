@@ -524,7 +524,7 @@ const userAndCompaniesModule = {
         (user_and_company_and_gakutika) => user_and_company_and_gakutika.id == payload.userAndCompanyAndGakutikaId
       );
       user_and_company.user_and_company_and_gakutikas.splice(user_and_company.user_and_company_and_gakutikas.indexOf(user_and_company_and_gakutika), 1);
-      if(user_and_company.user_and_company_and_gakutikas.length == 0) {
+      if (user_and_company.user_and_company_and_gakutikas.length == 0) {
         state.userAndCompanies.splice(state.userAndCompanies.indexOf(user_and_company));
       }
     }
