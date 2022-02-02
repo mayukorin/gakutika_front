@@ -17,6 +17,21 @@
     </form-dialog>
     <GakutikaShowCard :gakutika="gakutika" v-show="!loading" />
     <br />
+    <form-dialog :propsFormShowFlag.sync="userAndCompanyFormShowFlag">
+      <Button
+        :classString="'success ml-1 mt-2 mb-2'"
+        slot="btn"
+        @click="userAndCompanyFormShowFlag = true"
+      >
+        話す企業追加
+      </Button>
+      <userAndCompanyCreateCard
+        slot="formCard"
+        :onUserAndCompanyCreate="handleCreateUserAndCompany"
+        v-show="!loading"
+      />
+    </form-dialog>
+    <br>
     <CompanyList :user_and_companies="userAndCompanies" :onUserAndCompanyAndGakutikaDelete="handleDeleteUserAndCompanyAndGakutika" v-show="!loading" />
     <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
@@ -44,6 +59,7 @@ import GakutikaUpdateCard from "@/components/organisms/GakutikaUpdateCard";
 import QuestionList from "@/components/organisms/QuestionList";
 import QuestionCreateCard from "@/components/organisms/QuestionCreateCard";
 import CompanyList from "@/components/organisms/CompanyList";
+import UserAndCompanyCreateCard from "@/components/organisms/UserAndCompanyCreateCard";
 
 export default {
   name: "GakutikaAndQuestionShowCard",
@@ -56,12 +72,14 @@ export default {
     QuestionList,
     QuestionCreateCard,
     CompanyList,
+    UserAndCompanyCreateCard,
   },
   data() {
     return {
       loading: false,
       formShowFlag: false,
       questionFormShowFlag: false,
+      userAndCompanyFormShowFlag: false,
     };
   },
   created: function () {
@@ -116,6 +134,10 @@ export default {
             messages: ["話す学チカから削除しました"],
           });
       })
+    },
+    handleCreateUserAndCompany: function (userAndCompanyInfo) {
+      console.log(userAndCompanyInfo);
+      // this.userAndCompanyFormShowFlag = false;
     }
   }
 };
