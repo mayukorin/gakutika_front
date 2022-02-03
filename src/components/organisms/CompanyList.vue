@@ -6,6 +6,8 @@
         :key="user_and_company.id"
         :user_and_company="user_and_company"
         @deleteUserAndCompanyAndGakutika="onUserAndCompanyAndGakutikaDelete"
+        @deleteUserAndCompany="onUserAndCompanyDelete"
+        :createUserAndCompanyAndGakutika="userAndCompanyAndGakutikaCreate"
       />
     </v-expansion-panels>
   </div>
@@ -23,6 +25,12 @@ export default {
       type: Array,
     },
     onUserAndCompanyAndGakutikaDelete: {
+      type: Function,
+    },
+    userAndCompanyAndGakutikaCreate: {
+      type: Function,
+    },
+    onUserAndCompanyDelete: {
       type: Function,
     }
   },

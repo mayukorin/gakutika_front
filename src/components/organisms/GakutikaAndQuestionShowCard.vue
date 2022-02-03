@@ -32,7 +32,12 @@
       />
     </form-dialog>
     <br>
-    <CompanyList :user_and_companies="userAndCompanies" :onUserAndCompanyAndGakutikaDelete="handleDeleteUserAndCompanyAndGakutika" v-show="!loading" />
+    <CompanyList 
+      :user_and_companies="userAndCompanies" 
+      :onUserAndCompanyAndGakutikaDelete="handleDeleteUserAndCompanyAndGakutika" 
+      :userAndCompanyAndGakutikaCreate="handleCreateUserAndCompanyAndGakutika"
+      :onUserAndCompanyDelete="handleDeleteUserAndCompany"
+      v-show="!loading" />
     <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button
@@ -145,7 +150,28 @@ export default {
             messages: ["話す企業に追加しました"],
           });
       })
-    }
+    },
+    handleCreateUserAndCompanyAndGakutika: function(userAndCompanyAndGakutikaInfo) {
+      console.log(userAndCompanyAndGakutikaInfo);
+      // this.userAndCompanyFormShowFlag = false;
+      return this.$store.dispatch("userAndCompanies/createUserAndCompanyAndGakutika", {gakutikaTitle: userAndCompanyAndGakutikaInfo.gakutikaTitle, gakutikaId: this.gakutika.id, companyName: userAndCompanyAndGakutikaInfo.companyName, actionName: "gakutika/fetchGakutika" })
+      .then(() => {
+        this.userAndCompanyFormShowFlag = false;
+        this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["話す企業に追加しました"],
+          });
+      })
+    },
+    handleDeleteUserAndCompany: function(userAndCompanyId) {
+      console.log("hakuzitu");
+      console.log(userAndCompanyId);
+      return this.$store.dispatch("userAndCompanies/destroyUserAndCompany", {userAndCompanyId: userAndCompanyId, gakutikaId: this.gakutika.id, actionName: "gakutika/fetchGakutika"})
+      .then(() => {
+        this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["企業を削除しました"],
+          });
+      })
+    },
   }
 };
 </script>

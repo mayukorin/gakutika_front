@@ -560,7 +560,16 @@ const userAndCompaniesModule = {
         console.log(response);
         context.dispatch(payload.actionName, payload, { root: true });
       })
-    }
+    },
+    destroyUserAndCompany(context, payload) {
+      return api({
+        method: "delete",
+        url: "/user_and_companies/" + payload.userAndCompanyId,
+      }).then((response) => {
+        console.log(response);
+        context.dispatch(payload.actionName, payload, { root: true });
+      });
+    },
 
   }
 }
