@@ -570,6 +570,20 @@ const userAndCompaniesModule = {
         context.dispatch(payload.actionName, payload, { root: true });
       });
     },
+    updateUserAndCompany(context, payload) {
+      return api({
+        method: "patch",
+        url: "/user_and_companies/" + payload.userAndCompanyId,
+        data: {
+          user_and_company: {
+            company_name: payload.companyName,
+          },
+        }
+      }).then((response) => {
+        console.log(response);
+        context.dispatch(payload.actionName, payload, { root: true });
+      });
+    },
 
   }
 }

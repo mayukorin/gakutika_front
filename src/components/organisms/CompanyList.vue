@@ -8,6 +8,7 @@
         @deleteUserAndCompanyAndGakutika="onUserAndCompanyAndGakutikaDelete"
         @deleteUserAndCompany="onUserAndCompanyDelete"
         :createUserAndCompanyAndGakutika="userAndCompanyAndGakutikaCreate"
+        :updateUserAndCompany="onUserAndCompanyUpdate"
       />
     </v-expansion-panels>
   </div>
@@ -32,7 +33,10 @@ export default {
     },
     onUserAndCompanyDelete: {
       type: Function,
-    }
+    },
+    onUserAndCompanyUpdate: {
+      type: Function,
+    },
   },
   
 };

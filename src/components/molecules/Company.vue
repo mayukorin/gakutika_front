@@ -6,8 +6,18 @@
           <div>{{ user_and_company.company.name }}</div>
         </v-col>
         <v-col cols="6" md="2">
-          <div class="caption grey--text">編集</div>
-          <v-icon>mdi-magnify-plus</v-icon>
+          <form-dialog :propsFormShowFlag.sync="updateFormShowFlag">
+            <div slot="btn" @click.stop="updateFormShowFlag = true">
+              <div class="caption grey--text">編集</div>
+              <v-icon>mdi-magnify-plus</v-icon>
+            </div>
+            <UserAndCompanyUpdateCard
+              slot="formCard"
+              :companyName="user_and_company.company.name"
+              :userAndCompanyId="user_and_company.id"
+              :onUserAndCompanyUpdate="onUserAndCompanyUpdate"
+            />
+          </form-dialog>
         </v-col>
         <v-col cols="6" md="2" @click.stop="$emit('deleteUserAndCompany', user_and_company.id)">
           <div class="caption grey--text">削除</div>
@@ -47,12 +57,14 @@
 </template>
 <script>
 import UserAndCompanyAndGakutikaCreateCard from "@/components/organisms/UserAndCompanyAndGakutikaCreateCard";
+import UserAndCompanyUpdateCard from "@/components/organisms/UserAndCompanyUpdateCard";
 import FormDialog from "@/components/organisms/FormDialog";
 
 export default {
   name: "Company",
   components: {
     UserAndCompanyAndGakutikaCreateCard,
+    UserAndCompanyUpdateCard,
     FormDialog,
   },
   props: {
@@ -61,11 +73,15 @@ export default {
     },
     createUserAndCompanyAndGakutika: {
       type: Function,
+    },
+    updateUserAndCompany: {
+      type: Function,
     }
   },
   data() {
     return {
       formShowFlag: false,
+      updateFormShowFlag: false,
     };
   },
   methods: {
@@ -73,6 +89,12 @@ export default {
       return this.createUserAndCompanyAndGakutika(userAndCompanyAndGakutikaInfo).
       then(() => {
         this.formShowFlag = false;
+      });
+    },
+    onUserAndCompanyUpdate: function(userAndCompanyInfo) {
+      return this.updateUserAndCompany(userAndCompanyInfo).
+      then(() => {
+        this.updateFormShowFlag = false;
       });
     }
   }

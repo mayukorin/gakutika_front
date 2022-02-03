@@ -37,6 +37,7 @@
       :onUserAndCompanyAndGakutikaDelete="handleDeleteUserAndCompanyAndGakutika" 
       :userAndCompanyAndGakutikaCreate="handleCreateUserAndCompanyAndGakutika"
       :onUserAndCompanyDelete="handleDeleteUserAndCompany"
+      :onUserAndCompanyUpdate="handleUpdateUserAndCompany"
       v-show="!loading" />
     <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
@@ -171,6 +172,18 @@ export default {
             messages: ["企業を削除しました"],
           });
       })
+    },
+    handleUpdateUserAndCompany: function(userAndCompanyInfo) {
+      console.log("hakuzitu");
+      console.log(userAndCompanyInfo);
+      console.log("さく");
+      return this.$store.dispatch("userAndCompanies/updateUserAndCompany", {userAndCompanyId: userAndCompanyInfo.userAndCompanyId, companyName: userAndCompanyInfo.companyName, gakutikaId: this.gakutika.id, actionName: "gakutika/fetchGakutika"})
+      .then(() => {
+        this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["企業名を編集しました"],
+          });
+      })
+      
     },
   }
 };
