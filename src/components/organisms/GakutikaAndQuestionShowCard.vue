@@ -138,7 +138,7 @@ export default {
     handleCreateUserAndCompany: function (userAndCompanyInfo) {
       console.log(userAndCompanyInfo);
       // this.userAndCompanyFormShowFlag = false;
-      return this.$store.dispatch("userAndCompanies/createUserAndCompanyAndGakutika", {gakutikaId: this.gakutika.id, companyName: userAndCompanyInfo.companyName, actionName: "gakutika/fetchGakutika" })
+      return this.$store.dispatch("userAndCompanies/createUserAndCompanyAndGakutika", {gakutikaTitle: this.gakutika.title, gakutikaId: this.gakutika.id, companyName: userAndCompanyInfo.companyName, actionName: "gakutika/fetchGakutika" })
       .then(() => {
         this.userAndCompanyFormShowFlag = false;
         this.$store.dispatch("flashMessage/setSuccessMessage", {

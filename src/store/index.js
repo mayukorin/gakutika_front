@@ -545,13 +545,15 @@ const userAndCompaniesModule = {
       });
     },
     createUserAndCompanyAndGakutika(context, payload) {
+      console.log("aaaa");
+      console.log(payload.gakutikaTitle);
       return api({
         method: "post",
         url: "/user_and_company_and_gakutikas",
         data: {
           user_and_company_and_gakutika: {
             company_name: payload.companyName,
-            gakutika_id: payload.gakutikaId,
+            gakutika_title: payload.gakutikaTitle,
           },
         },
       }).then((response) => {
