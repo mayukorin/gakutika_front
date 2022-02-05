@@ -443,6 +443,7 @@ const gakutikaModule = {
   },
   actions: {
     fetchGakutika(context, payload) {
+      console.log(payload.gakutikaId);
       return api({
         method: "get",
         url: "/gakutikas/" + payload.gakutikaId,

@@ -129,12 +129,11 @@ export default {
           });
       });
     },
-    handleDeleteUserAndCompanyAndGakutika: function(...args) {
-
-      const [deleteUserAndCompanyAndGakutikaId, gakutikaId] = args;
+    handleDeleteUserAndCompanyAndGakutika: function(deleteUserAndCompanyAndGakutikaId) {
+      
       let actionName = 'gakutika/fetchGakutika';
 
-      return this.$store.dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId, gakutikaId: gakutikaId, actionName })
+      return this.$store.dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId, gakutikaId: this.gakutika.id, actionName })
       .then(() => {
         this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["話す学チカから削除しました"],
