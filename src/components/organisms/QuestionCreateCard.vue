@@ -20,7 +20,7 @@ export default {
       console.log("質問");
       console.log(this.$store.state.questions.questions);
       return this.$store
-        .dispatch("gakutika/createQuestion", questionInfo)
+        .dispatch("questions/createQuestion", questionInfo)
         .then(() => {
           this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["新しい質問を保存しました"],

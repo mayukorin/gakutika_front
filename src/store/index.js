@@ -270,35 +270,12 @@ const gakutikasModule = {
 const questionModule = {
   namespaced: true,
   state: {
-    questions: ["abc"],
+    questions: [],
   },
   mutations: {
     setQuestions(state, payload) {
-      console.log("こっちはデテキルヨ");
-      console.log(state.questions);
       state.questions = payload.questions;
     },
-    pushQuestions(state, payload) {
-      console.log("年迎えたい");
-      console.log(payload.newQuestion);
-      console.log(state.questions);
-      state.questions.push(payload.newQuestion);
-    },
-    setUpdatedQuestion(state, payload) {
-      const question = state.questions.find(
-        (question) => question.id == payload.updatedQuestion.id
-      );
-      question.query = payload.updatedQuestion.query;
-      question.answer = payload.updatedQuestion.answer;
-      question.day = payload.updatedQuestion.day;
-      question.companyName = payload.updatedQuestion.companyName;
-    },
-    deleteQuestion(state, payload) {
-      const question = state.questions.find(
-        (question) => question.id == payload.deleteQuestionId
-      );
-      state.questions.splice(state.questions.indexOf(question), 1);
-    }
   },
   getters: {
     getQuestionsSortedByDay(state) {
@@ -310,7 +287,6 @@ const questionModule = {
   },
   actions: {
     createQuestion(context, payload) {
-      console.log(payload);
       return api({
         method: "post",
         url: "/questions",
@@ -325,14 +301,10 @@ const questionModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        return context.commit("pushQuestions", { newQuestion: response.data });
+        context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
-    fetchQuestions(context, payload) {
-      return context.commit("setQuestions", { questions: payload.questions });
-    },
     updateQuestion(context, payload) {
-      console.log(payload);
       return api({
         method: "patch",
         url: "/questions/" + payload.id,
@@ -346,9 +318,8 @@ const questionModule = {
           },
         },
       }).then((response) => {
-        return context.commit("setUpdatedQuestion", {
-          updatedQuestion: response.data,
-        });
+        console.log(response.data);
+        context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
     destoryQuestion(context, payload) {
@@ -357,10 +328,7 @@ const questionModule = {
         url: "/questions/" + payload.id,
       }).then((response) => {
         console.log(response);
-        console.log(context);
-        return context.commit("deleteQuestion", {
-          deleteQuestionId: payload.id
-        });
+        context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       })
     }
   },
@@ -450,8 +418,12 @@ const gakutikaModule = {
       }).then((response) => {
         context.commit("setGakutika", { gakutika: response.data });
         context.commit("userAndCompanies/setUserAndCompanies", { userAndCompanies: response.data.user_and_companies }, {root: true });
+        console.log("why");
+        console.log(response.data.questions);
+        context.commit("questions/setQuestions", { questions: response.data.questions }, {root: true });
       });
     },
+    /*
     createQuestion(context, payload) {
       return api({
         method: "post",
@@ -497,15 +469,7 @@ const gakutikaModule = {
         context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
-    destroyUserAndCompanyAndGakutika(context, payload) {
-      return api({
-        method: "delete",
-        url: "/user_and_company_and_gakutikas/" + payload.id,
-      }).then((response) => {
-        console.log(response);
-        console.log(context);
-      });
-    },
+    */
   }
 }
 const userAndCompaniesModule = {
@@ -517,18 +481,6 @@ const userAndCompaniesModule = {
     setUserAndCompanies(state, payload) {
       state.userAndCompanies = payload.userAndCompanies;
     },
-    deleteUserAndCompanyAndGakutika(state, payload) {
-      const user_and_company = state.userAndCompanies.find(
-        (user_and_company) => user_and_company.id == payload.userAndCompanyId
-      );
-      const user_and_company_and_gakutika = user_and_company.user_and_company_and_gakutikas.find(
-        (user_and_company_and_gakutika) => user_and_company_and_gakutika.id == payload.userAndCompanyAndGakutikaId
-      );
-      user_and_company.user_and_company_and_gakutikas.splice(user_and_company.user_and_company_and_gakutikas.indexOf(user_and_company_and_gakutika), 1);
-      if (user_and_company.user_and_company_and_gakutikas.length == 0) {
-        state.userAndCompanies.splice(state.userAndCompanies.indexOf(user_and_company));
-      }
-    }
   },
   getters: {
     getUserAndCompanies(state) {
@@ -546,8 +498,6 @@ const userAndCompaniesModule = {
       });
     },
     createUserAndCompanyAndGakutika(context, payload) {
-      console.log("aaaa");
-      console.log(payload.gakutikaTitle);
       return api({
         method: "post",
         url: "/user_and_company_and_gakutikas",

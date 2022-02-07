@@ -25,7 +25,7 @@ export default {
     handleUpdate: function (questionInfo) {
       console.log(questionInfo);
       return this.$store
-        .dispatch("gakutika/updateQuestion", questionInfo)
+        .dispatch("questions/updateQuestion", questionInfo)
         .then(() => {
           this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["質問を更新しました"],
