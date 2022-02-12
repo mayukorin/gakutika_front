@@ -63,9 +63,6 @@ export default {
     DayPicker,
   },
   props: {
-    onupdate: {
-      type: Function,
-    },
     question: {
       type: Object,
     },
@@ -85,14 +82,15 @@ export default {
           this.$nextTick()
             .then(() => {
               console.log(this.loadFlag);
-              return this.onupdate({
+              console.log(this);
+              return this.$emit('update-button-click', {
                 query: this.editedQuestion.query,
                 answer: this.editedQuestion.answer,
                 companyName: this.editedQuestion.companyName,
                 day: this.editedQuestion.day,
                 gakutikaId: this.$route.params.id,
                 id: this.editedQuestion.id,
-              });
+              })
             })
             .finally(() => {
               this.loadFlag = false;

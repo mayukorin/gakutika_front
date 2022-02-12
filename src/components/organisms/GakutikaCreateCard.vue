@@ -4,7 +4,7 @@
       <span class="headline">学チカ作成</span>
     </v-card-title>
     <v-card-text>
-      <GakutikaCreateForm :oncreate="handleCreate" />
+      <GakutikaCreateForm @create-button-click="handleCreate" />
     </v-card-text>
   </v-card>
 </template>

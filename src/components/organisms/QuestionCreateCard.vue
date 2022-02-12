@@ -4,7 +4,7 @@
       <span class="headline">質問作成</span>
     </v-card-title>
     <v-card-text>
-      <QuestionCreateForm :oncreate="handleCreate" />
+      <QuestionCreateForm @create-button-click="handleCreate" />
     </v-card-text>
   </v-card>
 </template>
@@ -17,8 +17,7 @@ export default {
   },
   methods: {
     handleCreate: function (questionInfo) {
-      console.log("質問");
-      console.log(this.$store.state.questions.questions);
+      
       return this.$store
         .dispatch("questions/createQuestion", questionInfo)
         .then(() => {

@@ -41,18 +41,12 @@ export default {
     DayPicker,
   },
   props: {
-    createUserAndCompany: {
-      type: Function,
-    },
     userAndCompanyId: {
       type: Number,
     },
     companyName: {
         type: String,
     },
-    updateUserAndCompany: {
-        type: Function,
-    }
   },
   data() {
     return {
@@ -72,7 +66,8 @@ export default {
           this.$nextTick()
             .then(() => {
               console.log(this.loadFlag);
-              return this.updateUserAndCompany({
+              console.log(this);
+              return this.$emit('update-button-click', {
                 companyName: this.editedcompanyName,
                 latestInterviewDay: this.latestInterviewDay,
                 userAndCompanyId: this.userAndCompanyId,

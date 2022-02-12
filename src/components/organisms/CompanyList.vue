@@ -5,11 +5,12 @@
         v-for="user_and_company in user_and_companies"
         :key="user_and_company.id"
         :user_and_company="user_and_company"
-        @deleteUserAndCompanyAndGakutika="onUserAndCompanyAndGakutikaDelete"
-        @deleteUserAndCompany="onUserAndCompanyDelete"
+        @user-and-company-and-gakutika-delete-button-click="handleDeleteUserAndCompanyAndGakutika"
+        @user-and-company-delete-button-click="handleDeleteUserAndCompany"
         :createUserAndCompanyAndGakutika="userAndCompanyAndGakutikaCreate"
-        :updateUserAndCompany="onUserAndCompanyUpdate"
-      />
+        :gakutika-id="gakutikaId"
+        :store-action-name="storeActionName"
+      /> 
     </v-expansion-panels>
   </div>
 </template>
@@ -25,19 +26,43 @@ export default {
     user_and_companies: {
       type: Array,
     },
-    onUserAndCompanyAndGakutikaDelete: {
-      type: Function,
-    },
     userAndCompanyAndGakutikaCreate: {
       type: Function,
     },
-    onUserAndCompanyDelete: {
-      type: Function,
+    gakutikaId: {
+      type: Number,
+      default: 0
     },
-    onUserAndCompanyUpdate: {
-      type: Function,
-    },
+    storeActionName: {
+      type: String,
+    }
   },
+  methods: {
+    handleDeleteUserAndCompanyAndGakutika: function(deleteUserAndCompanyAndGakutikaId) {
+      return this.$store.dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {
+        userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId, 
+        gakutikaId: this.gakutikaId, 
+        actionName: this.storeActionName 
+      })
+      .then(() => {
+        this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["話す学チカから削除しました"],
+          });
+      })
+    },
+    handleDeleteUserAndCompany: function (userAndCompanyId) {
+      return this.$store.dispatch("userAndCompanies/destroyUserAndCompany", {
+        userAndCompanyId: userAndCompanyId, 
+        gakutikaId: this.gakutikaId, 
+        actionName: this.storeActionName,
+      })
+      .then(() => {
+        this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["企業を削除しました"],
+          });
+      })
+    },
+  }
   
 };
 </script>

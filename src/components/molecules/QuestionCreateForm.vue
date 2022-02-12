@@ -71,11 +71,6 @@ export default {
     DayPicker,
     MonthPicker,
   },
-  props: {
-    oncreate: {
-      type: Function,
-    },
-  },
   data() {
     return {
       query: "",
@@ -97,7 +92,7 @@ export default {
           this.$nextTick()
             .then(() => {
               console.log(this.loadFlag);
-              return this.oncreate({
+              this.$emit('create-button-click', {
                 query: this.query,
                 answer: this.answer,
                 companyName: this.companyName,

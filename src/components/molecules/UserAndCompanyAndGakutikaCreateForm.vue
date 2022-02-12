@@ -30,9 +30,6 @@ export default {
     Button,
   },
   props: {
-    createUserAndCompanyAndGakutika: {
-      type: Function,
-    },
     companyName: {
       type: String,
     },
@@ -51,7 +48,7 @@ export default {
           this.$nextTick()
             .then(() => {
               console.log(this.loadFlag);
-              return this.createUserAndCompanyAndGakutika({
+              this.$emit('create-button-click', {
                 companyName: this.companyName,
                 gakutikaTitle: this.gakutikaTitle,
               });

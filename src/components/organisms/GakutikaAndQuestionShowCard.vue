@@ -34,10 +34,8 @@
     <br>
     <CompanyList 
       :user_and_companies="userAndCompanies" 
-      :onUserAndCompanyAndGakutikaDelete="handleDeleteUserAndCompanyAndGakutika" 
-      :userAndCompanyAndGakutikaCreate="handleCreateUserAndCompanyAndGakutika"
-      :onUserAndCompanyDelete="handleDeleteUserAndCompany"
-      :onUserAndCompanyUpdate="handleUpdateUserAndCompany"
+      :gakutika-id="gakutika.id"
+      store-action-name="gakutika/fetchGakutika"
       v-show="!loading" />
     <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
@@ -53,7 +51,7 @@
         @uploaded="questionFormShowFlag = false"
       />
     </form-dialog>
-    <QuestionList :questions="questions" :ondelete="handleDeleteQuestion" v-show="!loading" />
+    <QuestionList :questions="questions" :gakutika-id="gakutika.id" v-show="!loading" />
   </div>
 </template>
 <script>
@@ -121,25 +119,6 @@ export default {
     }
   },
   methods: {
-    handleDeleteQuestion: function(deleteQuestionId) {
-      return this.$store.dispatch("questions/destoryQuestion", {id: deleteQuestionId, gakutikaId: this.gakutika.id })
-      .then(() => {
-          this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["質問を削除しました"],
-          });
-      });
-    },
-    handleDeleteUserAndCompanyAndGakutika: function(deleteUserAndCompanyAndGakutikaId) {
-      
-      let actionName = 'gakutika/fetchGakutika';
-
-      return this.$store.dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId, gakutikaId: this.gakutika.id, actionName })
-      .then(() => {
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["話す学チカから削除しました"],
-          });
-      })
-    },
     handleCreateUserAndCompany: function (userAndCompanyInfo) {
       console.log(userAndCompanyInfo);
       // this.userAndCompanyFormShowFlag = false;
@@ -150,39 +129,6 @@ export default {
             messages: ["話す企業に追加しました"],
           });
       })
-    },
-    handleCreateUserAndCompanyAndGakutika: function(userAndCompanyAndGakutikaInfo) {
-      console.log(userAndCompanyAndGakutikaInfo);
-      // this.userAndCompanyFormShowFlag = false;
-      return this.$store.dispatch("userAndCompanies/createUserAndCompanyAndGakutika", {gakutikaTitle: userAndCompanyAndGakutikaInfo.gakutikaTitle, gakutikaId: this.gakutika.id, companyName: userAndCompanyAndGakutikaInfo.companyName, actionName: "gakutika/fetchGakutika" })
-      .then(() => {
-        this.userAndCompanyFormShowFlag = false;
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["話す企業に追加しました"],
-          });
-      })
-    },
-    handleDeleteUserAndCompany: function(userAndCompanyId) {
-      console.log("hakuzitu");
-      console.log(userAndCompanyId);
-      return this.$store.dispatch("userAndCompanies/destroyUserAndCompany", {userAndCompanyId: userAndCompanyId, gakutikaId: this.gakutika.id, actionName: "gakutika/fetchGakutika"})
-      .then(() => {
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["企業を削除しました"],
-          });
-      })
-    },
-    handleUpdateUserAndCompany: function(userAndCompanyInfo) {
-      console.log("hakuzitu");
-      console.log(userAndCompanyInfo);
-      console.log("さく");
-      return this.$store.dispatch("userAndCompanies/updateUserAndCompany", {userAndCompanyId: userAndCompanyInfo.userAndCompanyId, companyName: userAndCompanyInfo.companyName, gakutikaId: this.gakutika.id, actionName: "gakutika/fetchGakutika"})
-      .then(() => {
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["企業名を編集しました"],
-          });
-      })
-      
     },
   }
 };

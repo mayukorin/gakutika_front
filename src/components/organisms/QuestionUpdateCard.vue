@@ -4,7 +4,7 @@
       <span class="headline">質問更新</span>
     </v-card-title>
     <v-card-text>
-      <QuestionUpdateForm :onupdate="handleUpdate" :question="question" />
+      <QuestionUpdateForm @update-button-click="handleUpdate" :question="question" />
     </v-card-text>
   </v-card>
 </template>

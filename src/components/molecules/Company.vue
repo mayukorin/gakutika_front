@@ -15,11 +15,13 @@
               slot="formCard"
               :companyName="user_and_company.company.name"
               :userAndCompanyId="user_and_company.id"
-              :onUserAndCompanyUpdate="onUserAndCompanyUpdate"
+              @uploaded="formShowFlag = updateFormShowFlag"
+              :gakutika-id="gakutikaId"
+              :store-action-name="storeActionName"
             />
           </form-dialog>
         </v-col>
-        <v-col cols="6" md="2" @click.stop="$emit('deleteUserAndCompany', user_and_company.id)">
+        <v-col cols="6" md="2" @click.stop="$emit('user-and-company-delete-button-click', user_and_company.id)">
           <div class="caption grey--text">削除</div>
           <v-icon>mdi-delete</v-icon>
         </v-col>
@@ -34,8 +36,10 @@
         </div>
         <UserAndCompanyAndGakutikaCreateCard
           slot="formCard"
+          @created="formShowFlag = false"
           :companyName="user_and_company.company.name"
-          :onUserAndCompanyAndGakutikaCreate="onUserAndCompanyAndGakutikaCreate"
+          :gakutika-id="gakutikaId"
+          :store-action-name="storeActionName"
         />
       </form-dialog>
       <div
@@ -49,7 +53,7 @@
           <router-link :to="{name: 'GakutikaAndQuestionShow', params: { id: user_and_company_and_gakutika.gakutika.id }}">
             詳細
           </router-link>&nbsp;
-          <span @click.stop="$emit('deleteUserAndCompanyAndGakutika', user_and_company_and_gakutika.id)">話す学チカから削除</span>
+          <span @click.stop="$emit('user-and-company-and-gakutika-delete-button-click', user_and_company_and_gakutika.id)">話す学チカから削除</span>
         </div>
       </div>
     </v-expansion-panel-content>
@@ -71,11 +75,12 @@ export default {
     user_and_company: {
       type: Object,
     },
-    createUserAndCompanyAndGakutika: {
-      type: Function,
+    gakutikaId: {
+      type: Number,
+      default: 0
     },
-    updateUserAndCompany: {
-      type: Function,
+    storeActionName: {
+      type: String,
     }
   },
   data() {
@@ -84,19 +89,5 @@ export default {
       updateFormShowFlag: false,
     };
   },
-  methods: {
-    onUserAndCompanyAndGakutikaCreate: function(userAndCompanyAndGakutikaInfo) {
-      return this.createUserAndCompanyAndGakutika(userAndCompanyAndGakutikaInfo).
-      then(() => {
-        this.formShowFlag = false;
-      });
-    },
-    onUserAndCompanyUpdate: function(userAndCompanyInfo) {
-      return this.updateUserAndCompany(userAndCompanyInfo).
-      then(() => {
-        this.updateFormShowFlag = false;
-      });
-    }
-  }
 };
 </script>
