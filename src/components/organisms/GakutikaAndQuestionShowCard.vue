@@ -103,7 +103,7 @@ export default {
   computed: {
     gakutika: {
       get() {
-        console.log(this.$store.state.gakutikas.gakutika);
+        console.log(this.$store.getters["gakutika/getGakutika"]);
         return this.$store.getters["gakutika/getGakutika"];
       },
     },

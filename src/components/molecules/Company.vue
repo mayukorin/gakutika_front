@@ -22,7 +22,11 @@
           </form-dialog>
         </v-col>
         <v-col cols="6" md="2" @click.stop="$emit('user-and-company-delete-button-click', userAndCompany.id)">
-          <div class="caption grey--text">削除</div>
+          <div class="caption grey--text">受ける企業から削除</div>
+          <v-icon>mdi-delete</v-icon>
+        </v-col>
+        <v-col v-if ="userAndCompany.user_and_company_and_particular_gakutika != null" cols="6" md="2" @click.stop="$emit('user-and-company-and-gakutika-delete-button-click', userAndCompany.user_and_company_and_particular_gakutika.id)">
+          <div class="caption grey--text">話す企業から削除</div>
           <v-icon>mdi-delete</v-icon>
         </v-col>
       </v-row>
