@@ -4,7 +4,7 @@
       <span class="headline">話す学チカ追加</span>
     </v-card-title>
     <v-card-text>
-      <UserAndCompanyAndGakutikaCreateForm @create-button-click="handleCreate" :companyName="companyName"/>
+      <UserAndCompanyAndGakutikaCreateForm @create-button-click="handleCreate" :company-name="companyName"/>
     </v-card-text>
   </v-card>
 </template>

@@ -2,12 +2,11 @@
   <div>
     <v-expansion-panels accordion>
       <Company
-        v-for="user_and_company in user_and_companies"
-        :key="user_and_company.id"
-        :user_and_company="user_and_company"
+        v-for="userAndCompany in userAndCompanies"
+        :key="userAndCompany.id"
+        :user-and-company="userAndCompany"
         @user-and-company-and-gakutika-delete-button-click="handleDeleteUserAndCompanyAndGakutika"
         @user-and-company-delete-button-click="handleDeleteUserAndCompany"
-        :createUserAndCompanyAndGakutika="userAndCompanyAndGakutikaCreate"
         :gakutika-id="gakutikaId"
         :store-action-name="storeActionName"
       /> 
@@ -23,11 +22,8 @@ export default {
     Company,
   },
   props: {
-    user_and_companies: {
+    userAndCompanies: {
       type: Array,
-    },
-    userAndCompanyAndGakutikaCreate: {
-      type: Function,
     },
     gakutikaId: {
       type: Number,

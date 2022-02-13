@@ -6,8 +6,8 @@
     <v-card-text>
       <UserAndCompanyUpdateForm 
         @update-button-click="handleUpdate"
-        :userAndCompanyId="userAndCompanyId"
-        :companyName="companyName"
+        :user-and-company-id="userAndCompanyId"
+        :company-name="companyName"
     />
     </v-card-text>
   </v-card>

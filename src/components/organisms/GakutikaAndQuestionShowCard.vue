@@ -3,7 +3,7 @@
     <ProgressCircular v-show="loading" />
     <form-dialog :propsFormShowFlag.sync="formShowFlag" v-show="!loading">
       <Button
-        :classString="'success ml-1 mt-2 mb-2'"
+        :class-string="'success ml-1 mt-2 mb-2'"
         slot="btn"
         @click="formShowFlag = true"
       >
@@ -19,7 +19,7 @@
     <br />
     <form-dialog :propsFormShowFlag.sync="userAndCompanyFormShowFlag">
       <Button
-        :classString="'success ml-1 mt-2 mb-2'"
+        :class-string="'success ml-1 mt-2 mb-2'"
         slot="btn"
         @click="userAndCompanyFormShowFlag = true"
       >
@@ -33,14 +33,14 @@
     </form-dialog>
     <br>
     <CompanyList 
-      :user_and_companies="userAndCompanies" 
+      :user-and-companies="userAndCompanies" 
       :gakutika-id="gakutika.id"
       store-action-name="gakutika/fetchGakutika"
       v-show="!loading" />
     <br />
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button
-        :classString="'success ml-1 mt-2 mb-2'"
+        :class-string="'success ml-1 mt-2 mb-2'"
         slot="btn"
         @click="questionFormShowFlag = true"
       >

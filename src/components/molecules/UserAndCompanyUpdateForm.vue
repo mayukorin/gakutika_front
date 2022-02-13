@@ -18,7 +18,7 @@
           <v-col cols="12">
             <DayPicker
               :propsDay.sync="latestInterviewDay"
-              :labelName="'直近の面接日'"
+              :label-name="'直近の面接日'"
               @input="handleDaySet"
             />
           </v-col>

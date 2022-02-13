@@ -3,7 +3,7 @@
     <v-expansion-panel-header>
       <v-row>
         <v-col cols="12" md="7">
-          <div>{{ user_and_company.company.name }}</div>
+          <div>{{ userAndCompany.company.name }}</div>
         </v-col>
         <v-col cols="6" md="2">
           <form-dialog :propsFormShowFlag.sync="updateFormShowFlag">
@@ -13,15 +13,15 @@
             </div>
             <UserAndCompanyUpdateCard
               slot="formCard"
-              :companyName="user_and_company.company.name"
-              :userAndCompanyId="user_and_company.id"
-              @uploaded="formShowFlag = updateFormShowFlag"
+              :company-name="userAndCompany.company.name"
+              :user-and-company-id="userAndCompany.id"
+              @uploaded="updateFormShowFlag = false"
               :gakutika-id="gakutikaId"
               :store-action-name="storeActionName"
             />
           </form-dialog>
         </v-col>
-        <v-col cols="6" md="2" @click.stop="$emit('user-and-company-delete-button-click', user_and_company.id)">
+        <v-col cols="6" md="2" @click.stop="$emit('user-and-company-delete-button-click', userAndCompany.id)">
           <div class="caption grey--text">削除</div>
           <v-icon>mdi-delete</v-icon>
         </v-col>
@@ -37,23 +37,23 @@
         <UserAndCompanyAndGakutikaCreateCard
           slot="formCard"
           @created="formShowFlag = false"
-          :companyName="user_and_company.company.name"
+          :company-name="userAndCompany.company.name"
           :gakutika-id="gakutikaId"
           :store-action-name="storeActionName"
         />
       </form-dialog>
       <div
-        v-for="user_and_company_and_gakutika in user_and_company.user_and_company_and_gakutikas"
-        :key="user_and_company_and_gakutika.id"
+        v-for="userAndCompanyAndGakutika in userAndCompany.user_and_company_and_gakutikas"
+        :key="userAndCompanyAndGakutika.id"
       >
         <div>
-          {{ user_and_company_and_gakutika.gakutika.title }}
+          {{ userAndCompanyAndGakutika.gakutika.title }}
         </div>
         <div>
-          <router-link :to="{name: 'GakutikaAndQuestionShow', params: { id: user_and_company_and_gakutika.gakutika.id }}">
+          <router-link :to="{name: 'GakutikaAndQuestionShow', params: { id: userAndCompanyAndGakutika.gakutika.id }}">
             詳細
           </router-link>&nbsp;
-          <span @click.stop="$emit('user-and-company-and-gakutika-delete-button-click', user_and_company_and_gakutika.id)">話す学チカから削除</span>
+          <span @click.stop="$emit('user-and-company-and-gakutika-delete-button-click', userAndCompanyAndGakutika.id)">話す学チカから削除</span>
         </div>
       </div>
     </v-expansion-panel-content>
@@ -72,7 +72,7 @@ export default {
     FormDialog,
   },
   props: {
-    user_and_company: {
+    userAndCompany: {
       type: Object,
     },
     gakutikaId: {

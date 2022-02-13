@@ -4,8 +4,8 @@
     <v-row class="ma-0 mb-3" v-show="!loading">
       <Tooltip
         :textFlag="!isSortProp('id')"
-        :colorString="'grey'"
-        :classString="'mt-2 ml-1'"
+        :color-string="'grey'"
+        :class-string="'mt-2 ml-1'"
         @click="setSortPropAndReverseFlag('id', true)"
         :icon="'mdi-folder'"
         :caption="'作成順'"
@@ -13,14 +13,14 @@
       />
       <Tooltip
         :textFlag="!isSortProp('toughRank')"
-        :colorString="'grey'"
-        :classString="'mt-2 ml-1'"
+        :color-string="'grey'"
+        :class-string="'mt-2 ml-1'"
         @click="setSortPropAndReverseFlag('toughRank', false)"
         :icon="'mdi-cards-heart'"
         :caption="'頑張り順'"
         :explain="'頑張り順で並び替え'"
       />
-      <Button :classString="'success ml-1 mt-2'" @click="changeOrderFlag">
+      <Button :class-string="'success ml-1 mt-2'" @click="changeOrderFlag">
         <div v-show="!orderFlag">頑張り順を変更</div>
         <div v-show="orderFlag">変更完了</div>
       </Button>
@@ -35,7 +35,7 @@
     />
     <form-dialog :propsFormShowFlag.sync="formShowFlag">
       <Button
-        :classString="'success ml-1 mt-2'"
+        :class-string="'success ml-1 mt-2'"
         slot="btn"
         @click="formShowFlag = true"
       >
