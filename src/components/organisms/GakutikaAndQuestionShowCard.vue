@@ -27,7 +27,11 @@
       </Button>
       <userAndCompanyCreateCard
         slot="formCard"
-        :onUserAndCompanyCreate="handleCreateUserAndCompany"
+        store-action-name="userAndCompanies/createUserAndCompanyAndGakutika"
+        next-store-action-name="gakutika/fetchGakutika"
+        :gakutika-title="gakutika.title"
+        :gakutika-id="gakutika.id"
+        @created="userAndCompanyFormShowFlag = false"
         v-show="!loading"
       />
     </form-dialog>
@@ -118,18 +122,5 @@ export default {
       }
     }
   },
-  methods: {
-    handleCreateUserAndCompany: function (userAndCompanyInfo) {
-      console.log(userAndCompanyInfo);
-      // this.userAndCompanyFormShowFlag = false;
-      return this.$store.dispatch("userAndCompanies/createUserAndCompanyAndGakutika", {gakutikaTitle: this.gakutika.title, gakutikaId: this.gakutika.id, companyName: userAndCompanyInfo.companyName, actionName: "gakutika/fetchGakutika" })
-      .then(() => {
-        this.userAndCompanyFormShowFlag = false;
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["話す企業に追加しました"],
-          });
-      })
-    },
-  }
 };
 </script>

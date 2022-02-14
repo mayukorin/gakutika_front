@@ -4,7 +4,7 @@
       <span class="headline">面接予定の企業追加</span>
     </v-card-title>
     <v-card-text>
-      <UserAndCompanyCreateForm :createUserAndCompany="onUserAndCompanyCreate" />
+      <UserAndCompanyCreateForm @create-button-click="handleCreate" />
     </v-card-text>
   </v-card>
 </template>
@@ -16,9 +16,40 @@ export default {
     UserAndCompanyCreateForm,
   },
   props: {
-      onUserAndCompanyCreate: {
-          type: Function,
+      
+      gakutikaId: {
+        type: Number,
+        default: 0
+      },
+      storeActionName: {
+        type: String,
+        default: "",
+      },
+      gakutikaTitle: {
+        type: String
+      },
+      nextStoreActionName: {
+        type: String,
+        default: "",
       }
   },
+  methods: {
+    handleCreate: function (userAndCompanyInfo) {
+      console.log(userAndCompanyInfo);
+      // this.userAndCompanyFormShowFlag = false;
+      return this.$store.dispatch("userAndCompanies/createUserAndCompany", {
+        gakutikaTitle: this.gakutikaTitle, 
+        gakutikaId: this.gakutikaId, 
+        companyName: userAndCompanyInfo.companyName, 
+        actionName: this.storeActionName,
+        nextActionName: this.nextStoreActionName})
+      .then(() => {
+        this.$emit('created');
+        this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["話す企業に追加しました"],
+          });
+      })
+    },
+  }
 };
 </script>

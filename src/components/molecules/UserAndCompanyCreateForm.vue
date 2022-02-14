@@ -40,11 +40,6 @@ export default {
     Button,
     DayPicker,
   },
-  props: {
-    createUserAndCompany: {
-      type: Function,
-    },
-  },
   data() {
     return {
       loadFlag: false,
@@ -62,7 +57,7 @@ export default {
           this.$nextTick()
             .then(() => {
               console.log(this.loadFlag);
-              return this.createUserAndCompany({
+              return this.$emit('create-button-click', {
                 companyName: this.companyName,
                 latestInterviewDay: this.latestInterviewDay,
               });

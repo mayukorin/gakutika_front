@@ -512,6 +512,22 @@ const userAndCompaniesModule = {
         context.dispatch(payload.actionName, payload, { root: true });
       })
     },
+    createUserAndCompany(context, payload) {
+      return api({
+        method: "post",
+        url: "/user_and_companies",
+        data: {
+          user_and_company: {
+            company_name: payload.companyName,
+          },
+        },
+      }).then((response) => {
+        console.log(response);
+        let actionName = payload.actionName;
+        payload.actionName = payload.nextActionName;
+        context.dispatch(actionName, payload, { root: true });
+      })
+    },
     destroyUserAndCompany(context, payload) {
       return api({
         method: "delete",
