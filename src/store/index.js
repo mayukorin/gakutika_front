@@ -522,9 +522,10 @@ const userAndCompaniesModule = {
           },
         },
       }).then((response) => {
+        console.log("thennn");
         console.log(response);
         let actionName = payload.actionName;
-        payload.actionName = payload.nextActionName;
+        // payload.actionName = payload.nextActionName;
         context.dispatch(actionName, payload, { root: true });
       })
     },

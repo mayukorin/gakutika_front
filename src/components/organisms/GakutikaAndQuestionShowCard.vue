@@ -27,8 +27,8 @@
       </Button>
       <userAndCompanyCreateCard
         slot="formCard"
-        store-action-name="userAndCompanies/createUserAndCompanyAndGakutika"
-        next-store-action-name="gakutika/fetchGakutika"
+        store-action-name="gakutika/fetchGakutika"
+        create-store-action-name="createUserAndCompanyAndGakutika"
         :gakutika-title="gakutika.title"
         :gakutika-id="gakutika.id"
         @created="userAndCompanyFormShowFlag = false"

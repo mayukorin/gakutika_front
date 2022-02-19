@@ -31,13 +31,19 @@ export default {
       nextStoreActionName: {
         type: String,
         default: "",
+      },
+      createStoreActionName: {
+        type: String,
+        default: "createUserAndCompany"
       }
   },
   methods: {
     handleCreate: function (userAndCompanyInfo) {
       console.log(userAndCompanyInfo);
       // this.userAndCompanyFormShowFlag = false;
-      return this.$store.dispatch("userAndCompanies/createUserAndCompany", {
+      console.log("これから");
+      console.log(this.createStoreActionName);
+      return this.$store.dispatch("userAndCompanies/"+this.createStoreActionName, {
         gakutikaTitle: this.gakutikaTitle, 
         gakutikaId: this.gakutikaId, 
         companyName: userAndCompanyInfo.companyName, 
