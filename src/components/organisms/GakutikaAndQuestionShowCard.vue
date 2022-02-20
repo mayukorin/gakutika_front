@@ -11,7 +11,7 @@
       </Button>
       <GakutikaUpdateCard
         slot="formCard"
-        @uploaded="formShowFlag = false"
+        @updated="formShowFlag = false"
         :gakutika="gakutika"
       />
     </form-dialog>
@@ -52,7 +52,7 @@
       </Button>
       <QuestionCreateCard
         slot="formCard"
-        @uploaded="questionFormShowFlag = false"
+        @created="questionFormShowFlag = false"
       />
     </form-dialog>
     <QuestionList :questions="questions" :gakutika-id="gakutika.id" v-show="!loading" />

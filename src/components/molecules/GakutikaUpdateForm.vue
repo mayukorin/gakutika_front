@@ -61,19 +61,14 @@ export default {
     gakutika: {
       type: Object,
     },
+    loadFlag: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      /*
-      title: this.gakutika.title,
-      content: this.gakutika.content,
-      */
-      loadFlag: false,
       menu: false,
-      /*
-      startMonth: this.gakutika.startMonth,
-      endMonth: this.gakutika.endMonth,
-      */
       editedGakutika: this.gakutika,
     };
   },
@@ -81,13 +76,9 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.loadFlag = true;
           this.$nextTick()
             .then(() => {
               return this.$emit('update-button-click', this.editedGakutika);
-            })
-            .finally(() => {
-              this.loadFlag = false;
             });
         }
       });

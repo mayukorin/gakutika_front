@@ -42,18 +42,22 @@ export default {
   },
   data() {
     return {
-      loadFlag: false,
       companyName: "",
       latestInterviewDay: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
     };
   },
+  props: {
+    loadFlag: {
+      type: Boolean,
+      default: false,
+    },
+  },
   methods: {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.loadFlag = true;
           this.$nextTick()
             .then(() => {
               console.log(this.loadFlag);
@@ -62,9 +66,6 @@ export default {
                 latestInterviewDay: this.latestInterviewDay,
               });
             })
-            .finally(() => {
-              this.loadFlag = false;
-            });
         }
       });
     },

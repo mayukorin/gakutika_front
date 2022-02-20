@@ -47,10 +47,13 @@ export default {
     companyName: {
         type: String,
     },
+    loadFlag: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      loadFlag: false,
       latestInterviewDay: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -62,7 +65,6 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.loadFlag = true;
           this.$nextTick()
             .then(() => {
               console.log(this.loadFlag);
@@ -72,9 +74,6 @@ export default {
                 latestInterviewDay: this.latestInterviewDay,
                 userAndCompanyId: this.userAndCompanyId,
               });
-            })
-            .finally(() => {
-              this.loadFlag = false;
             });
         }
       });

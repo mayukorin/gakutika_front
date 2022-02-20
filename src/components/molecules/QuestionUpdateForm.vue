@@ -66,10 +66,13 @@ export default {
     question: {
       type: Object,
     },
+    loadFlag: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      loadFlag: false,
       menu: false,
       editedQuestion: this.question,
     };
@@ -78,11 +81,8 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.loadFlag = true;
           this.$nextTick()
             .then(() => {
-              console.log(this.loadFlag);
-              console.log(this);
               return this.$emit('update-button-click', {
                 query: this.editedQuestion.query,
                 answer: this.editedQuestion.answer,
@@ -91,9 +91,6 @@ export default {
                 gakutikaId: this.$route.params.id,
                 id: this.editedQuestion.id,
               })
-            })
-            .finally(() => {
-              this.loadFlag = false;
             });
         }
       });

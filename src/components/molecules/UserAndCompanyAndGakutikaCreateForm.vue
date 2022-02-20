@@ -33,10 +33,13 @@ export default {
     companyName: {
       type: String,
     },
+    loadFlag: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      loadFlag: false,
       gakutikaTitle: "",
     };
   },
@@ -44,7 +47,6 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.loadFlag = true;
           this.$nextTick()
             .then(() => {
               console.log(this.loadFlag);
@@ -53,9 +55,6 @@ export default {
                 gakutikaTitle: this.gakutikaTitle,
               });
             })
-            .finally(() => {
-              this.loadFlag = false;
-            });
         }
       });
     },

@@ -16,7 +16,7 @@
             </div>
             <QuestionUpdateCard
               slot="formCard"
-              @uploaded="formShowFlag = false"
+              @updated="formShowFlag = false"
               :question="question"
             />
           </form-dialog>

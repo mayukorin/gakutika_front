@@ -15,7 +15,7 @@
               slot="formCard"
               :company-name="userAndCompany.company.name"
               :user-and-company-id="userAndCompany.id"
-              @uploaded="updateFormShowFlag = false"
+              @updated="updateFormShowFlag = false"
               :gakutika-id="gakutikaId"
               :store-action-name="storeActionName"
             />

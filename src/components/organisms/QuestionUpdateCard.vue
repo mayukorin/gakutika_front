@@ -4,7 +4,7 @@
       <span class="headline">質問更新</span>
     </v-card-title>
     <v-card-text>
-      <QuestionUpdateForm @update-button-click="handleUpdate" :question="question" />
+      <QuestionUpdateForm @update-button-click="handleUpdate" :question="question" :load-flag="loadFlag" />
     </v-card-text>
   </v-card>
 </template>
@@ -21,16 +21,24 @@ export default {
   components: {
     QuestionUpdateForm,
   },
+  data() {
+    return {
+      loadFlag: false,
+    };
+  },
   methods: {
     handleUpdate: function (questionInfo) {
-      console.log(questionInfo);
+      this.loadFlag = true;
       return this.$store
         .dispatch("questions/updateQuestion", questionInfo)
         .then(() => {
           this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["質問を更新しました"],
           });
-          this.$emit("uploaded");
+          this.$emit("updated");
+        })
+        .finally(() => {
+          this.loadFlag = false;
         });
     },
   },

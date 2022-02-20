@@ -75,7 +75,6 @@ export default {
     return {
       query: "",
       answer: "",
-      loadFlag: false,
       menu: false,
       companyName: "",
       day: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -84,14 +83,18 @@ export default {
       startMonth: new Date().toISOString().substr(0, 7),
     };
   },
+  props: {
+    loadFlag: {
+      type: Boolean,
+      default: false,
+    },
+  },
   methods: {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.loadFlag = true;
           this.$nextTick()
             .then(() => {
-              console.log(this.loadFlag);
               this.$emit('create-button-click', {
                 query: this.query,
                 answer: this.answer,
@@ -99,9 +102,6 @@ export default {
                 day: this.day,
                 gakutikaId: this.$route.params.id,
               });
-            })
-            .finally(() => {
-              this.loadFlag = false;
             });
         }
       });

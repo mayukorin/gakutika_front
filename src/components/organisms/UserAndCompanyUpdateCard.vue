@@ -8,6 +8,7 @@
         @update-button-click="handleUpdate"
         :user-and-company-id="userAndCompanyId"
         :company-name="companyName"
+        :load-flag="loadFlag"
     />
     </v-card-text>
   </v-card>
@@ -34,8 +35,14 @@ export default {
         type: String,
       }
   },
+  data() {
+    return {
+      loadFlag: false,
+    };
+  },
   methods: {
     handleUpdate: function (userAndCompanyInfo) {
+      this.loadFlag = true;
       return this.$store.dispatch("userAndCompanies/updateUserAndCompany", {
         userAndCompanyId: userAndCompanyInfo.userAndCompanyId, 
         companyName: userAndCompanyInfo.companyName, 
@@ -46,7 +53,9 @@ export default {
         this.$store.dispatch("flashMessage/setSuccessMessage", {
           messages: ["企業名を更新しました"],
         });
-        this.$emit("uploaded");
+        this.$emit("updated");
+      }).finally(() => {
+        this.loadFlag = false;
       });
     },
   },

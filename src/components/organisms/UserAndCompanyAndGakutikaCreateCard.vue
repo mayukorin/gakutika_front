@@ -4,7 +4,7 @@
       <span class="headline">話す学チカ追加</span>
     </v-card-title>
     <v-card-text>
-      <UserAndCompanyAndGakutikaCreateForm @create-button-click="handleCreate" :company-name="companyName"/>
+      <UserAndCompanyAndGakutikaCreateForm @create-button-click="handleCreate" :company-name="companyName" :load-flag="loadFlag" />
     </v-card-text>
   </v-card>
 </template>
@@ -27,16 +27,23 @@ export default {
         type: String,
       }
   },
+  data() {
+    return {
+      loadFlag: false,
+    };
+  },
   methods: {
     handleCreate: function(userAndCompanyAndGakutikaInfo) {
-      // this.userAndCompanyFormShowFlag = false;
+      this.loadFlag = true;
       return this.$store.dispatch("userAndCompanies/createUserAndCompanyAndGakutika", {gakutikaTitle: userAndCompanyAndGakutikaInfo.gakutikaTitle, gakutikaId: this.gakutikaId, companyName: userAndCompanyAndGakutikaInfo.companyName, actionName: this.storeActionName })
       .then(() => {
         this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["話す企業に追加しました"],
           });
         this.$emit("created");
-      })
+      }).finally(() => {
+        this.loadFlag = false;
+      });
     },
   }
 };

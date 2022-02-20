@@ -4,7 +4,7 @@
       <span class="headline">面接予定の企業追加</span>
     </v-card-title>
     <v-card-text>
-      <UserAndCompanyCreateForm @create-button-click="handleCreate" />
+      <UserAndCompanyCreateForm @create-button-click="handleCreate" :load-flag="loadFlag" />
     </v-card-text>
   </v-card>
 </template>
@@ -37,12 +37,15 @@ export default {
         default: "createUserAndCompany"
       }
   },
+  data() {
+    return {
+      loadFlag: false,
+    };
+  },
   methods: {
     handleCreate: function (userAndCompanyInfo) {
       console.log(userAndCompanyInfo);
-      // this.userAndCompanyFormShowFlag = false;
-      console.log("これから");
-      console.log(this.createStoreActionName);
+      this.loadFlag = true;
       return this.$store.dispatch("userAndCompanies/"+this.createStoreActionName, {
         gakutikaTitle: this.gakutikaTitle, 
         gakutikaId: this.gakutikaId, 
@@ -53,8 +56,10 @@ export default {
         this.$emit('created');
         this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["話す企業に追加しました"],
-          });
-      })
+        })
+      }).finally(() => {
+        this.loadFlag = false;
+      });
     },
   }
 };
