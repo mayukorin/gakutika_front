@@ -1,12 +1,12 @@
 <template>
-  <CompanyList />
+  <CompanyListCard />
 </template>
 <script>
-import CompanyList from "@/components/organisms/CompanyList";
+import CompanyListCard from "@/components/organisms/CompanyListCard";
 export default {
   name: "CompanyListView",
   components: {
-    CompanyList,
+    CompanyListCard,
   },
 };
 </script>

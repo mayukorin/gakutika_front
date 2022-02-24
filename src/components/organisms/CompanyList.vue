@@ -7,6 +7,7 @@
         :user-and-company="userAndCompany"
         @user-and-company-and-gakutika-delete-button-click="handleDeleteUserAndCompanyAndGakutika"
         @user-and-company-delete-button-click="handleDeleteUserAndCompany"
+        @gakutika-show-button-click="handleFetchGakutika"
         :gakutika-id="gakutikaId"
         :store-action-name="storeActionName"
       /> 
@@ -57,6 +58,9 @@ export default {
             messages: ["企業を削除しました"],
           });
       })
+    },
+    handleFetchGakutika: function (gakutikaId) {
+      this.$router.replace("/gakutika/" + gakutikaId);
     },
   }
   

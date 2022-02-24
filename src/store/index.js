@@ -552,6 +552,15 @@ const userAndCompaniesModule = {
         context.dispatch(payload.actionName, payload, { root: true });
       });
     },
+    fetchuserAndCompanies(context) {
+      return api({
+        method: "get",
+        url: "/user_and_companies",
+      }).then((response) => {
+        console.log(response.data);
+        return context.commit("setUserAndCompanies", { userAndCompanies: response.data });
+      });
+    }
 
   }
 }
