@@ -181,18 +181,16 @@ const gakutikasModule = {
       });
     },
     fetchGakutika(context, payload) {
+      console.log(payload.gakutikaId);
       return api({
         method: "get",
-        url: "/gakutikas/" + payload.id,
+        url: "/gakutikas/" + payload.gakutikaId,
       }).then((response) => {
-        console.log("api");
-        console.log(response.data);
         context.commit("setGakutika", { gakutika: response.data });
-        return context.dispatch(
-          "questions/fetchQuestions",
-          { questions: response.data.questions },
-          { root: true }
-        );
+        context.commit("userAndCompanies/setUserAndCompanies", { userAndCompanies: response.data.user_and_companies }, {root: true });
+        console.log("why");
+        console.log(response.data.questions);
+        context.commit("questions/setQuestions", { questions: response.data.questions }, {root: true });
       });
     },
     destoryGakutika(context, payload) {
@@ -301,7 +299,7 @@ const questionModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
+        context.dispatch("gakutikas/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
     updateQuestion(context, payload) {
@@ -319,7 +317,7 @@ const questionModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
+        context.dispatch("gakutikas/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
     destoryQuestion(context, payload) {
@@ -328,42 +326,12 @@ const questionModule = {
         url: "/questions/" + payload.id,
       }).then((response) => {
         console.log(response);
-        context.dispatch("gakutika/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
+        context.dispatch("gakutikas/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       })
     }
   },
 };
 
-const companyModule = {
-  namespaced: true,
-  state: {
-    userAndCompanies: [],
-  },
-  getters: {
-    getCompanies(state) {
-      return state.userAndCompanies; 
-    }
-  },
-  mutations: {
-    setCompanies(state, payload) {
-      state.userAndCompanies = payload.userAndCompanies;
-    },
-  },
-  actions: {
-    fetchCompanyList(context) {
-      return api({
-        method: "get",
-        url: "/companies/",
-      }).then((response) => {
-        console.log(response);
-        console.log(response.data);
-        context.commit("setCompanies", {
-          userAndCompanies: response.data,
-        });
-      });
-    }
-  }
-};
 
 const gakutikaModule = {
   namespaced: true,
@@ -572,7 +540,6 @@ const store = new Vuex.Store({
     gakutikas: gakutikasModule,
     gakutika: gakutikaModule,
     questions: questionModule,
-    companies: companyModule,
     userAndCompanies: userAndCompaniesModule,
   },
 });
