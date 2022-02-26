@@ -136,6 +136,9 @@ const gakutikasModule = {
       if (state.reverseFlag) return sortedGakutikas.reverse();
       else return sortedGakutikas;
     },
+    getGakutika(state) {
+      return state.gakutika;
+    }
   },
   mutations: {
     set(state, payload) {
@@ -152,6 +155,7 @@ const gakutikasModule = {
       state.gakutika.toughRank = payload.gakutika.toughRank;
       */
      state.gakutika = payload.gakutika;
+     console.log(state.gakutika);
     },
     clear(state) {
       state.gakutikas = [];
@@ -186,10 +190,9 @@ const gakutikasModule = {
         method: "get",
         url: "/gakutikas/" + payload.gakutikaId,
       }).then((response) => {
+        console.log(response.data);
         context.commit("setGakutika", { gakutika: response.data });
         context.commit("userAndCompanies/setUserAndCompanies", { userAndCompanies: response.data.user_and_companies }, {root: true });
-        console.log("why");
-        console.log(response.data.questions);
         context.commit("questions/setQuestions", { questions: response.data.questions }, {root: true });
       });
     },

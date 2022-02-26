@@ -56,6 +56,10 @@
       />
     </form-dialog>
     <QuestionList :questions="questions" :gakutika-id="gakutika.id" v-show="!loading" />
+    <div v-for="user_and_company in gakutika.user_and_companies" :key="user_and_company.id">
+      <div>{{ user_and_company.company.name}}</div>
+      <QuestionList :questions="user_and_company.user_and_company_and_particular_gakutika.questions" :gakutika-id="gakutika.id" v-show="!loading" />
+    </div>
   </div>
 </template>
 <script>
@@ -93,7 +97,7 @@ export default {
   created: function () {
     this.loading = true;
     this.$store
-      .dispatch("gakutika/fetchGakutika", { gakutikaId: this.$route.params.id })
+      .dispatch("gakutikas/fetchGakutika", { gakutikaId: this.$route.params.id })
       .then(() => {
         this.loading = false;
       })
@@ -107,8 +111,8 @@ export default {
   computed: {
     gakutika: {
       get() {
-        console.log(this.$store.getters["gakutika/getGakutika"]);
-        return this.$store.getters["gakutika/getGakutika"];
+        console.log(this.$store.getters["gakutikas/getGakutika"]);
+        return this.$store.getters["gakutikas/getGakutika"];
       },
     },
     questions: {
