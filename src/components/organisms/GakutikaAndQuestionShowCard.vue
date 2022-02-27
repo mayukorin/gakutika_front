@@ -1,6 +1,7 @@
 <template>
   <div>
     <ProgressCircular v-show="loading" />
+    <h3 class="success--text mr-3 ml-1">学チカ詳細</h3>
     <form-dialog :propsFormShowFlag.sync="formShowFlag" v-show="!loading">
       <Button
         :class-string="'success ml-1 mt-2 mb-2'"
@@ -17,6 +18,7 @@
     </form-dialog>
     <GakutikaShowCard :gakutika="gakutika" v-show="!loading" />
     <br />
+    <h3 class="success--text mr-3 ml-1">話す企業一覧</h3>
     <form-dialog :propsFormShowFlag.sync="userAndCompanyFormShowFlag">
       <Button
         :class-string="'success ml-1 mt-2 mb-2'"
@@ -42,6 +44,7 @@
       store-action-name="gakutika/fetchGakutika"
       v-show="!loading" />
     <br />
+    <h3 class="success--text mr-3 ml-1">質問一覧</h3>
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button
         :class-string="'success ml-1 mt-2 mb-2'"
@@ -128,3 +131,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  h3 {
+    display:inline;
+  }
+</style>
