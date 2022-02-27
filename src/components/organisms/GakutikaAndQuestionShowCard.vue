@@ -1,8 +1,9 @@
 <template>
   <div>
     <ProgressCircular v-show="loading" />
+    <div v-show="!loading">
     <h3 class="success--text mr-3 ml-1">学チカ詳細</h3>
-    <form-dialog :propsFormShowFlag.sync="formShowFlag" v-show="!loading">
+    <form-dialog :propsFormShowFlag.sync="formShowFlag">
       <Button
         :class-string="'success ml-1 mt-2 mb-2'"
         slot="btn"
@@ -16,7 +17,7 @@
         :gakutika="gakutika"
       />
     </form-dialog>
-    <GakutikaShowCard :gakutika="gakutika" v-show="!loading" />
+    <GakutikaShowCard :gakutika="gakutika"/>
     <br />
     <h3 class="success--text mr-3 ml-1">話す企業一覧</h3>
     <form-dialog :propsFormShowFlag.sync="userAndCompanyFormShowFlag">
@@ -34,7 +35,6 @@
         :gakutika-title="gakutika.title"
         :gakutika-id="gakutika.id"
         @created="userAndCompanyFormShowFlag = false"
-        v-show="!loading"
       />
     </form-dialog>
     <br>
@@ -42,7 +42,7 @@
       :user-and-companies="userAndCompanies" 
       :gakutika-id="gakutika.id"
       store-action-name="gakutika/fetchGakutika"
-      v-show="!loading" />
+       />
     <br />
     <h3 class="success--text mr-3 ml-1">質問一覧</h3>
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
@@ -64,10 +64,11 @@
     <div v-for="user_and_company in gakutika.user_and_companies" :key="user_and_company.id" class="mb-2 mt-2">
       <h5 class="mb-2 mt-3 ml-1">{{ user_and_company.company.name}}でされた質問</h5>
       <div v-if="user_and_company.user_and_company_and_particular_gakutika.questions.length!=0">
-        <QuestionList :questions="user_and_company.user_and_company_and_particular_gakutika.questions" :gakutika-id="gakutika.id" v-show="!loading" />    
+        <QuestionList :questions="user_and_company.user_and_company_and_particular_gakutika.questions" :gakutika-id="gakutika.id"  />    
       </div>
       <div v-else class="text-center">質問はまだありません</div>
     </div>
+  </div>
   </div>
 </template>
 <script>
