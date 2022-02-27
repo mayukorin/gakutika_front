@@ -44,6 +44,7 @@
               @input="handleDaySet"
             />
           </v-col>
+          <!--
           <v-col cols="12" sm="6">
             <MonthPicker
               :propsMonth.sync="startMonth"
@@ -51,6 +52,7 @@
               @input="handleMonthSet"
             />
           </v-col>
+          -->
         </v-row>
         <v-row>
           <Button :loading="loadFlag" @click="handleClick()">作成</Button>
@@ -62,14 +64,14 @@
 <script>
 import Button from "@/components/atoms/Button.vue";
 import DayPicker from "@/components/atoms/DayPicker.vue";
-import MonthPicker from "@/components/atoms/MonthPicker.vue";
+// import MonthPicker from "@/components/atoms/MonthPicker.vue";
 
 export default {
   name: "QuestionCreateForm",
   components: {
     Button,
     DayPicker,
-    MonthPicker,
+    // MonthPicker,
   },
   data() {
     return {
