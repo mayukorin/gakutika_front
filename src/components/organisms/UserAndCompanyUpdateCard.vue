@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <span class="headline">面接予定の企業編集</span>
+      <span class="headline">企業編集</span>
     </v-card-title>
     <v-card-text>
       <UserAndCompanyUpdateForm 

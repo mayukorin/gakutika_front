@@ -1,6 +1,17 @@
 <template>
   <div>
     <ProgressCircular v-show="loading" />
+    <h3 class="success--text mr-3 ml-1">学チカ一覧</h3>
+    <form-dialog :propsFormShowFlag.sync="formShowFlag">
+      <Button
+        :class-string="'success ml-1 mt-2'"
+        slot="btn"
+        @click="formShowFlag = true"
+      >
+        学チカ新規作成
+      </Button>
+      <GakutikaCreateCard slot="formCard" @uploaded="formShowFlag = false" />
+    </form-dialog>
     <v-row class="ma-0 mb-3" v-show="!loading">
       <Tooltip
         :textFlag="!isSortProp('id')"
@@ -33,16 +44,6 @@
       :onfetch-gakutika="handleFetchGakutika"
       :ondelete="handleDeleteGakutika"
     />
-    <form-dialog :propsFormShowFlag.sync="formShowFlag">
-      <Button
-        :class-string="'success ml-1 mt-2'"
-        slot="btn"
-        @click="formShowFlag = true"
-      >
-        学チカ新規作成
-      </Button>
-      <GakutikaCreateCard slot="formCard" @uploaded="formShowFlag = false" />
-    </form-dialog>
   </div>
 </template>
 <script>
@@ -143,3 +144,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+  h3 {
+    display:inline;
+  }
+</style>
+

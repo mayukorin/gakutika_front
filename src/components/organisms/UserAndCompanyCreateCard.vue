@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <span class="headline">面接予定の企業追加</span>
+      <span class="headline">企業追加</span>
     </v-card-title>
     <v-card-text>
       <UserAndCompanyCreateForm @create-button-click="handleCreate" :load-flag="loadFlag" />
