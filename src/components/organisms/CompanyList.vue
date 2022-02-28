@@ -43,7 +43,7 @@ export default {
       })
       .then(() => {
         this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["話す学チカから削除しました"],
+            messages: ["話す企業から削除しました"],
           });
       })
     },
