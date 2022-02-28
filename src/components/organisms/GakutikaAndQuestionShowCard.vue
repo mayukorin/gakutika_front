@@ -30,7 +30,7 @@
       </Button>
       <userAndCompanyCreateCard
         slot="formCard"
-        store-action-name="gakutika/fetchGakutika"
+        store-action-name="gakutikas/fetchGakutika"
         create-store-action-name="createUserAndCompanyAndGakutika"
         :gakutika-title="gakutika.title"
         :gakutika-id="gakutika.id"
@@ -41,7 +41,7 @@
     <CompanyList 
       :user-and-companies="userAndCompanies" 
       :gakutika-id="gakutika.id"
-      store-action-name="gakutika/fetchGakutika"
+      store-action-name="gakutikas/fetchGakutika"
        />
     <br />
     <h3 class="success--text mr-3 ml-1">質問一覧</h3>
