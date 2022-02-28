@@ -16,13 +16,13 @@
             </div>
             <QuestionUpdateCard
               slot="formCard"
-              @uploaded="formShowFlag = false"
+              @updated="formShowFlag = false"
               :question="question"
             />
           </form-dialog>
         </v-col>
         <v-col cols="6" md="2">
-          <div @click.stop="$emit('delete', question.id)">
+          <div @click.stop="$emit('delete-button-click', question.id)">
             <div class="caption grey--text">削除</div>
             <v-icon>mdi-delete</v-icon>
           </div>

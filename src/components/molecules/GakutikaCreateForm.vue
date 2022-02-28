@@ -80,12 +80,12 @@ export default {
           this.$nextTick()
             .then(() => {
               console.log(this.loadFlag);
-              return this.oncreate({
+              this.$emit('create-button-click', {
                 title: this.title,
                 content: this.content,
                 startMonth: this.startMonth,
                 endMonth: this.endMonth,
-              });
+              })
             })
             .finally(() => {
               this.loadFlag = false;

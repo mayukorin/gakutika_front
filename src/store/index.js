@@ -59,6 +59,8 @@ const authModule = {
         },
       })
         .then((response) => {
+          console.log("signin");
+          console.log(response);
           localStorage.setItem("access", response.data.access);
           return context.dispatch("renew");
         })
@@ -118,7 +120,7 @@ const flashMessageModule = {
   },
 };
 
-const gakutikaModule = {
+const gakutikasModule = {
   namespaced: true,
   state: {
     gakutikas: [],
@@ -134,6 +136,9 @@ const gakutikaModule = {
       if (state.reverseFlag) return sortedGakutikas.reverse();
       else return sortedGakutikas;
     },
+    getGakutika(state) {
+      return state.gakutika;
+    }
   },
   mutations: {
     set(state, payload) {
@@ -150,6 +155,7 @@ const gakutikaModule = {
       state.gakutika.toughRank = payload.gakutika.toughRank;
       */
      state.gakutika = payload.gakutika;
+     console.log(state.gakutika);
     },
     clear(state) {
       state.gakutikas = [];
@@ -179,18 +185,15 @@ const gakutikaModule = {
       });
     },
     fetchGakutika(context, payload) {
+      console.log(payload.gakutikaId);
       return api({
         method: "get",
-        url: "/gakutikas/" + payload.id,
+        url: "/gakutikas/" + payload.gakutikaId,
       }).then((response) => {
-        console.log("api");
         console.log(response.data);
         context.commit("setGakutika", { gakutika: response.data });
-        return context.dispatch(
-          "questions/fetchQuestions",
-          { questions: response.data.questions },
-          { root: true }
-        );
+        context.commit("userAndCompanies/setUserAndCompanies", { userAndCompanies: response.data.user_and_companies }, {root: true });
+        context.commit("questions/setQuestions", { questions: response.data.questions }, {root: true });
       });
     },
     destoryGakutika(context, payload) {
@@ -268,35 +271,12 @@ const gakutikaModule = {
 const questionModule = {
   namespaced: true,
   state: {
-    questions: ["abc"],
+    questions: [],
   },
   mutations: {
     setQuestions(state, payload) {
-      console.log("こっちはデテキルヨ");
-      console.log(state.questions);
       state.questions = payload.questions;
     },
-    pushQuestions(state, payload) {
-      console.log("年迎えたい");
-      console.log(payload.newQuestion);
-      console.log(state.questions);
-      state.questions.push(payload.newQuestion);
-    },
-    setUpdatedQuestion(state, payload) {
-      const question = state.questions.find(
-        (question) => question.id == payload.updatedQuestion.id
-      );
-      question.query = payload.updatedQuestion.query;
-      question.answer = payload.updatedQuestion.answer;
-      question.day = payload.updatedQuestion.day;
-      question.companyName = payload.updatedQuestion.companyName;
-    },
-    deleteQuestion(state, payload) {
-      const question = state.questions.find(
-        (question) => question.id == payload.deleteQuestionId
-      );
-      state.questions.splice(state.questions.indexOf(question), 1);
-    }
   },
   getters: {
     getQuestionsSortedByDay(state) {
@@ -308,7 +288,6 @@ const questionModule = {
   },
   actions: {
     createQuestion(context, payload) {
-      console.log(payload);
       return api({
         method: "post",
         url: "/questions",
@@ -323,14 +302,10 @@ const questionModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        return context.commit("pushQuestions", { newQuestion: response.data });
+        context.dispatch("gakutikas/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
-    fetchQuestions(context, payload) {
-      return context.commit("setQuestions", { questions: payload.questions });
-    },
     updateQuestion(context, payload) {
-      console.log(payload);
       return api({
         method: "patch",
         url: "/questions/" + payload.id,
@@ -344,9 +319,8 @@ const questionModule = {
           },
         },
       }).then((response) => {
-        return context.commit("setUpdatedQuestion", {
-          updatedQuestion: response.data,
-        });
+        console.log(response.data);
+        context.dispatch("gakutikas/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       });
     },
     destoryQuestion(context, payload) {
@@ -355,58 +329,103 @@ const questionModule = {
         url: "/questions/" + payload.id,
       }).then((response) => {
         console.log(response);
-        console.log(context);
-        return context.commit("deleteQuestion", {
-          deleteQuestionId: payload.id
-        });
+        context.dispatch("gakutikas/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
       })
     }
   },
 };
 
-const companyModule = {
+
+const userAndCompaniesModule = {
   namespaced: true,
   state: {
     userAndCompanies: [],
   },
-  getters: {
-    getCompanies(state) {
-      return state.userAndCompanies; 
-    }
-  },
   mutations: {
-    setCompanies(state, payload) {
+    setUserAndCompanies(state, payload) {
       state.userAndCompanies = payload.userAndCompanies;
     },
   },
-  actions: {
-    fetchCompanyList(context) {
-      return api({
-        method: "get",
-        url: "/companies/",
-      }).then((response) => {
-        console.log(response);
-        console.log(response.data);
-        context.commit("setCompanies", {
-          userAndCompanies: response.data,
-        });
-      });
+  getters: {
+    getUserAndCompanies(state) {
+      return state.userAndCompanies;
     }
-  }
-};
-
-const userAndComanyAndGakutikaModule = {
-  namespaced: true,
+  },
   actions: {
     destroyUserAndCompanyAndGakutika(context, payload) {
       return api({
         method: "delete",
-        url: "/user_and_company_and_gakutikas/" + payload.id,
+        url: "/user_and_company_and_gakutikas/" + payload.userAndCompanyAndGakutikaId,
       }).then((response) => {
         console.log(response);
-        console.log(context);
+        context.dispatch(payload.actionName, payload, { root: true });
+      });
+    },
+    createUserAndCompanyAndGakutika(context, payload) {
+      return api({
+        method: "post",
+        url: "/user_and_company_and_gakutikas",
+        data: {
+          user_and_company_and_gakutika: {
+            company_name: payload.companyName,
+            gakutika_title: payload.gakutikaTitle,
+          },
+        },
+      }).then((response) => {
+        console.log(response);
+        context.dispatch(payload.actionName, payload, { root: true });
       })
+    },
+    createUserAndCompany(context, payload) {
+      return api({
+        method: "post",
+        url: "/user_and_companies",
+        data: {
+          user_and_company: {
+            company_name: payload.companyName,
+          },
+        },
+      }).then((response) => {
+        console.log("thennn");
+        console.log(response);
+        let actionName = payload.actionName;
+        // payload.actionName = payload.nextActionName;
+        context.dispatch(actionName, payload, { root: true });
+      })
+    },
+    destroyUserAndCompany(context, payload) {
+      return api({
+        method: "delete",
+        url: "/user_and_companies/" + payload.userAndCompanyId,
+      }).then((response) => {
+        console.log(response);
+        context.dispatch(payload.actionName, payload, { root: true });
+      });
+    },
+    updateUserAndCompany(context, payload) {
+      return api({
+        method: "patch",
+        url: "/user_and_companies/" + payload.userAndCompanyId,
+        data: {
+          user_and_company: {
+            company_name: payload.companyName,
+          },
+        }
+      }).then((response) => {
+        console.log(response);
+        context.dispatch(payload.actionName, payload, { root: true });
+      });
+    },
+    fetchuserAndCompanies(context) {
+      return api({
+        method: "get",
+        url: "/user_and_companies",
+      }).then((response) => {
+        console.log(response.data);
+        return context.commit("setUserAndCompanies", { userAndCompanies: response.data });
+      });
     }
+
   }
 }
 
@@ -414,10 +433,9 @@ const store = new Vuex.Store({
   modules: {
     auth: authModule,
     flashMessage: flashMessageModule,
-    gakutikas: gakutikaModule,
+    gakutikas: gakutikasModule,
     questions: questionModule,
-    companies: companyModule,
-    userAndCompanyAndGakutikas: userAndComanyAndGakutikaModule,
+    userAndCompanies: userAndCompaniesModule,
   },
 });
 

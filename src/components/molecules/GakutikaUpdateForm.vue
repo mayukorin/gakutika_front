@@ -58,25 +58,17 @@ export default {
     MonthPicker,
   },
   props: {
-    onupdate: {
-      type: Function,
-    },
     gakutika: {
       type: Object,
+    },
+    loadFlag: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
     return {
-      /*
-      title: this.gakutika.title,
-      content: this.gakutika.content,
-      */
-      loadFlag: false,
       menu: false,
-      /*
-      startMonth: this.gakutika.startMonth,
-      endMonth: this.gakutika.endMonth,
-      */
       editedGakutika: this.gakutika,
     };
   },
@@ -84,21 +76,9 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.loadFlag = true;
           this.$nextTick()
             .then(() => {
-              console.log(this.loadFlag);
-              return this.onupdate({
-                id: this.editedGakutika.id,
-                title: this.editedGakutika.title,
-                content: this.editedGakutika.content,
-                startMonth: this.editedGakutika.startMonth,
-                endMonth: this.editedGakutika.endMonth,
-                toughRank: this.editedGakutika.toughRank,
-              });
-            })
-            .finally(() => {
-              this.loadFlag = false;
+              return this.$emit('update-button-click', this.editedGakutika);
             });
         }
       });

@@ -5,7 +5,7 @@
         v-for="question in questions"
         :key="question.id"
         :question="question"
-        @delete="ondelete"
+        @delete-button-click="handleDelete"
       />
     </v-expansion-panels>
   </div>
@@ -22,9 +22,20 @@ export default {
     questions: {
       type: Array,
     },
-    ondelete: {
-      type: Function,
-    },
+    gakutikaId: {
+      type: Number,
+      default: 0,
+    }
   },
+   methods: {
+    handleDelete: function(deleteQuestionId) {
+      return this.$store.dispatch("questions/destoryQuestion", {id: deleteQuestionId, gakutikaId: this.gakutikaId })
+      .then(() => {
+          this.$store.dispatch("flashMessage/setSuccessMessage", {
+            messages: ["質問を削除しました"],
+          });
+      });
+    },
+   }
 };
 </script>

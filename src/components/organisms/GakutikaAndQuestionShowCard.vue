@@ -1,9 +1,11 @@
 <template>
   <div>
     <ProgressCircular v-show="loading" />
-    <form-dialog :propsFormShowFlag.sync="formShowFlag" v-show="!loading">
+    <div v-show="!loading">
+    <h3 class="success--text mr-3 ml-1">学チカ詳細</h3>
+    <form-dialog :propsFormShowFlag.sync="formShowFlag">
       <Button
-        :classString="'success ml-1 mt-2 mb-2'"
+        :class-string="'success ml-1 mt-2 mb-2'"
         slot="btn"
         @click="formShowFlag = true"
       >
@@ -11,17 +13,41 @@
       </Button>
       <GakutikaUpdateCard
         slot="formCard"
-        @uploaded="formShowFlag = false"
+        @updated="formShowFlag = false"
         :gakutika="gakutika"
       />
     </form-dialog>
-    <GakutikaShowCard :gakutika="gakutika" v-show="!loading" />
+    <GakutikaShowCard :gakutika="gakutika"/>
     <br />
-    <CompanyList :user_and_companies="gakutika.user_and_companies" :onUserAndCompanyAndGakutikaDelete="handleDeleteUserAndCompanyAndGakutika" v-show="!loading" />
+    <h3 class="success--text mr-3 ml-1">話す企業一覧</h3>
+    <form-dialog :propsFormShowFlag.sync="userAndCompanyFormShowFlag">
+      <Button
+        :class-string="'success ml-1 mt-2 mb-2'"
+        slot="btn"
+        @click="userAndCompanyFormShowFlag = true"
+      >
+        話す企業追加
+      </Button>
+      <userAndCompanyCreateCard
+        slot="formCard"
+        store-action-name="gakutikas/fetchGakutika"
+        create-store-action-name="createUserAndCompanyAndGakutika"
+        :gakutika-title="gakutika.title"
+        :gakutika-id="gakutika.id"
+        @created="userAndCompanyFormShowFlag = false"
+      />
+    </form-dialog>
+    <br>
+    <CompanyList 
+      :user-and-companies="userAndCompanies" 
+      :gakutika-id="gakutika.id"
+      store-action-name="gakutikas/fetchGakutika"
+       />
     <br />
+    <h3 class="success--text mr-3 ml-1">質問一覧</h3>
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button
-        :classString="'success ml-1 mt-2 mb-2'"
+        :class-string="'success ml-1 mt-2 mb-2'"
         slot="btn"
         @click="questionFormShowFlag = true"
       >
@@ -29,10 +55,20 @@
       </Button>
       <QuestionCreateCard
         slot="formCard"
-        @uploaded="questionFormShowFlag = false"
+        @created="questionFormShowFlag = false"
       />
     </form-dialog>
-    <QuestionList :questions="gakutika.questions" :ondelete="handleDeleteQuestion" v-show="!loading" />
+    <!--
+    <QuestionList :questions="questions" :gakutika-id="gakutika.id" v-show="!loading" />
+    -->
+    <div v-for="user_and_company in gakutika.user_and_companies" :key="user_and_company.id" class="mb-2 mt-2">
+      <h5 class="mb-2 mt-3 ml-1">{{ user_and_company.company.name}}でされた質問</h5>
+      <div v-if="user_and_company.user_and_company_and_particular_gakutika.questions.length!=0">
+        <QuestionList :questions="user_and_company.user_and_company_and_particular_gakutika.questions" :gakutika-id="gakutika.id"  />    
+      </div>
+      <div v-else class="text-center">質問はまだありません</div>
+    </div>
+  </div>
   </div>
 </template>
 <script>
@@ -44,6 +80,7 @@ import GakutikaUpdateCard from "@/components/organisms/GakutikaUpdateCard";
 import QuestionList from "@/components/organisms/QuestionList";
 import QuestionCreateCard from "@/components/organisms/QuestionCreateCard";
 import CompanyList from "@/components/organisms/CompanyList";
+import UserAndCompanyCreateCard from "@/components/organisms/UserAndCompanyCreateCard";
 
 export default {
   name: "GakutikaAndQuestionShowCard",
@@ -56,18 +93,20 @@ export default {
     QuestionList,
     QuestionCreateCard,
     CompanyList,
+    UserAndCompanyCreateCard,
   },
   data() {
     return {
       loading: false,
       formShowFlag: false,
       questionFormShowFlag: false,
+      userAndCompanyFormShowFlag: false,
     };
   },
   created: function () {
     this.loading = true;
     this.$store
-      .dispatch("gakutikas/fetchGakutika", { id: this.$route.params.id })
+      .dispatch("gakutikas/fetchGakutika", { gakutikaId: this.$route.params.id })
       .then(() => {
         this.loading = false;
       })
@@ -81,34 +120,26 @@ export default {
   computed: {
     gakutika: {
       get() {
-        console.log(this.$store.state.gakutikas.gakutika);
-        return this.$store.state.gakutikas.gakutika;
+        console.log(this.$store.getters["gakutikas/getGakutika"]);
+        return this.$store.getters["gakutikas/getGakutika"];
       },
     },
     questions: {
       get() {
-        // return this.$store.state.gakutikas.gakutika.questions;
-        return this.$store.state.questions.questions;
+        return this.$store.getters["questions/getQuestionsSortedByDay"];
+      }
+    },
+    userAndCompanies: {
+      get() {
+        return this.$store.getters["userAndCompanies/getUserAndCompanies"];
       }
     }
   },
-  methods: {
-    handleDeleteQuestion: function(deleteQuestionId) {
-      return this.$store.dispatch("questions/destoryQuestion", {id: deleteQuestionId })
-      .then(() => {
-          this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["質問を削除しました"],
-          });
-      });
-    },
-    handleDeleteUserAndCompanyAndGakutika: function(deleteUserAndCompanyAndGakutikaId) {
-      return this.$store.dispatch("userAndCompanyAndGakutikas/destroyUserAndCompanyAndGakutika", {id: deleteUserAndCompanyAndGakutikaId})
-      .then(() => {
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["話す学チカから削除しました"],
-          });
-      })
-    }
-  }
 };
 </script>
+
+<style scoped>
+  h3 {
+    display:inline;
+  }
+</style>
