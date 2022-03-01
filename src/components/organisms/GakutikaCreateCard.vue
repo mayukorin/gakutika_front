@@ -4,7 +4,7 @@
       <span class="headline">学チカ作成</span>
     </v-card-title>
     <v-card-text>
-      <GakutikaCreateForm @create-button-click="handleCreate" />
+      <GakutikaCreateForm @create-button-click="handleCreate" :load-flag="loadFlag" />
     </v-card-text>
   </v-card>
 </template>
@@ -15,11 +15,18 @@ export default {
   components: {
     GakutikaCreateForm,
   },
+  data() {
+    return {
+      loadFlag: false,
+    }
+  },
   methods: {
     handleCreate: function (gakutikaInfo) {
+      this.loadFlag = true;
       return this.$store
         .dispatch("gakutikas/createGakutika", gakutikaInfo)
         .then(() => {
+          this.loadFlag = false;
           this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["新しい学チカを保存しました"],
           });

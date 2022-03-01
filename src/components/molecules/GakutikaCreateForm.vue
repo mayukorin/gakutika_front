@@ -58,15 +58,14 @@ export default {
     MonthPicker,
   },
   props: {
-    oncreate: {
-      type: Function,
+    loadFlag: {
+      type: Boolean,
     },
   },
   data() {
     return {
       title: "",
       content: "",
-      loadFlag: false,
       menu: false,
       startMonth: new Date().toISOString().substr(0, 7),
       endMonth: new Date().toISOString().substr(0, 7),
@@ -76,19 +75,14 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.loadFlag = true;
           this.$nextTick()
             .then(() => {
-              console.log(this.loadFlag);
               this.$emit('create-button-click', {
                 title: this.title,
                 content: this.content,
                 startMonth: this.startMonth,
                 endMonth: this.endMonth,
               })
-            })
-            .finally(() => {
-              this.loadFlag = false;
             });
         }
       });
