@@ -3,6 +3,17 @@
     <v-expansion-panel-header>
       <v-row>
         <v-col cols="12" md="6">
+          <div class="caption grey--text">
+            <div class="mb-1">
+              直近の面接日：
+              <span v-if="userAndCompany.latest_interview_day">
+                {{ userAndCompany.latest_interview_day }}
+              </span>
+              <span v-else>
+                まだ登録されていません
+              </span>
+            </div>
+          </div>
           <div>{{ userAndCompany.company.name }}</div>
         </v-col>
         <v-col cols="12" md="2">

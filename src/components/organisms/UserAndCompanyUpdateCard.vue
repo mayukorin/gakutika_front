@@ -48,6 +48,7 @@ export default {
         companyName: userAndCompanyInfo.companyName, 
         gakutikaId: this.gakutikaId, 
         actionName: this.storeActionName, 
+        latestInterviewDay: userAndCompanyInfo.latestInterviewDay,
       })
       .then(() => {
         this.$store.dispatch("flashMessage/setSuccessMessage", {
