@@ -369,6 +369,7 @@ const userAndCompaniesModule = {
           user_and_company_and_gakutika: {
             company_name: payload.companyName,
             gakutika_title: payload.gakutikaTitle,
+            latest_interview_day: payload.latestInterviewDay,
           },
         },
       }).then((response) => {
@@ -383,6 +384,7 @@ const userAndCompaniesModule = {
         data: {
           user_and_company: {
             company_name: payload.companyName,
+            latest_interview_day: payload.latestInterviewDay,
           },
         },
       }).then((response) => {
@@ -403,12 +405,15 @@ const userAndCompaniesModule = {
       });
     },
     updateUserAndCompany(context, payload) {
+      console.log("なぜなぜ");
+      console.log(payload.latestInterviewDay);
       return api({
         method: "patch",
         url: "/user_and_companies/" + payload.userAndCompanyId,
         data: {
           user_and_company: {
             company_name: payload.companyName,
+            latest_interview_day: payload.latestInterviewDay,
           },
         }
       }).then((response) => {

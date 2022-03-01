@@ -50,6 +50,7 @@ export default {
         gakutikaTitle: this.gakutikaTitle, 
         gakutikaId: this.gakutikaId, 
         companyName: userAndCompanyInfo.companyName, 
+        latestInterviewDay: userAndCompanyInfo.latestInterviewDay,
         actionName: this.storeActionName,
         nextActionName: this.nextStoreActionName})
       .then(() => {
