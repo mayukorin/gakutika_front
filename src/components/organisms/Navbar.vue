@@ -35,7 +35,6 @@ export default {
       console.log(messages);
       if (messages.length > 0) {
         this.setSnacTrue();
-        console.log(this.$route.path);
         if (messages.indexOf("ログインの有効期限切れです．") != -1 && this.$route.path != "/sign-in" ) {
           console.log("ok");
           this.$router.replace({
