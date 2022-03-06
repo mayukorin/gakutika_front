@@ -7,12 +7,16 @@
           name="企業名"
           rules="required"
         >
-          <v-text-field
+          <v-autocomplete
+            :no-filter="true"
+            :items="companyEntries"
+            :search-input.sync="search"
             v-model="editedcompanyName"
             label="企業名"
             prepend-icon="mdi-domain"
             :error-messages="errors"
-          ></v-text-field>
+            hide-no-data
+          ></v-autocomplete>
         </validation-provider>
         <v-row>
           <v-col cols="12">
@@ -51,13 +55,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    companyEntries: {
+      type: Array,
+    }
   },
   data() {
     return {
       latestInterviewDay: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
-        editedcompanyName: this.companyName
+      editedcompanyName: this.companyName,
+      // editedcompanyName: "",
+      search: null,
 
     };
   },
@@ -83,5 +92,14 @@ export default {
       this[field] = value;
     },
   },
+  watch: {
+    search: function (inputName) {
+      // Items have already been loaded
+      if (inputName === "") return;
+
+      this.$emit('input-company-name', inputName);
+
+    }
+  }
 };
 </script>
