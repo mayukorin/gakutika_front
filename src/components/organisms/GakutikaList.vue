@@ -1,7 +1,7 @@
 <template>
   <div>
     <ProgressCircular v-show="loading" />
-    <h3 class="success--text mr-3 ml-1">学チカ一覧</h3>
+    <h3 class="success--text mr-3 ml-1 title">学チカ一覧</h3>
     <form-dialog :propsFormShowFlag.sync="formShowFlag">
       <Button
         :class-string="'success ml-1 mt-2'"

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3 class="success--text mr-3 ml-1 title">面接を受ける企業一覧</h3>
     <v-expansion-panels accordion>
       <Company
         v-for="userAndCompany in userAndCompanies"
@@ -43,7 +44,7 @@ export default {
       })
       .then(() => {
         this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["話す企業から削除しました"],
+            messages: ["学チカを話すのをやめました"],
           });
       })
     },
@@ -55,7 +56,7 @@ export default {
       })
       .then(() => {
         this.$store.dispatch("flashMessage/setSuccessMessage", {
-            messages: ["企業を削除しました"],
+            messages: ["面接を受ける企業から削除しました"],
           });
       })
     },
