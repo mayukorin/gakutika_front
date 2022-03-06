@@ -26,15 +26,19 @@
         </validation-provider>
         <validation-provider
           v-slot="{ errors }"
-          name="質問された企業"
+          name="企業名"
           rules="required"
         >
-          <v-text-field
+          <v-autocomplete
+            :no-filter="true"
+            :items="companyEntries"
+            :search-input.sync="search"
             v-model="editedQuestion.companyName"
-            label="質問された企業"
+            label="企業名"
             prepend-icon="mdi-domain"
             :error-messages="errors"
-          ></v-text-field>
+            hide-no-data
+          ></v-autocomplete>
         </validation-provider>
         <v-row>
           <v-col cols="12" sm="6">
@@ -70,11 +74,15 @@ export default {
       type: Boolean,
       default: false,
     },
+    companyEntries: {
+      type: Array,
+    }
   },
   data() {
     return {
       menu: false,
       editedQuestion: this.question,
+      search: null,
     };
   },
   methods: {
@@ -104,6 +112,13 @@ export default {
     question: function (newQuestion) {
       this.editedQuestion = newQuestion;
     },
+    search: function (inputName) {
+      // Items have already been loaded
+      if (inputName === "") return;
+
+      this.$emit('input-company-name', inputName);
+
+    }
   },
 };
 </script>
