@@ -437,6 +437,14 @@ const userAndCompaniesModule = {
         console.log(response.data);
         return context.commit("setUserAndCompanies", { userAndCompanies: response.data });
       });
+    },
+    searchCompanyName(context, payload) {
+      return api({
+        method: "get",
+        url: "/search-company/" + payload.name,
+      }).then((response) => {
+        return response;
+      })
     }
 
   }
