@@ -265,6 +265,14 @@ const gakutikasModule = {
         context.commit("setGakutika", { gakutika: response.data });
       });
     },
+    searchGakutikaTitle(context, payload) {
+      return api({
+        method: "get",
+        url: "/search-gakutika/" + payload.title,
+      }).then((response) => {
+        return response;
+      })
+    }
   },
 };
 
