@@ -79,7 +79,7 @@
                 {{ userAndCompanyAndGakutika.gakutika.title }}
               </div>
             </v-col>
-            <v-col cols="6" md="2" click.stop="$emit('gakutika-show-button-click', userAndCompanyAndGakutika.gakutika.id)"> 
+            <v-col cols="6" md="2" @click.stop="$emit('gakutika-show-button-click', userAndCompanyAndGakutika.gakutika.id)"> 
               <div class="caption grey--text">詳細</div>
               <v-icon>mdi-magnify-plus</v-icon>
             </v-col>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3 class="success--text mr-3 ml-1 title">面接を受ける企業一覧</h3>
     <v-expansion-panels accordion>
       <Company
         v-for="userAndCompany in userAndCompanies"
