@@ -4,7 +4,12 @@
       <span class="headline">企業追加</span>
     </v-card-title>
     <v-card-text>
-      <UserAndCompanyCreateForm @create-button-click="handleCreate" :load-flag="loadFlag" />
+      <UserAndCompanyCreateForm 
+        @create-button-click="handleCreate"  
+        :load-flag="loadFlag" 
+        @input-company-name="handleSearchCompany"
+        :company-entries="companyEntries"
+       />
     </v-card-text>
   </v-card>
 </template>
@@ -40,6 +45,9 @@ export default {
   data() {
     return {
       loadFlag: false,
+      companyEntries: [],
+      isSearchFlag: false,
+      inputCompanyName: "",
     };
   },
   methods: {
@@ -62,6 +70,27 @@ export default {
         this.loadFlag = false;
       });
     },
+
+    handleSearchCompany: function(inputCompanyName) {
+      
+      this.inputCompanyName = inputCompanyName;
+      if (this.isSearchFlag) return;
+      this.isSearchFlag = true;
+      return this.$store.dispatch("userAndCompanies/searchCompanyName", {
+        name: inputCompanyName
+      })
+      .then((response) => {
+        
+        this.companyEntries = [{header: "入力値"}];
+        this.companyEntries.push(this.inputCompanyName);
+        this.companyEntries.push({divider: true});
+        this.companyEntries.push({header: "検索結果"});
+        Array.prototype.push.apply(this.companyEntries, response.data.company_names);
+      })
+      .finally(() => {
+        this.isSearchFlag = false;
+      })
+    }
   }
 };
 </script>

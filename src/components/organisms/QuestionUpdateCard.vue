@@ -4,7 +4,13 @@
       <span class="headline">質問更新</span>
     </v-card-title>
     <v-card-text>
-      <QuestionUpdateForm @update-button-click="handleUpdate" :question="question" :load-flag="loadFlag" />
+      <QuestionUpdateForm 
+        @update-button-click="handleUpdate" 
+        :question="question" 
+        :load-flag="loadFlag" 
+        @input-company-name="handleSearchCompany"
+        :company-entries="companyEntries"
+      />
     </v-card-text>
   </v-card>
 </template>
@@ -24,6 +30,13 @@ export default {
   data() {
     return {
       loadFlag: false,
+      companyEntries: [
+        { header: "入力値"},
+        this.question.companyName,
+        { divider: true}
+      ],
+      isSearchFlag: false,
+      inputCompanyName: "",
     };
   },
   methods: {
@@ -41,6 +54,26 @@ export default {
           this.loadFlag = false;
         });
     },
+    handleSearchCompany: function(inputCompanyName) {
+      
+      this.inputCompanyName = inputCompanyName;
+      if (this.isSearchFlag) return;
+      this.isSearchFlag = true;
+      return this.$store.dispatch("userAndCompanies/searchCompanyName", {
+        name: inputCompanyName
+      })
+      .then((response) => {
+        
+        this.companyEntries = [{header: "入力値"}];
+        this.companyEntries.push(this.inputCompanyName);
+        this.companyEntries.push({divider: true});
+        this.companyEntries.push({header: "検索結果"});
+        Array.prototype.push.apply(this.companyEntries, response.data.company_names);
+      })
+      .finally(() => {
+        this.isSearchFlag = false;
+      })
+    }
   },
 };
 </script>

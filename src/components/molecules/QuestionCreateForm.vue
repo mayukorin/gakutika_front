@@ -29,12 +29,16 @@
           name="質問された企業"
           rules="required"
         >
-          <v-text-field
+          <v-autocomplete
+            :no-filter="true"
+            :items="companyEntries"
+            :search-input.sync="search"
             v-model="companyName"
-            label="質問された企業"
+            label="企業名"
             prepend-icon="mdi-domain"
             :error-messages="errors"
-          ></v-text-field>
+            hide-no-data
+          ></v-autocomplete>
         </validation-provider>
         <v-row>
           <v-col cols="12" sm="6">
@@ -44,15 +48,6 @@
               @input="handleDaySet"
             />
           </v-col>
-          <!--
-          <v-col cols="12" sm="6">
-            <MonthPicker
-              :propsMonth.sync="startMonth"
-              :labelName="'開始年月'"
-              @input="handleMonthSet"
-            />
-          </v-col>
-          -->
         </v-row>
         <v-row>
           <Button :loading="loadFlag" @click="handleClick()">作成</Button>
@@ -83,6 +78,7 @@ export default {
         .toISOString()
         .substr(0, 10),
       startMonth: new Date().toISOString().substr(0, 7),
+      search: null,
     };
   },
   props: {
@@ -90,6 +86,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    companyEntries: {
+      type: Array,
+    }
   },
   methods: {
     handleClick: function () {
@@ -118,5 +117,14 @@ export default {
       console.log(this.startMonth);
     },
   },
+  watch: {
+    search: function (inputName) {
+      // Items have already been loaded
+      if (inputName === "") return;
+
+      this.$emit('input-company-name', inputName);
+
+    }
+  }
 };
 </script>

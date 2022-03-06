@@ -265,6 +265,14 @@ const gakutikasModule = {
         context.commit("setGakutika", { gakutika: response.data });
       });
     },
+    searchGakutikaTitle(context, payload) {
+      return api({
+        method: "get",
+        url: "/search-gakutika/" + payload.title,
+      }).then((response) => {
+        return response;
+      })
+    }
   },
 };
 
@@ -429,6 +437,14 @@ const userAndCompaniesModule = {
         console.log(response.data);
         return context.commit("setUserAndCompanies", { userAndCompanies: response.data });
       });
+    },
+    searchCompanyName(context, payload) {
+      return api({
+        method: "get",
+        url: "/search-company/" + payload.name,
+      }).then((response) => {
+        return response;
+      })
     }
 
   }

@@ -4,7 +4,12 @@
       <span class="headline">話す学チカ追加</span>
     </v-card-title>
     <v-card-text>
-      <UserAndCompanyAndGakutikaCreateForm @create-button-click="handleCreate" :company-name="companyName" :load-flag="loadFlag" />
+      <UserAndCompanyAndGakutikaCreateForm 
+        @create-button-click="handleCreate" 
+        @input-gakutika-title="handleSearchGakutika" 
+        :gakutika-entries="gakutikaEntries"
+        :company-name="companyName" 
+        :load-flag="loadFlag" />
     </v-card-text>
   </v-card>
 </template>
@@ -30,6 +35,9 @@ export default {
   data() {
     return {
       loadFlag: false,
+      isSearchFlag: false,
+      gakutikaEntries: [],
+      inputGakutikaTitle: "",
     };
   },
   methods: {
@@ -45,6 +53,47 @@ export default {
         this.loadFlag = false;
       });
     },
-  }
+    handleSearchGakutika: function(inputGakutikaTitle) {
+      
+      this.inputGakutikaTitle = inputGakutikaTitle;
+      if (this.isSearchFlag) return;
+      this.isSearchFlag = true;
+      return this.$store.dispatch("gakutikas/searchGakutikaTitle", {
+        title: inputGakutikaTitle
+      })
+      .then((response) => {
+        
+        this.gakutikaEntries = [{header: "検索結果"}];
+        Array.prototype.push.apply(this.gakutikaEntries, response.data.gakutika_titles);
+        console.log(this.gakutikaEntries);
+        /*
+        this.gakutikaEntries = [{
+          text: inputGakutikaTitle,
+          value: inputGakutikaTitle,
+          disabled: true,
+          header: "検索結果"
+        }];
+        Array.prototype.push.apply(this.gakutikaEntries, response.data.gakutika_titles);
+        this.gakutikaEntries = response.data.gakutika_titles;
+        this.gakutikaEntries.push(
+          {
+            text: inputGakutikaTitle,
+            value: inputGakutikaTitle,
+            // disabled: true,
+          }
+        );
+        console.log(response.data);
+        this.gakutikaEntries = [{
+            text: inputGakutikaTitle,
+            value: inputGakutikaTitle,
+            // disabled: true,
+          }];
+        */
+      })
+      .finally(() => {
+        this.isSearchFlag = false;
+      })
+    }
+  },
 };
 </script>
