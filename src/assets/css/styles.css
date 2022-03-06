@@ -1,0 +1,14 @@
+.v-application{
+    font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    
+    font-weight: normal!important;
+    font-family: inherit;
+    color: inherit;
+}
+
+.title {
+    font-weight: bold!important;
+}

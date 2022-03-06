@@ -5,21 +5,22 @@
         {{ message }}
       </div>
     </v-snackbar>
-    <v-app-bar flat app>
-      <v-app-bar-nav-icon class="grey--text"></v-app-bar-nav-icon>
-      <v-toolbar-title class="text-uppercase grey--text">
-        <span class="font-weight-light">Gakutika</span>
-      </v-toolbar-title>
-    </v-app-bar>
+    <Appbar @handle-drawer="drawerChange" />
   </nav>
 </template>
 <script>
+import Appbar from "@/components/organisms/Appbar";
+
 export default {
   name: "Navbar",
   data() {
     return {
       snac: true,
+      drawerNotify: false,
     };
+  },
+  components: {
+    Appbar,
   },
   methods: {
     setSnacFalse: function () {
@@ -27,6 +28,11 @@ export default {
     },
     setSnacTrue: function () {
       this.snac = true;
+    },
+    drawerChange() {
+      console.log("drawerChange");
+      this.drawerNotify = !this.drawerNotify;
+      console.log(this.drawerNotify);
     },
   },
   computed: {
