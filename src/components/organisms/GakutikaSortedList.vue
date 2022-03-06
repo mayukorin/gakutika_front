@@ -59,7 +59,7 @@ export default {
       },
       page: 1,
       sortedGakutikas: [],
-      pageSize: 2,
+      pageSize: 10,
       length: 0,
     };
   },

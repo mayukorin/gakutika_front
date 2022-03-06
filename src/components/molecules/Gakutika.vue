@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="12" md="7">
           <div class="caption grey--text">
-            {{ gakutika.startMonth }} ~ {{ gakutika.endMonth }}
+            期間：{{ gakutika.startMonth }} ~ {{ gakutika.endMonth }}
           </div>
           <div>{{ gakutika.title }}</div>
         </v-col>

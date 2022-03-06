@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="12" md="7">
           <div class="caption grey--text">
-            <div>{{ question.day }}&nbsp;{{ question.companyName }}</div>
+            <div>質問された日：{{ question.day }}</div>
           </div>
           <div>{{ question.query }}</div>
         </v-col>

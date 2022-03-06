@@ -2,7 +2,7 @@
   <div>
     <ProgressCircular v-show="loading" />
     <div v-show="!loading">
-    <h3 class="success--text mr-3 ml-1">学チカ詳細</h3>
+    <h3 class="success--text mr-3 ml-1 title">学チカ詳細</h3>
     <form-dialog :propsFormShowFlag.sync="formShowFlag">
       <Button
         :class-string="'success ml-1 mt-2 mb-2'"
@@ -19,7 +19,7 @@
     </form-dialog>
     <GakutikaShowCard :gakutika="gakutika"/>
     <br />
-    <h3 class="success--text mr-3 ml-1">話す企業一覧</h3>
+    <h3 class="success--text mr-3 ml-1 title">話す企業一覧</h3>
     <form-dialog :propsFormShowFlag.sync="userAndCompanyFormShowFlag">
       <Button
         :class-string="'success ml-1 mt-2 mb-2'"
@@ -44,7 +44,7 @@
       store-action-name="gakutikas/fetchGakutika"
        />
     <br />
-    <h3 class="success--text mr-3 ml-1">質問一覧</h3>
+    <h3 class="success--text mr-3 ml-1 title">質問一覧</h3>
     <form-dialog :propsFormShowFlag.sync="questionFormShowFlag">
       <Button
         :class-string="'success ml-1 mt-2 mb-2'"
@@ -62,7 +62,7 @@
     <QuestionList :questions="questions" :gakutika-id="gakutika.id" v-show="!loading" />
     -->
     <div v-for="user_and_company in gakutika.user_and_companies" :key="user_and_company.id" class="mb-2 mt-2">
-      <h5 class="mb-2 mt-3 ml-1">{{ user_and_company.company.name}}でされた質問</h5>
+      <h4 class="mb-2 mt-3 ml-1 success--text">{{ user_and_company.company.name}}でされた質問</h4>
       <div v-if="user_and_company.user_and_company_and_particular_gakutika.questions.length!=0">
         <QuestionList :questions="user_and_company.user_and_company_and_particular_gakutika.questions" :gakutika-id="gakutika.id"  />    
       </div>
