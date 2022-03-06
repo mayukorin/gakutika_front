@@ -3,7 +3,7 @@
     <v-expansion-panel-header>
       <v-row>
         <v-col cols="12" md="7">
-          <div class="caption grey--text">
+          <div class="caption grey--text mb-1">
             <div>質問された日：{{ question.day }}</div>
           </div>
           <div>{{ question.query }}</div>
@@ -30,6 +30,7 @@
       </v-row>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
+      <div class="caption grey--text mb-1">解答</div>
       <div>{{ question.answer }}</div>
     </v-expansion-panel-content>
   </v-expansion-panel>
