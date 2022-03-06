@@ -7,12 +7,16 @@
           name="学チカのタイトル"
           rules="required"
         >
-          <v-text-field
+          <v-autocomplete
+            :no-filter="true"
+            :items="gakutikaEntries"
+            :search-input.sync="search"
             v-model="gakutikaTitle"
             label="学チカのタイトル"
             prepend-icon="mdi-domain"
             :error-messages="errors"
-          ></v-text-field>
+            hide-no-data
+          ></v-autocomplete>
         </validation-provider>
         <v-row>
           <Button :loading="loadFlag" @click="handleClick()">追加</Button>
@@ -37,10 +41,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    gakutikaEntries: {
+      type: Array,
+    }
   },
   data() {
     return {
       gakutikaTitle: "",
+      search: null,
     };
   },
   methods: {
@@ -63,5 +71,15 @@ export default {
       this[field] = value;
     },
   },
+  watch: {
+    search: function (inputTitle) {
+      // Items have already been loaded
+      if (inputTitle === "") return;
+
+      this.$emit('input-gakutika-title', inputTitle);
+
+    }
+  }
+
 };
 </script>
