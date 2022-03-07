@@ -8,7 +8,7 @@
 <script>
 import CompanyList from "@/components/organisms/CompanyList";
 export default {
-  name: "CompanyListCard",
+  name: "CompanyIndexCard",
   components: {
     CompanyList,
   },
