@@ -46,7 +46,7 @@ const routes = [
     name: "CompanyList",
     component: CompanyList,
     meta: { requiresAuth: true },
-  }
+  },
 ];
 
 const router = new VueRouter({

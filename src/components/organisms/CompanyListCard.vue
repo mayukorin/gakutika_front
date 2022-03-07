@@ -1,5 +1,9 @@
 <template>
-  <CompanyList :user-and-companies="userAndCompanies" v-show="!loading" store-action-name="userAndCompanies/fetchuserAndCompanies"/>
+  <CompanyList
+    :user-and-companies="userAndCompanies"
+    v-show="!loading"
+    store-action-name="userAndCompanies/fetchuserAndCompanies"
+  />
 </template>
 <script>
 import CompanyList from "@/components/organisms/CompanyList";
@@ -17,10 +21,12 @@ export default {
     userAndCompanies: {
       get() {
         console.log("computed");
-        console.log(this.$store.getters["userAndCompanies/getUserAndCompanies"]);
+        console.log(
+          this.$store.getters["userAndCompanies/getUserAndCompanies"]
+        );
         return this.$store.getters["userAndCompanies/getUserAndCompanies"];
-      }
-    }
+      },
+    },
   },
   created: function () {
     this.loading = true;

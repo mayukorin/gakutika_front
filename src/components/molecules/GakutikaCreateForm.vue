@@ -75,15 +75,14 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.$nextTick()
-            .then(() => {
-              this.$emit('create-button-click', {
-                title: this.title,
-                content: this.content,
-                startMonth: this.startMonth,
-                endMonth: this.endMonth,
-              })
+          this.$nextTick().then(() => {
+            this.$emit("create-button-click", {
+              title: this.title,
+              content: this.content,
+              startMonth: this.startMonth,
+              endMonth: this.endMonth,
             });
+          });
         }
       });
     },

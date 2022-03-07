@@ -2,11 +2,7 @@
   <v-form>
     <validation-observer ref="observer">
       <form @submit.prevent="submit">
-        <validation-provider
-          v-slot="{ errors }"
-          name="企業名"
-          rules="required"
-        >
+        <validation-provider v-slot="{ errors }" name="企業名" rules="required">
           <v-autocomplete
             :no-filter="true"
             :items="companyEntries"
@@ -49,7 +45,7 @@ export default {
       type: Number,
     },
     companyName: {
-        type: String,
+      type: String,
     },
     loadFlag: {
       type: Boolean,
@@ -57,33 +53,33 @@ export default {
     },
     companyEntries: {
       type: Array,
-    }
+    },
   },
   data() {
     return {
-      latestInterviewDay: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      latestInterviewDay: new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
         .toISOString()
         .substr(0, 10),
       editedcompanyName: this.companyName,
       // editedcompanyName: "",
       search: null,
-
     };
   },
   methods: {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.$nextTick()
-            .then(() => {
-              console.log(this.loadFlag);
-              console.log(this);
-              return this.$emit('update-button-click', {
-                companyName: this.editedcompanyName,
-                latestInterviewDay: this.latestInterviewDay,
-                userAndCompanyId: this.userAndCompanyId,
-              });
+          this.$nextTick().then(() => {
+            console.log(this.loadFlag);
+            console.log(this);
+            return this.$emit("update-button-click", {
+              companyName: this.editedcompanyName,
+              latestInterviewDay: this.latestInterviewDay,
+              userAndCompanyId: this.userAndCompanyId,
             });
+          });
         }
       });
     },
@@ -97,9 +93,8 @@ export default {
       // Items have already been loaded
       if (inputName === "") return;
 
-      this.$emit('input-company-name', inputName);
-
-    }
-  }
+      this.$emit("input-company-name", inputName);
+    },
+  },
 };
 </script>

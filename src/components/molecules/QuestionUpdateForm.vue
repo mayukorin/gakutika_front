@@ -24,11 +24,7 @@
             :error-messages="errors"
           ></v-textarea>
         </validation-provider>
-        <validation-provider
-          v-slot="{ errors }"
-          name="企業名"
-          rules="required"
-        >
+        <validation-provider v-slot="{ errors }" name="企業名" rules="required">
           <v-autocomplete
             :no-filter="true"
             :items="companyEntries"
@@ -76,7 +72,7 @@ export default {
     },
     companyEntries: {
       type: Array,
-    }
+    },
   },
   data() {
     return {
@@ -89,17 +85,16 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.$nextTick()
-            .then(() => {
-              return this.$emit('update-button-click', {
-                query: this.editedQuestion.query,
-                answer: this.editedQuestion.answer,
-                companyName: this.editedQuestion.companyName,
-                day: this.editedQuestion.day,
-                gakutikaId: this.$route.params.id,
-                id: this.editedQuestion.id,
-              })
+          this.$nextTick().then(() => {
+            return this.$emit("update-button-click", {
+              query: this.editedQuestion.query,
+              answer: this.editedQuestion.answer,
+              companyName: this.editedQuestion.companyName,
+              day: this.editedQuestion.day,
+              gakutikaId: this.$route.params.id,
+              id: this.editedQuestion.id,
             });
+          });
         }
       });
     },
@@ -116,9 +111,8 @@ export default {
       // Items have already been loaded
       if (inputName === "") return;
 
-      this.$emit('input-company-name', inputName);
-
-    }
+      this.$emit("input-company-name", inputName);
+    },
   },
 };
 </script>

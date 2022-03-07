@@ -121,14 +121,15 @@ export default {
       console.log(gakutikaId);
       this.$router.replace("/gakutika/" + gakutikaId);
     },
-    handleDeleteGakutika: function(gakutikaId) {
-      return this.$store.dispatch("gakutikas/destoryGakutika", {id: gakutikaId })
-      .then(() => {
+    handleDeleteGakutika: function (gakutikaId) {
+      return this.$store
+        .dispatch("gakutikas/destoryGakutika", { id: gakutikaId })
+        .then(() => {
           this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["学チカを削除しました"],
           });
-      });
-    }
+        });
+    },
   },
   computed: {
     gakutikas: {
@@ -145,8 +146,7 @@ export default {
 };
 </script>
 <style scoped>
-  h3 {
-    display:inline;
-  }
+h3 {
+  display: inline;
+}
 </style>
-

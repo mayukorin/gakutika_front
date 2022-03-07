@@ -53,7 +53,7 @@ export default {
       this.$store.dispatch("auth/logout");
       this.$store.dispatch("flashMessage/setSuccessMessage", {
         messages: ["ログアウトしました"],
-    });
+      });
       this.$router.replace("/sign-in");
     },
     login() {

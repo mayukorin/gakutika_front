@@ -138,7 +138,7 @@ const gakutikasModule = {
     },
     getGakutika(state) {
       return state.gakutika;
-    }
+    },
   },
   mutations: {
     set(state, payload) {
@@ -154,8 +154,8 @@ const gakutikasModule = {
       state.gakutika.title = payload.gakutika.title;
       state.gakutika.toughRank = payload.gakutika.toughRank;
       */
-     state.gakutika = payload.gakutika;
-     console.log(state.gakutika);
+      state.gakutika = payload.gakutika;
+      console.log(state.gakutika);
     },
     clear(state) {
       state.gakutikas = [];
@@ -172,7 +172,7 @@ const gakutikasModule = {
         (gakutika) => gakutika.id == payload.deleteGakutikaId
       );
       state.gakutikas.splice(state.gakutikas.indexOf(gakutika), 1);
-    }
+    },
   },
   actions: {
     fetchGakutikaList(context) {
@@ -192,8 +192,16 @@ const gakutikasModule = {
       }).then((response) => {
         console.log(response.data);
         context.commit("setGakutika", { gakutika: response.data });
-        context.commit("userAndCompanies/setUserAndCompanies", { userAndCompanies: response.data.user_and_companies }, {root: true });
-        context.commit("questions/setQuestions", { questions: response.data.questions }, {root: true });
+        context.commit(
+          "userAndCompanies/setUserAndCompanies",
+          { userAndCompanies: response.data.user_and_companies },
+          { root: true }
+        );
+        context.commit(
+          "questions/setQuestions",
+          { questions: response.data.questions },
+          { root: true }
+        );
       });
     },
     destoryGakutika(context, payload) {
@@ -204,9 +212,9 @@ const gakutikasModule = {
         console.log(response);
         console.log(context);
         return context.commit("deleteGakutika", {
-          deleteGakutikaId: payload.id
+          deleteGakutikaId: payload.id,
         });
-      })
+      });
     },
     setGakutikaList(context, payload) {
       return context.commit("set", { gakutikas: payload.sortedGakutikas });
@@ -271,8 +279,8 @@ const gakutikasModule = {
         url: "/search-gakutika/" + payload.title,
       }).then((response) => {
         return response;
-      })
-    }
+      });
+    },
   },
 };
 
@@ -310,7 +318,11 @@ const questionModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        context.dispatch("gakutikas/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
+        context.dispatch(
+          "gakutikas/fetchGakutika",
+          { gakutikaId: payload.gakutikaId },
+          { root: true }
+        );
       });
     },
     updateQuestion(context, payload) {
@@ -328,7 +340,11 @@ const questionModule = {
         },
       }).then((response) => {
         console.log(response.data);
-        context.dispatch("gakutikas/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
+        context.dispatch(
+          "gakutikas/fetchGakutika",
+          { gakutikaId: payload.gakutikaId },
+          { root: true }
+        );
       });
     },
     destoryQuestion(context, payload) {
@@ -337,12 +353,15 @@ const questionModule = {
         url: "/questions/" + payload.id,
       }).then((response) => {
         console.log(response);
-        context.dispatch("gakutikas/fetchGakutika", {gakutikaId: payload.gakutikaId },{ root: true });
-      })
-    }
+        context.dispatch(
+          "gakutikas/fetchGakutika",
+          { gakutikaId: payload.gakutikaId },
+          { root: true }
+        );
+      });
+    },
   },
 };
-
 
 const userAndCompaniesModule = {
   namespaced: true,
@@ -357,13 +376,15 @@ const userAndCompaniesModule = {
   getters: {
     getUserAndCompanies(state) {
       return state.userAndCompanies;
-    }
+    },
   },
   actions: {
     destroyUserAndCompanyAndGakutika(context, payload) {
       return api({
         method: "delete",
-        url: "/user_and_company_and_gakutikas/" + payload.userAndCompanyAndGakutikaId,
+        url:
+          "/user_and_company_and_gakutikas/" +
+          payload.userAndCompanyAndGakutikaId,
       }).then((response) => {
         console.log(response);
         context.dispatch(payload.actionName, payload, { root: true });
@@ -383,7 +404,7 @@ const userAndCompaniesModule = {
       }).then((response) => {
         console.log(response);
         context.dispatch(payload.actionName, payload, { root: true });
-      })
+      });
     },
     createUserAndCompany(context, payload) {
       return api({
@@ -401,7 +422,7 @@ const userAndCompaniesModule = {
         let actionName = payload.actionName;
         // payload.actionName = payload.nextActionName;
         context.dispatch(actionName, payload, { root: true });
-      })
+      });
     },
     destroyUserAndCompany(context, payload) {
       return api({
@@ -423,7 +444,7 @@ const userAndCompaniesModule = {
             company_name: payload.companyName,
             latest_interview_day: payload.latestInterviewDay,
           },
-        }
+        },
       }).then((response) => {
         console.log(response);
         context.dispatch(payload.actionName, payload, { root: true });
@@ -435,7 +456,9 @@ const userAndCompaniesModule = {
         url: "/user_and_companies",
       }).then((response) => {
         console.log(response.data);
-        return context.commit("setUserAndCompanies", { userAndCompanies: response.data });
+        return context.commit("setUserAndCompanies", {
+          userAndCompanies: response.data,
+        });
       });
     },
     searchCompanyName(context, payload) {
@@ -444,11 +467,10 @@ const userAndCompaniesModule = {
         url: "/search-company/" + payload.name,
       }).then((response) => {
         return response;
-      })
-    }
-
-  }
-}
+      });
+    },
+  },
+};
 
 const store = new Vuex.Store({
   modules: {

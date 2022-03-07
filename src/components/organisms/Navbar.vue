@@ -41,18 +41,19 @@ export default {
       console.log(messages);
       if (messages.length > 0) {
         this.setSnacTrue();
-        if (messages.indexOf("ログインの有効期限切れです．") != -1 && this.$route.path != "/sign-in" ) {
+        if (
+          messages.indexOf("ログインの有効期限切れです．") != -1 &&
+          this.$route.path != "/sign-in"
+        ) {
           console.log("ok");
           this.$router.replace({
             path: "/sign-in",
-            query: { next: this.$route.path }
-            
+            query: { next: this.$route.path },
           });
         }
-      }
-      else this.setSnacFalse();
+      } else this.setSnacFalse();
       return this.$store.state.flashMessage;
-      }
+    },
   },
 };
 </script>

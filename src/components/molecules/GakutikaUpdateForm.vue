@@ -76,10 +76,9 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.$nextTick()
-            .then(() => {
-              return this.$emit('update-button-click', this.editedGakutika);
-            });
+          this.$nextTick().then(() => {
+            return this.$emit("update-button-click", this.editedGakutika);
+          });
         }
       });
     },
