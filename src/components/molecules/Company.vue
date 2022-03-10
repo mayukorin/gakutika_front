@@ -9,9 +9,7 @@
               <span v-if="userAndCompany.latest_interview_day">
                 {{ userAndCompany.latest_interview_day }}
               </span>
-              <span v-else>
-                まだ登録されていません
-              </span>
+              <span v-else> まだ登録されていません </span>
             </div>
           </div>
           <div>{{ userAndCompany.company.name }}</div>
@@ -32,11 +30,27 @@
             />
           </form-dialog>
         </v-col>
-        <v-col cols="6" md="2" @click.stop="$emit('user-and-company-delete-button-click', userAndCompany.id)">
+        <v-col
+          cols="6"
+          md="2"
+          @click.stop="
+            $emit('user-and-company-delete-button-click', userAndCompany.id)
+          "
+        >
           <div class="caption grey--text">面接を受ける企業から削除</div>
           <v-icon>mdi-delete</v-icon>
         </v-col>
-        <v-col cols="6" md="2" v-if ="userAndCompany.user_and_company_and_particular_gakutika != null"  @click.stop="$emit('user-and-company-and-gakutika-delete-button-click', userAndCompany.user_and_company_and_particular_gakutika.id)">
+        <v-col
+          cols="6"
+          md="2"
+          v-if="userAndCompany.user_and_company_and_particular_gakutika != null"
+          @click.stop="
+            $emit(
+              'user-and-company-and-gakutika-delete-button-click',
+              userAndCompany.user_and_company_and_particular_gakutika.id
+            )
+          "
+        >
           <div class="caption grey--text">学チカを話すのをやめる</div>
           <v-icon>mdi-delete</v-icon>
         </v-col>
@@ -79,11 +93,29 @@
                 {{ userAndCompanyAndGakutika.gakutika.title }}
               </div>
             </v-col>
-            <v-col cols="6" md="2" @click.stop="$emit('gakutika-show-button-click', userAndCompanyAndGakutika.gakutika.id)"> 
+            <v-col
+              cols="6"
+              md="2"
+              @click.stop="
+                $emit(
+                  'gakutika-show-button-click',
+                  userAndCompanyAndGakutika.gakutika.id
+                )
+              "
+            >
               <div class="caption grey--text">詳細</div>
               <v-icon>mdi-magnify-plus</v-icon>
             </v-col>
-            <v-col cols="6" md="2" @click.stop="$emit('user-and-company-and-gakutika-delete-button-click', userAndCompanyAndGakutika.id)">
+            <v-col
+              cols="6"
+              md="2"
+              @click.stop="
+                $emit(
+                  'user-and-company-and-gakutika-delete-button-click',
+                  userAndCompanyAndGakutika.id
+                )
+              "
+            >
               <div class="caption grey--text">話す学チカから削除</div>
               <v-icon>mdi-delete</v-icon>
             </v-col>
@@ -113,11 +145,11 @@ export default {
     },
     gakutikaId: {
       type: Number,
-      default: 0
+      default: 0,
     },
     storeActionName: {
       type: String,
-    }
+    },
   },
   data() {
     return {
@@ -128,7 +160,7 @@ export default {
 };
 </script>
 <style scoped>
-  .margin-add {
-    margin-right: 24px;
-  }
+.margin-add {
+  margin-right: 24px;
+}
 </style>

@@ -5,12 +5,14 @@
         v-for="userAndCompany in userAndCompanies"
         :key="userAndCompany.id"
         :user-and-company="userAndCompany"
-        @user-and-company-and-gakutika-delete-button-click="handleDeleteUserAndCompanyAndGakutika"
+        @user-and-company-and-gakutika-delete-button-click="
+          handleDeleteUserAndCompanyAndGakutika
+        "
         @user-and-company-delete-button-click="handleDeleteUserAndCompany"
         @gakutika-show-button-click="handleFetchGakutika"
         :gakutika-id="gakutikaId"
         :store-action-name="storeActionName"
-      /> 
+      />
     </v-expansion-panels>
   </div>
 </template>
@@ -28,41 +30,44 @@ export default {
     },
     gakutikaId: {
       type: Number,
-      default: 0
+      default: 0,
     },
     storeActionName: {
       type: String,
-    }
+    },
   },
   methods: {
-    handleDeleteUserAndCompanyAndGakutika: function(deleteUserAndCompanyAndGakutikaId) {
-      return this.$store.dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {
-        userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId, 
-        gakutikaId: this.gakutikaId, 
-        actionName: this.storeActionName 
-      })
-      .then(() => {
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
+    handleDeleteUserAndCompanyAndGakutika: function (
+      deleteUserAndCompanyAndGakutikaId
+    ) {
+      return this.$store
+        .dispatch("userAndCompanies/destroyUserAndCompanyAndGakutika", {
+          userAndCompanyAndGakutikaId: deleteUserAndCompanyAndGakutikaId,
+          gakutikaId: this.gakutikaId,
+          actionName: this.storeActionName,
+        })
+        .then(() => {
+          this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["学チカを話すのをやめました"],
           });
-      })
+        });
     },
     handleDeleteUserAndCompany: function (userAndCompanyId) {
-      return this.$store.dispatch("userAndCompanies/destroyUserAndCompany", {
-        userAndCompanyId: userAndCompanyId, 
-        gakutikaId: this.gakutikaId, 
-        actionName: this.storeActionName,
-      })
-      .then(() => {
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
+      return this.$store
+        .dispatch("userAndCompanies/destroyUserAndCompany", {
+          userAndCompanyId: userAndCompanyId,
+          gakutikaId: this.gakutikaId,
+          actionName: this.storeActionName,
+        })
+        .then(() => {
+          this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["面接を受ける企業から削除しました"],
           });
-      })
+        });
     },
     handleFetchGakutika: function (gakutikaId) {
       this.$router.replace("/gakutika/" + gakutikaId);
     },
-  }
-  
+  },
 };
 </script>

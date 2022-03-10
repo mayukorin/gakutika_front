@@ -1,49 +1,50 @@
 <template>
   <div>
     <ProgressCircular v-show="loading" />
-    <h3 class="success--text mr-3 ml-1 title">学チカ一覧</h3>
-    <form-dialog :propsFormShowFlag.sync="formShowFlag">
-      <Button
-        :class-string="'success ml-1 mt-2'"
-        slot="btn"
-        @click="formShowFlag = true"
-      >
-        学チカ新規作成
-      </Button>
-      <GakutikaCreateCard slot="formCard" @uploaded="formShowFlag = false" />
-    </form-dialog>
-    <v-row class="ma-0 mb-3" v-show="!loading">
-      <Tooltip
-        :textFlag="!isSortProp('id')"
-        :color-string="'grey'"
-        :class-string="'mt-2 ml-1'"
-        @click="setSortPropAndReverseFlag('id', true)"
-        :icon="'mdi-folder'"
-        :caption="'作成順'"
-        :explain="'作成順で並び替え'"
+    <div v-show="!loading">
+      <h3 class="success--text mr-3 ml-1 title">学チカ一覧</h3>
+      <form-dialog :propsFormShowFlag.sync="formShowFlag">
+        <Button
+          :class-string="'success ml-1 mt-2'"
+          slot="btn"
+          @click="formShowFlag = true"
+        >
+          学チカ新規作成
+        </Button>
+        <GakutikaCreateCard slot="formCard" @uploaded="formShowFlag = false" />
+      </form-dialog>
+      <v-row class="ma-0 mb-3">
+        <Tooltip
+          :textFlag="!isSortProp('id')"
+          :color-string="'grey'"
+          :class-string="'mt-2 ml-1'"
+          @click="setSortPropAndReverseFlag('id', true)"
+          :icon="'mdi-folder'"
+          :caption="'作成順'"
+          :explain="'作成順で並び替え'"
+        />
+        <Tooltip
+          :textFlag="!isSortProp('toughRank')"
+          :color-string="'grey'"
+          :class-string="'mt-2 ml-1'"
+          @click="setSortPropAndReverseFlag('toughRank', false)"
+          :icon="'mdi-cards-heart'"
+          :caption="'頑張り順'"
+          :explain="'頑張り順で並び替え'"
+        />
+        <Button :class-string="'success ml-1 mt-2'" @click="changeOrderFlag">
+          <div v-show="!orderFlag">頑張り順を変更</div>
+          <div v-show="orderFlag">変更完了</div>
+        </Button>
+      </v-row>
+      <GakutikaSortedList
+        :gakutikas="gakutikas"
+        :on-update-tough-rank="handleUpdateToughRank"
+        :order-flag="orderFlag"
+        :onfetch-gakutika="handleFetchGakutika"
+        :ondelete="handleDeleteGakutika"
       />
-      <Tooltip
-        :textFlag="!isSortProp('toughRank')"
-        :color-string="'grey'"
-        :class-string="'mt-2 ml-1'"
-        @click="setSortPropAndReverseFlag('toughRank', false)"
-        :icon="'mdi-cards-heart'"
-        :caption="'頑張り順'"
-        :explain="'頑張り順で並び替え'"
-      />
-      <Button :class-string="'success ml-1 mt-2'" @click="changeOrderFlag">
-        <div v-show="!orderFlag">頑張り順を変更</div>
-        <div v-show="orderFlag">変更完了</div>
-      </Button>
-    </v-row>
-    <GakutikaSortedList
-      :gakutikas="gakutikas"
-      v-show="!loading"
-      :on-update-tough-rank="handleUpdateToughRank"
-      :order-flag="orderFlag"
-      :onfetch-gakutika="handleFetchGakutika"
-      :ondelete="handleDeleteGakutika"
-    />
+    </div>
   </div>
 </template>
 <script>
@@ -121,14 +122,15 @@ export default {
       console.log(gakutikaId);
       this.$router.replace("/gakutika/" + gakutikaId);
     },
-    handleDeleteGakutika: function(gakutikaId) {
-      return this.$store.dispatch("gakutikas/destoryGakutika", {id: gakutikaId })
-      .then(() => {
+    handleDeleteGakutika: function (gakutikaId) {
+      return this.$store
+        .dispatch("gakutikas/destoryGakutika", { id: gakutikaId })
+        .then(() => {
           this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["学チカを削除しました"],
           });
-      });
-    }
+        });
+    },
   },
   computed: {
     gakutikas: {
@@ -145,8 +147,7 @@ export default {
 };
 </script>
 <style scoped>
-  h3 {
-    display:inline;
-  }
+h3 {
+  display: inline;
+}
 </style>
-

@@ -1,6 +1,6 @@
 <template>
-  <v-navigation-drawer 
-    app 
+  <v-navigation-drawer
+    app
     class="success"
     :value="value"
     @input="$emit('handle-drawer')"
@@ -40,12 +40,10 @@
   </v-navigation-drawer>
 </template>
 <script>
-
-
 export default {
   name: "Drawer",
   props: {
-   value: {
+    value: {
       type: Boolean,
       default: false,
     },

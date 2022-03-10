@@ -25,17 +25,21 @@ export default {
     gakutikaId: {
       type: Number,
       default: 0,
-    }
+    },
   },
-   methods: {
-    handleDelete: function(deleteQuestionId) {
-      return this.$store.dispatch("questions/destoryQuestion", {id: deleteQuestionId, gakutikaId: this.gakutikaId })
-      .then(() => {
+  methods: {
+    handleDelete: function (deleteQuestionId) {
+      return this.$store
+        .dispatch("questions/destoryQuestion", {
+          id: deleteQuestionId,
+          gakutikaId: this.gakutikaId,
+        })
+        .then(() => {
           this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["質問を削除しました"],
           });
-      });
+        });
     },
-   }
+  },
 };
 </script>

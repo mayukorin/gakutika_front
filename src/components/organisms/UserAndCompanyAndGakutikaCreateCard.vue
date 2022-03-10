@@ -4,12 +4,13 @@
       <span class="headline">話す学チカ追加</span>
     </v-card-title>
     <v-card-text>
-      <UserAndCompanyAndGakutikaCreateForm 
-        @create-button-click="handleCreate" 
-        @input-gakutika-title="handleSearchGakutika" 
+      <UserAndCompanyAndGakutikaCreateForm
+        @create-button-click="handleCreate"
+        @input-gakutika-title="handleSearchGakutika"
         :gakutika-entries="gakutikaEntries"
-        :company-name="companyName" 
-        :load-flag="loadFlag" />
+        :company-name="companyName"
+        :load-flag="loadFlag"
+      />
     </v-card-text>
   </v-card>
 </template>
@@ -21,16 +22,16 @@ export default {
     UserAndCompanyAndGakutikaCreateForm,
   },
   props: {
-      companyName: {
-          type: String,
-      },
-      gakutikaId: {
-        type: Number,
-        default: 0
-      },
-      storeActionName: {
-        type: String,
-      }
+    companyName: {
+      type: String,
+    },
+    gakutikaId: {
+      type: Number,
+      default: 0,
+    },
+    storeActionName: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -41,32 +42,41 @@ export default {
     };
   },
   methods: {
-    handleCreate: function(userAndCompanyAndGakutikaInfo) {
+    handleCreate: function (userAndCompanyAndGakutikaInfo) {
       this.loadFlag = true;
-      return this.$store.dispatch("userAndCompanies/createUserAndCompanyAndGakutika", {gakutikaTitle: userAndCompanyAndGakutikaInfo.gakutikaTitle, gakutikaId: this.gakutikaId, companyName: userAndCompanyAndGakutikaInfo.companyName, actionName: this.storeActionName })
-      .then(() => {
-        this.$store.dispatch("flashMessage/setSuccessMessage", {
+      return this.$store
+        .dispatch("userAndCompanies/createUserAndCompanyAndGakutika", {
+          gakutikaTitle: userAndCompanyAndGakutikaInfo.gakutikaTitle,
+          gakutikaId: this.gakutikaId,
+          companyName: userAndCompanyAndGakutikaInfo.companyName,
+          actionName: this.storeActionName,
+        })
+        .then(() => {
+          this.$store.dispatch("flashMessage/setSuccessMessage", {
             messages: ["話す企業に追加しました"],
           });
-        this.$emit("created");
-      }).finally(() => {
-        this.loadFlag = false;
-      });
+          this.$emit("created");
+        })
+        .finally(() => {
+          this.loadFlag = false;
+        });
     },
-    handleSearchGakutika: function(inputGakutikaTitle) {
-      
+    handleSearchGakutika: function (inputGakutikaTitle) {
       this.inputGakutikaTitle = inputGakutikaTitle;
       if (this.isSearchFlag) return;
       this.isSearchFlag = true;
-      return this.$store.dispatch("gakutikas/searchGakutikaTitle", {
-        title: inputGakutikaTitle
-      })
-      .then((response) => {
-        
-        this.gakutikaEntries = [{header: "検索結果"}];
-        Array.prototype.push.apply(this.gakutikaEntries, response.data.gakutika_titles);
-        console.log(this.gakutikaEntries);
-        /*
+      return this.$store
+        .dispatch("gakutikas/searchGakutikaTitle", {
+          title: inputGakutikaTitle,
+        })
+        .then((response) => {
+          this.gakutikaEntries = [{ header: "検索結果" }];
+          Array.prototype.push.apply(
+            this.gakutikaEntries,
+            response.data.gakutika_titles
+          );
+          console.log(this.gakutikaEntries);
+          /*
         this.gakutikaEntries = [{
           text: inputGakutikaTitle,
           value: inputGakutikaTitle,
@@ -89,11 +99,11 @@ export default {
             // disabled: true,
           }];
         */
-      })
-      .finally(() => {
-        this.isSearchFlag = false;
-      })
-    }
+        })
+        .finally(() => {
+          this.isSearchFlag = false;
+        });
+    },
   },
 };
 </script>

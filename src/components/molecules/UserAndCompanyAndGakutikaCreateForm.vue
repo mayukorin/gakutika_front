@@ -43,7 +43,7 @@ export default {
     },
     gakutikaEntries: {
       type: Array,
-    }
+    },
   },
   data() {
     return {
@@ -55,14 +55,13 @@ export default {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.$nextTick()
-            .then(() => {
-              console.log(this.loadFlag);
-              this.$emit('create-button-click', {
-                companyName: this.companyName,
-                gakutikaTitle: this.gakutikaTitle,
-              });
-            })
+          this.$nextTick().then(() => {
+            console.log(this.loadFlag);
+            this.$emit("create-button-click", {
+              companyName: this.companyName,
+              gakutikaTitle: this.gakutikaTitle,
+            });
+          });
         }
       });
     },
@@ -76,10 +75,8 @@ export default {
       // Items have already been loaded
       if (inputTitle === "") return;
 
-      this.$emit('input-gakutika-title', inputTitle);
-
-    }
-  }
-
+      this.$emit("input-gakutika-title", inputTitle);
+    },
+  },
 };
 </script>

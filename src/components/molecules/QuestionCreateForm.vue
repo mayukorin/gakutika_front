@@ -88,22 +88,21 @@ export default {
     },
     companyEntries: {
       type: Array,
-    }
+    },
   },
   methods: {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.$nextTick()
-            .then(() => {
-              this.$emit('create-button-click', {
-                query: this.query,
-                answer: this.answer,
-                companyName: this.companyName,
-                day: this.day,
-                gakutikaId: this.$route.params.id,
-              });
+          this.$nextTick().then(() => {
+            this.$emit("create-button-click", {
+              query: this.query,
+              answer: this.answer,
+              companyName: this.companyName,
+              day: this.day,
+              gakutikaId: this.$route.params.id,
             });
+          });
         }
       });
     },
@@ -122,9 +121,8 @@ export default {
       // Items have already been loaded
       if (inputName === "") return;
 
-      this.$emit('input-company-name', inputName);
-
-    }
-  }
+      this.$emit("input-company-name", inputName);
+    },
+  },
 };
 </script>

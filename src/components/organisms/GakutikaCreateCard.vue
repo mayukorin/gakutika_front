@@ -4,7 +4,10 @@
       <span class="headline">学チカ作成</span>
     </v-card-title>
     <v-card-text>
-      <GakutikaCreateForm @create-button-click="handleCreate" :load-flag="loadFlag" />
+      <GakutikaCreateForm
+        @create-button-click="handleCreate"
+        :load-flag="loadFlag"
+      />
     </v-card-text>
   </v-card>
 </template>
@@ -18,7 +21,7 @@ export default {
   data() {
     return {
       loadFlag: false,
-    }
+    };
   },
   methods: {
     handleCreate: function (gakutikaInfo) {

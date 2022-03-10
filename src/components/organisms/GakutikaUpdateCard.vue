@@ -4,7 +4,11 @@
       <span class="headline">学チカ更新</span>
     </v-card-title>
     <v-card-text>
-      <GakutikaUpdateForm @update-button-click="handleUpdate" :gakutika="gakutika" :load-flag="loadFlag" />
+      <GakutikaUpdateForm
+        @update-button-click="handleUpdate"
+        :gakutika="gakutika"
+        :load-flag="loadFlag"
+      />
     </v-card-text>
   </v-card>
 </template>

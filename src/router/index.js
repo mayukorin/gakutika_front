@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/components/templates/HomeView";
 import SignUp from "@/components/templates/SignUpView";
 import SignIn from "@/components/templates/SignInView";
-import CompanyList from "@/components/templates/CompanyListView";
+import CompanyIndex from "@/components/templates/CompanyIndexView";
 import GakutikaAndQuestionShow from "@/components/templates/GakutikaAndQuestionShowView";
 import store from "../store";
 
@@ -15,15 +15,6 @@ const routes = [
     name: "Home",
     component: Home,
     meta: { requiresAuth: true },
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
     path: "/sign-up",
@@ -43,10 +34,10 @@ const routes = [
   },
   {
     path: "/companies",
-    name: "CompanyList",
-    component: CompanyList,
+    name: "CompanyIndex",
+    component: CompanyIndex,
     meta: { requiresAuth: true },
-  }
+  },
 ];
 
 const router = new VueRouter({

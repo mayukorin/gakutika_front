@@ -4,9 +4,9 @@
       <span class="headline">質問作成</span>
     </v-card-title>
     <v-card-text>
-      <QuestionCreateForm 
-        @create-button-click="handleCreate" 
-        :load-flag="loadFlag" 
+      <QuestionCreateForm
+        @create-button-click="handleCreate"
+        :load-flag="loadFlag"
         @input-company-name="handleSearchCompany"
         :company-entries="companyEntries"
       />
@@ -43,26 +43,28 @@ export default {
           this.loadFlag = false;
         });
     },
-    handleSearchCompany: function(inputCompanyName) {
-      
+    handleSearchCompany: function (inputCompanyName) {
       this.inputCompanyName = inputCompanyName;
       if (this.isSearchFlag) return;
       this.isSearchFlag = true;
-      return this.$store.dispatch("userAndCompanies/searchCompanyName", {
-        name: inputCompanyName
-      })
-      .then((response) => {
-        
-        this.companyEntries = [{header: "入力値"}];
-        this.companyEntries.push(this.inputCompanyName);
-        this.companyEntries.push({divider: true});
-        this.companyEntries.push({header: "検索結果"});
-        Array.prototype.push.apply(this.companyEntries, response.data.company_names);
-      })
-      .finally(() => {
-        this.isSearchFlag = false;
-      })
-    }
+      return this.$store
+        .dispatch("userAndCompanies/searchCompanyName", {
+          name: inputCompanyName,
+        })
+        .then((response) => {
+          this.companyEntries = [{ header: "入力値" }];
+          this.companyEntries.push(this.inputCompanyName);
+          this.companyEntries.push({ divider: true });
+          this.companyEntries.push({ header: "検索結果" });
+          Array.prototype.push.apply(
+            this.companyEntries,
+            response.data.company_names
+          );
+        })
+        .finally(() => {
+          this.isSearchFlag = false;
+        });
+    },
   },
 };
 </script>

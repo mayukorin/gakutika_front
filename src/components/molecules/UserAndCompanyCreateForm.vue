@@ -2,11 +2,7 @@
   <v-form>
     <validation-observer ref="observer">
       <form @submit.prevent="submit">
-        <validation-provider
-          v-slot="{ errors }"
-          name="企業名"
-          rules="required"
-        >
+        <validation-provider v-slot="{ errors }" name="企業名" rules="required">
           <v-autocomplete
             :no-filter="true"
             :items="companyEntries"
@@ -47,7 +43,9 @@ export default {
   data() {
     return {
       companyName: "",
-      latestInterviewDay: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      latestInterviewDay: new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
         .toISOString()
         .substr(0, 10),
       search: null,
@@ -60,20 +58,19 @@ export default {
     },
     companyEntries: {
       type: Array,
-    }
+    },
   },
   methods: {
     handleClick: function () {
       this.$refs.observer.validate().then((result) => {
         if (result) {
-          this.$nextTick()
-            .then(() => {
-              console.log(this.loadFlag);
-              return this.$emit('create-button-click', {
-                companyName: this.companyName,
-                latestInterviewDay: this.latestInterviewDay,
-              });
-            })
+          this.$nextTick().then(() => {
+            console.log(this.loadFlag);
+            return this.$emit("create-button-click", {
+              companyName: this.companyName,
+              latestInterviewDay: this.latestInterviewDay,
+            });
+          });
         }
       });
     },
@@ -87,9 +84,8 @@ export default {
       // Items have already been loaded
       if (inputName === "") return;
 
-      this.$emit('input-company-name', inputName);
-
-    }
-  }
+      this.$emit("input-company-name", inputName);
+    },
+  },
 };
 </script>
