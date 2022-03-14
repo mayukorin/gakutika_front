@@ -9,6 +9,11 @@
           slot="btn"
           @click="userAndCompanyFormShowFlag = true"
         >
+          <v-icon
+            left
+          >
+            mdi-plus
+          </v-icon>
           面接を受ける企業追加
         </Button>
         <userAndCompanyCreateCard

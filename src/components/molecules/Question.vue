@@ -2,17 +2,19 @@
   <v-expansion-panel>
     <v-expansion-panel-header>
       <v-row>
-        <v-col cols="12" md="7">
+        <v-col cols="12" md="6">
           <div class="caption grey--text mb-1">
             <div>質問された日：{{ question.day }}</div>
           </div>
           <div>{{ question.query }}</div>
         </v-col>
-        <v-col cols="6" md="2">
+        <v-col cols="6" md="2" offset-md="2">
           <form-dialog :propsFormShowFlag.sync="formShowFlag">
             <div slot="btn" @click.stop="formShowFlag = true">
-              <div class="caption grey--text">編集</div>
-              <v-icon>mdi-pencil</v-icon>
+              <ViconTooltip 
+                :icon1="'mdi-pencil'"
+                :caption="'編集'"
+              />
             </div>
             <QuestionUpdateCard
               slot="formCard"
@@ -23,8 +25,10 @@
         </v-col>
         <v-col cols="6" md="2">
           <div @click.stop="$emit('delete-button-click', question.id)">
-            <div class="caption grey--text">削除</div>
-            <v-icon>mdi-delete</v-icon>
+            <ViconTooltip 
+                :icon1="'mdi-delete'"
+                :caption="'削除'"
+              />
           </div>
         </v-col>
       </v-row>
@@ -38,12 +42,14 @@
 <script>
 import FormDialog from "@/components/organisms/FormDialog";
 import QuestionUpdateCard from "@/components/organisms/QuestionUpdateCard";
+import ViconTooltip from "@/components/atoms/ViconTooltip.vue";
 
 export default {
   name: "Question",
   components: {
     FormDialog,
     QuestionUpdateCard,
+    ViconTooltip,
   },
   props: {
     question: {

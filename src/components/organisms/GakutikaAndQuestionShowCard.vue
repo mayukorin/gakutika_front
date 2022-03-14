@@ -9,6 +9,11 @@
           slot="btn"
           @click="formShowFlag = true"
         >
+          <v-icon
+            left
+          >
+            mdi-pencil
+          </v-icon>
           学チカ編集
         </Button>
         <GakutikaUpdateCard
@@ -26,6 +31,11 @@
           slot="btn"
           @click="userAndCompanyFormShowFlag = true"
         >
+          <v-icon
+            left
+          >
+            mdi-plus
+          </v-icon>
           話す企業追加
         </Button>
         <userAndCompanyCreateCard
@@ -51,7 +61,12 @@
           slot="btn"
           @click="questionFormShowFlag = true"
         >
-          質問新規作成
+          <v-icon
+            left
+          >
+            mdi-plus
+          </v-icon>
+          質問追加
         </Button>
         <QuestionCreateCard
           slot="formCard"

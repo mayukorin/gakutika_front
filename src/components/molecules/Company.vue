@@ -17,8 +17,10 @@
         <v-col cols="12" md="2">
           <form-dialog :propsFormShowFlag.sync="updateFormShowFlag">
             <div slot="btn" @click.stop="updateFormShowFlag = true">
-              <div class="caption grey--text">編集</div>
-              <v-icon>mdi-magnify-plus</v-icon>
+              <ViconTooltip 
+                :icon1="'mdi-pencil'"
+                :caption="'企業名・直近の面接日を編集'"
+              />
             </div>
             <UserAndCompanyUpdateCard
               slot="formCard"
@@ -37,8 +39,10 @@
             $emit('user-and-company-delete-button-click', userAndCompany.id)
           "
         >
-          <div class="caption grey--text">面接を受ける企業から削除</div>
-          <v-icon>mdi-delete</v-icon>
+          <ViconTooltip 
+                :icon1="'mdi-delete'"
+                :caption="'面接を受けるのをやめる'"
+              />
         </v-col>
         <v-col
           cols="6"
@@ -51,8 +55,10 @@
             )
           "
         >
-          <div class="caption grey--text">学チカを話すのをやめる</div>
-          <v-icon>mdi-delete</v-icon>
+          <ViconTooltip 
+                :icon1="'mdi-volume-off'"
+                :caption="'学チカを話すのをやめる'"
+              />
         </v-col>
       </v-row>
     </v-expansion-panel-header>
@@ -103,8 +109,10 @@
                 )
               "
             >
-              <div class="caption grey--text">詳細</div>
-              <v-icon>mdi-magnify-plus</v-icon>
+              <ViconTooltip 
+                :icon1="'mdi-magnify-plus'"
+                :caption="'詳細'"
+              />
             </v-col>
             <v-col
               cols="6"
@@ -116,8 +124,10 @@
                 )
               "
             >
-              <div class="caption grey--text">話す学チカから削除</div>
-              <v-icon>mdi-delete</v-icon>
+              <ViconTooltip 
+                :icon1="'mdi-volume-off'"
+                :caption="'話すのをやめる'"
+              />
             </v-col>
           </v-row>
         </div>
@@ -130,6 +140,7 @@ import UserAndCompanyAndGakutikaCreateCard from "@/components/organisms/UserAndC
 import UserAndCompanyUpdateCard from "@/components/organisms/UserAndCompanyUpdateCard";
 import FormDialog from "@/components/organisms/FormDialog";
 import Button from "@/components/atoms/Button.vue";
+import ViconTooltip from "@/components/atoms/ViconTooltip.vue";
 
 export default {
   name: "Company",
@@ -138,6 +149,7 @@ export default {
     UserAndCompanyUpdateCard,
     FormDialog,
     Button,
+    ViconTooltip,
   },
   props: {
     userAndCompany: {

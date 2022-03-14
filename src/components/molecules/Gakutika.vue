@@ -9,12 +9,16 @@
           <div>{{ gakutika.title }}</div>
         </v-col>
         <v-col cols="6" md="2" @click.stop="$emit('show', gakutika.id)">
-          <div class="caption grey--text">詳細</div>
-          <v-icon>mdi-magnify-plus</v-icon>
+          <ViconTooltip 
+            :icon1="'mdi-magnify-plus'"
+            :caption="'詳細'"
+          />
         </v-col>
         <v-col cols="6" md="2" @click.stop="$emit('delete', gakutika.id)">
-          <div class="caption grey--text">削除</div>
-          <v-icon>mdi-delete</v-icon>
+          <ViconTooltip 
+            :icon1="'mdi-delete'"
+            :caption="'削除'"
+          />
         </v-col>
       </v-row>
     </v-expansion-panel-header>
@@ -25,8 +29,13 @@
   </v-expansion-panel>
 </template>
 <script>
+import ViconTooltip from "@/components/atoms/ViconTooltip.vue";
+
 export default {
   name: "Gakutika",
+  components: {
+    ViconTooltip,
+  },
   props: {
     gakutika: {
       type: Object,
