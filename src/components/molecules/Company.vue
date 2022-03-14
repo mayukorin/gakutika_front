@@ -75,8 +75,14 @@
           <Button
             :class-string="'success ml-1 mt-2 mb-2'"
             slot="btn"
+            :small-flag="true"
             @click.stop="formShowFlag = true"
           >
+            <v-icon
+              left
+            >
+              mdi-plus
+            </v-icon>
             話す学チカ追加
           </Button>
           <UserAndCompanyAndGakutikaCreateCard
