@@ -31,6 +31,7 @@ export default {
     },
     gakutikaTitle: {
       type: String,
+      default: "",
     },
     nextStoreActionName: {
       type: String,

@@ -9,7 +9,12 @@
           slot="btn"
           @click="formShowFlag = true"
         >
-          学チカ新規作成
+          <v-icon
+            left
+          >
+            mdi-plus
+          </v-icon>
+          学チカ追加
         </Button>
         <GakutikaCreateCard slot="formCard" @uploaded="formShowFlag = false" />
       </form-dialog>
@@ -33,7 +38,14 @@
           :explain="'頑張り順で並び替え'"
         />
         <Button :class-string="'success ml-1 mt-2'" @click="changeOrderFlag">
-          <div v-show="!orderFlag">頑張り順を変更</div>
+          <div v-show="!orderFlag">
+            <v-icon
+            left
+          >
+            mdi-swap-vertical
+          </v-icon>
+            頑張り順を変更
+          </div>
           <div v-show="orderFlag">変更完了</div>
         </Button>
       </v-row>
@@ -54,6 +66,7 @@ import Button from "@/components/atoms/Button.vue";
 import Tooltip from "@/components/atoms/Tooltip.vue";
 import FormDialog from "@/components/organisms/FormDialog";
 import GakutikaCreateCard from "@/components/organisms/GakutikaCreateCard";
+
 
 export default {
   name: "GakutikaList",
