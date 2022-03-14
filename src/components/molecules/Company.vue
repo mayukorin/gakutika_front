@@ -94,50 +94,56 @@
           />
         </form-dialog>
       </div>
-      <div
-        v-for="userAndCompanyAndGakutika in userAndCompany.user_and_company_and_gakutikas"
-        :key="userAndCompanyAndGakutika.id"
-      >
-        <div class="margin-add">
-          <v-row>
-            <v-col cols="12" md="6">
-              <div>
-                {{ userAndCompanyAndGakutika.gakutika.title }}
-              </div>
-            </v-col>
-            <v-col
-              cols="6"
-              md="2"
-              @click.stop="
-                $emit(
-                  'gakutika-show-button-click',
-                  userAndCompanyAndGakutika.gakutika.id
-                )
-              "
-            >
-              <ViconTooltip 
-                :icon1="'mdi-magnify-plus'"
-                :caption="'詳細'"
-              />
-            </v-col>
-            <v-col
-              cols="6"
-              md="2"
-              @click.stop="
-                $emit(
-                  'user-and-company-and-gakutika-delete-button-click',
-                  userAndCompanyAndGakutika.id
-                )
-              "
-            >
-              <ViconTooltip 
-                :icon1="'mdi-volume-off'"
-                :caption="'話すのをやめる'"
-              />
-            </v-col>
-          </v-row>
-        </div>
-      </div>
+      <v-row>
+        <v-col
+          cols="12"
+          v-for="userAndCompanyAndGakutika in userAndCompany.user_and_company_and_gakutikas"
+          :key="userAndCompanyAndGakutika.id"
+        >
+          <v-card  class="grey lighten-4 pa-2 mt-2" flat>
+            <div class="margin-add">
+              <v-row>
+                <v-col cols="12" md="6">
+                  <div>
+                    {{ userAndCompanyAndGakutika.gakutika.title }}
+                  </div>
+                </v-col>
+                <v-col
+                  cols="6"
+                  md="2"
+                  @click.stop="
+                    $emit(
+                      'gakutika-show-button-click',
+                      userAndCompanyAndGakutika.gakutika.id
+                    )
+                  "
+                >
+                  <ViconTooltip 
+                    :icon1="'mdi-magnify-plus'"
+                    :caption="'詳細'"
+                  />
+                </v-col>
+                <v-col
+                  cols="6"
+                  md="2"
+                  @click.stop="
+                    $emit(
+                      'user-and-company-and-gakutika-delete-button-click',
+                      userAndCompanyAndGakutika.id
+                    )
+                  "
+                >
+                  <ViconTooltip 
+                    :icon1="'mdi-volume-off'"
+                    :caption="'話すのをやめる'"
+                  />
+                </v-col>
+              </v-row>
+              <!-- <v-divider class="mt-2 mb-2"></v-divider> -->
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
