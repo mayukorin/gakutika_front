@@ -24,22 +24,15 @@
             :error-messages="errors"
           ></v-textarea>
         </validation-provider>
-        <validation-provider
-          v-slot="{ errors }"
-          name="質問された企業"
-          rules="required"
-        >
-          <v-autocomplete
+        <v-autocomplete
             :no-filter="true"
             :items="companyEntries"
             :search-input.sync="search"
             v-model="companyName"
-            label="企業名"
+            label="質問された企業名(空白の場合は自分が予想した質問となります)"
             prepend-icon="mdi-domain"
-            :error-messages="errors"
             hide-no-data
-          ></v-autocomplete>
-        </validation-provider>
+        ></v-autocomplete>
         <v-row>
           <v-col cols="12" sm="6">
             <DayPicker
@@ -98,7 +91,7 @@ export default {
             this.$emit("create-button-click", {
               query: this.query,
               answer: this.answer,
-              companyName: this.companyName,
+              companyName: this.companyName !="" ?  this.companyName : "予想される質問",
               day: this.day,
               gakutikaId: this.$route.params.id,
             });

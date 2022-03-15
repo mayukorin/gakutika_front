@@ -82,7 +82,12 @@
         class="mb-2 mt-2"
       >
         <h4 class="mb-2 mt-3 ml-1 success--text">
-          {{ user_and_company.company.name }}でされた質問
+          <div v-if="user_and_company.company.name == '予想される質問'">
+            {{ user_and_company.company.name }}
+          </div>
+          <div v-else>
+            {{ user_and_company.company.name }}でされた質問
+          </div>
         </h4>
         <div
           v-if="
