@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel>
+  <v-expansion-panel v-if="userAndCompany.company.name != '予想される質問'">
     <v-expansion-panel-header>
       <v-row>
         <v-col cols="12" md="6">
