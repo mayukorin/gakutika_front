@@ -30,7 +30,7 @@
             :items="companyEntries"
             :search-input.sync="search"
             v-model="editedQuestion.companyName"
-            label="企業名"
+            label="質問された企業名(空白の場合は自分が予想した質問となります)"
             prepend-icon="mdi-domain"
             :error-messages="errors"
             hide-no-data
@@ -89,7 +89,7 @@ export default {
             return this.$emit("update-button-click", {
               query: this.editedQuestion.query,
               answer: this.editedQuestion.answer,
-              companyName: this.editedQuestion.companyName,
+              companyName: this.editedQuestion.companyName !="" ?  this.editedQuestion.companyName : "予想される質問",
               day: this.editedQuestion.day,
               gakutikaId: this.$route.params.id,
               id: this.editedQuestion.id,
