@@ -276,7 +276,10 @@ const gakutikasModule = {
     searchGakutikaTitle(context, payload) {
       return api({
         method: "get",
-        url: "/search-gakutika/" + payload.title,
+        url: "/gakutika/search_by_title",
+        params: {
+          title: payload.title,
+        },
       }).then((response) => {
         return response;
       });
