@@ -20,6 +20,7 @@ export default {
   props: {
     gakutika: {
       type: Object,
+      default: null,
     },
   },
   computed: {

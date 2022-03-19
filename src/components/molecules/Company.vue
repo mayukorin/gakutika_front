@@ -57,7 +57,7 @@
         >
           <ViconTooltip 
                 :icon1="'mdi-volume-off'"
-                :caption="'学チカを話すのをやめる'"
+                :caption="'学チカ「'+userAndCompany.user_and_company_and_particular_gakutika.gakutika.title+'」を話すのをやめる'"
               />
         </v-col>
       </v-row>
@@ -135,7 +135,7 @@
                 >
                   <ViconTooltip 
                     :icon1="'mdi-volume-off'"
-                    :caption="'話すのをやめる'"
+                    :caption="'学チカ「'+userAndCompanyAndGakutika.gakutika.title+'」を話すのをやめる'"
                   />
                 </v-col>
               </v-row>

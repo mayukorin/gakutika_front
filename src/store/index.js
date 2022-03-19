@@ -467,7 +467,10 @@ const userAndCompaniesModule = {
     searchCompanyName(context, payload) {
       return api({
         method: "get",
-        url: "/search-company/" + payload.name,
+        url: "/company/search_by_name",
+        params: {
+          "name": payload.name,
+        }
       }).then((response) => {
         return response;
       });

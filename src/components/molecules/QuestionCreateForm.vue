@@ -29,7 +29,7 @@
             :items="companyEntries"
             :search-input.sync="search"
             v-model="companyName"
-            label="質問された企業名(空白の場合は自分が予想した質問となります)"
+            label="質問された企業名(空白の場合は予想される質問)"
             prepend-icon="mdi-domain"
             hide-no-data
         ></v-autocomplete>
