@@ -276,7 +276,10 @@ const gakutikasModule = {
     searchGakutikaTitle(context, payload) {
       return api({
         method: "get",
-        url: "/search-gakutika/" + payload.title,
+        url: "/gakutika/search_by_title",
+        params: {
+          title: payload.title,
+        },
       }).then((response) => {
         return response;
       });
@@ -464,7 +467,10 @@ const userAndCompaniesModule = {
     searchCompanyName(context, payload) {
       return api({
         method: "get",
-        url: "/search-company/" + payload.name,
+        url: "/company/search_by_name",
+        params: {
+          "name": payload.name,
+        }
       }).then((response) => {
         return response;
       });
