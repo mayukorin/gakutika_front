@@ -117,7 +117,7 @@ export default {
       console.log(this.drawerNotify);
     },
     logout() {
-      this.$store.dispatch("auth/logout");
+      this.$store.dispatch("auth/signout");
       this.$store.dispatch("flashMessage/setSuccessMessage", {
         messages: ["ログアウトしました"],
       });
