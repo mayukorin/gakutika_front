@@ -20,7 +20,7 @@ export default {
       return this.$store
         .dispatch("auth/signup", userInfo)
         .then(() => {
-          this.$store.dispatch("auth/signin", userInfo);
+          return this.$store.dispatch("auth/signin", userInfo);
         })
         .then(() => {
           let signUpSuccessMessage = "アカウント登録が完了しました";
