@@ -27,8 +27,10 @@
         <v-autocomplete
             :no-filter="true"
             :items="companyEntries"
+            item-text="company_name"
+            item-value="id"
             :search-input.sync="search"
-            v-model="companyName"
+            v-model="userAndCompanyAndGakutikaId"
             label="質問された企業名(空白の場合は予想される質問)"
             prepend-icon="mdi-domain"
             hide-no-data
@@ -66,7 +68,7 @@ export default {
       query: "",
       answer: "",
       menu: false,
-      companyName: "",
+      userAndCompanyAndGakutikaId: 0,
       day: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -91,7 +93,7 @@ export default {
             this.$emit("create-button-click", {
               query: this.query,
               answer: this.answer,
-              companyName: this.companyName !="" ?  this.companyName : "予想される質問",
+              userAndCompanyAndGakutikaId: this.userAndCompanyAndGakutikaId,
               day: this.day,
               gakutikaId: this.$route.params.id,
             });

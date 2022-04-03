@@ -314,9 +314,8 @@ const questionModule = {
           question: {
             query: payload.query,
             answer: payload.answer,
-            company_name: payload.companyName,
+            user_and_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId,
             day: payload.day,
-            gakutika_id: payload.gakutikaId,
           },
         },
       }).then((response) => {
@@ -478,6 +477,24 @@ const userAndCompaniesModule = {
   },
 };
 
+const userAndCompanyAndGakutikaModule = {
+  namespaced: true,
+  actions: {
+    searchUserAndCompanyAndGakutikaByCompanyNameAndUserId(context, payload) {
+      return api({
+        method: "get",
+        url: "/user_and_company_and_gakutika/search_by_company_name_and_user_id",
+        params: {
+          "company_name": payload.companyName,
+          "gakutika_id": payload.gakutikaId,
+        }
+      }).then((response) => {
+        return response;
+      })
+    }
+  }
+}
+
 const store = new Vuex.Store({
   modules: {
     auth: authModule,
@@ -485,6 +502,7 @@ const store = new Vuex.Store({
     gakutikas: gakutikasModule,
     questions: questionModule,
     userAndCompanies: userAndCompaniesModule,
+    userAndCompanyAndGakutikas: userAndCompanyAndGakutikaModule,
   },
 });
 

@@ -48,18 +48,12 @@ export default {
       if (this.isSearchFlag) return;
       this.isSearchFlag = true;
       return this.$store
-        .dispatch("userAndCompanies/searchCompanyName", {
-          name: inputCompanyName,
+        .dispatch("userAndCompanyAndGakutikas/searchUserAndCompanyAndGakutikaByCompanyNameAndUserId", {
+          companyName: inputCompanyName,
+          gakutikaId: this.$route.params.id,
         })
         .then((response) => {
-          this.companyEntries = [{ header: "入力値" }];
-          this.companyEntries.push(this.inputCompanyName);
-          this.companyEntries.push({ divider: true });
-          this.companyEntries.push({ header: "検索結果" });
-          Array.prototype.push.apply(
-            this.companyEntries,
-            response.data.company_names
-          );
+          this.companyEntries = response.data;
         })
         .finally(() => {
           this.isSearchFlag = false;
