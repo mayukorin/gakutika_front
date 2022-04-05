@@ -314,7 +314,7 @@ const questionModule = {
           question: {
             query: payload.query,
             answer: payload.answer,
-            user_and_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId,
+            user_and_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId == "" ? context.rootGetters['gakutikas/getGakutika'].user_and_default_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId,
             day: payload.day,
           },
         },

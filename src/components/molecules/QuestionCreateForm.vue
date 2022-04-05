@@ -68,7 +68,7 @@ export default {
       query: "",
       answer: "",
       menu: false,
-      userAndCompanyAndGakutikaId: 0,
+      userAndCompanyAndGakutikaId: "",
       day: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
