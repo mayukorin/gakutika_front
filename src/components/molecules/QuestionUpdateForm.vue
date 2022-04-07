@@ -24,18 +24,15 @@
             :error-messages="errors"
           ></v-textarea>
         </validation-provider>
-        <validation-provider v-slot="{ errors }" name="企業名" rules="required">
-          <v-autocomplete
-            :no-filter="true"
-            :items="companyEntries"
-            :search-input.sync="search"
-            v-model="editedQuestion.companyName"
-            label="質問された企業名(空白の場合は予想される質問)"
-            prepend-icon="mdi-domain"
-            :error-messages="errors"
-            hide-no-data
-          ></v-autocomplete>
-        </validation-provider>
+        <v-autocomplete
+          :items="companyNameEntries"
+          item-text="company_name"
+          item-value="id"
+          v-model="userAndCompanyAndGakutikaId"
+          label="質問された企業名(予想される質問の場合は，「予想される質問」と入力してください)"
+          prepend-icon="mdi-domain"
+          hide-no-data
+        ></v-autocomplete>
         <v-row>
           <v-col cols="12" sm="6">
             <DayPicker
@@ -70,7 +67,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    companyEntries: {
+    companyNameEntries: {
       type: Array,
     },
   },
@@ -78,7 +75,7 @@ export default {
     return {
       menu: false,
       editedQuestion: this.question,
-      search: null,
+      userAndCompanyAndGakutikaId: this.question.user_and_company_and_gakutika_id,
     };
   },
   methods: {
@@ -89,7 +86,7 @@ export default {
             return this.$emit("update-button-click", {
               query: this.editedQuestion.query,
               answer: this.editedQuestion.answer,
-              companyName: this.editedQuestion.companyName !="" ?  this.editedQuestion.companyName : "予想される質問",
+              userAndCompanyAndGakutikaId: this.userAndCompanyAndGakutikaId,
               day: this.editedQuestion.day,
               gakutikaId: this.$route.params.id,
               id: this.editedQuestion.id,
@@ -101,17 +98,6 @@ export default {
     handleDaySet: function (...args) {
       let [field, value] = args;
       this.editedQuestion[field] = value;
-    },
-  },
-  watch: {
-    question: function (newQuestion) {
-      this.editedQuestion = newQuestion;
-    },
-    search: function (inputName) {
-      // Items have already been loaded
-      if (inputName === "") return;
-
-      this.$emit("input-company-name", inputName);
     },
   },
 };
