@@ -139,6 +139,13 @@ const gakutikasModule = {
     getGakutika(state) {
       return state.gakutika;
     },
+    getQuestionCompanyNameEntries(state) {
+      let questionCompanyNameEntries = state.gakutika.user_and_companies
+        .map(function(user_and_company) {
+          return {"company_name": user_and_company.company.name, "id": user_and_company.user_and_company_and_particular_gakutika.id };
+        });
+      return questionCompanyNameEntries;
+    }
   },
   mutations: {
     set(state, payload) {
@@ -314,7 +321,7 @@ const questionModule = {
           question: {
             query: payload.query,
             answer: payload.answer,
-            user_and_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId == "" ? context.rootGetters['gakutikas/getGakutika'].user_and_default_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId,
+            user_and_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId,
             day: payload.day,
           },
         },
@@ -335,9 +342,8 @@ const questionModule = {
           question: {
             query: payload.query,
             answer: payload.answer,
-            company_name: payload.companyName,
+            user_and_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId,
             day: payload.day,
-            gakutika_id: payload.gakutikaId,
           },
         },
       }).then((response) => {
@@ -490,6 +496,7 @@ const userAndCompanyAndGakutikaModule = {
         }
       }).then((response) => {
         return response;
+        // return {"defaultCompanyName": [{"company_name" : "予想される質問の場合はこちらを選択", "id": context.rootGetters['gakutikas/getGakutika'].user_and_default_company_and_gakutika_id}], "resultCompanyName" : response.data};
       })
     }
   }

@@ -25,13 +25,11 @@
           ></v-textarea>
         </validation-provider>
         <v-autocomplete
-            :no-filter="true"
-            :items="companyEntries"
+            :items="companyNameEntries"
             item-text="company_name"
             item-value="id"
-            :search-input.sync="search"
             v-model="userAndCompanyAndGakutikaId"
-            label="質問された企業名(空白の場合は予想される質問)"
+            label="質問された企業名(予想される質問の場合は，「予想される質問」と入力してください)"
             prepend-icon="mdi-domain"
             hide-no-data
         ></v-autocomplete>
@@ -81,7 +79,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    companyEntries: {
+    companyNameEntries: {
       type: Array,
     },
   },
@@ -113,6 +111,7 @@ export default {
   },
   watch: {
     search: function (inputName) {
+      console.log("searchForm");
       // Items have already been loaded
       if (inputName === "") return;
 

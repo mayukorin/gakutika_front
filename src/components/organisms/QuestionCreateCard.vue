@@ -7,8 +7,7 @@
       <QuestionCreateForm
         @create-button-click="handleCreate"
         :load-flag="loadFlag"
-        @input-company-name="handleSearchCompany"
-        :company-entries="companyEntries"
+        :company-name-entries="questionCompanyNameEntries"
       />
     </v-card-text>
   </v-card>
@@ -23,14 +22,22 @@ export default {
   data() {
     return {
       loadFlag: false,
-      companyEntries: [],
+      // defaultCompanyEntries: [{ "company_name" : "予想される質問", "id" : this.userAndDefaultCompanyAndGakutikaId }, { divider: true }, { header: "検索結果" }],
+      // companyEntries: this.defaultCompanyEntries,
       isSearchFlag: false,
       inputCompanyName: "",
+      userAndCompanyAndGakutikaId: "",
     };
+  },
+  props: {
+    questionCompanyNameEntries: {
+      type:Array,
+    }
   },
   methods: {
     handleCreate: function (questionInfo) {
       this.loadFlag = true;
+      questionInfo.userAndCompanyAndGakutikaId = questionInfo.userAndCompanyAndGakutikaId == "" ? this.userAndDefaultCompanyAndGakutikaId : questionInfo.userAndCompanyAndGakutikaId;
       return this.$store
         .dispatch("questions/createQuestion", questionInfo)
         .then(() => {
@@ -44,7 +51,9 @@ export default {
         });
     },
     handleSearchCompany: function (inputCompanyName) {
+      console.log("search");
       this.inputCompanyName = inputCompanyName;
+      console.log(inputCompanyName);
       if (this.isSearchFlag) return;
       this.isSearchFlag = true;
       return this.$store
@@ -53,7 +62,7 @@ export default {
           gakutikaId: this.$route.params.id,
         })
         .then((response) => {
-          this.companyEntries = response.data;
+          this.companyEntries = this.defaultCompanyEntries.concat(response.data);
         })
         .finally(() => {
           this.isSearchFlag = false;
