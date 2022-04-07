@@ -139,6 +139,13 @@ const gakutikasModule = {
     getGakutika(state) {
       return state.gakutika;
     },
+    getQuestionCompanyNameEntries(state) {
+      let questionCompanyNameEntries = state.gakutika.user_and_companies
+        .map(function(user_and_company) {
+          return {"company_name": user_and_company.company.name, "id": user_and_company.user_and_company_and_particular_gakutika.id };
+        });
+      return questionCompanyNameEntries;
+    }
   },
   mutations: {
     set(state, payload) {
@@ -314,9 +321,8 @@ const questionModule = {
           question: {
             query: payload.query,
             answer: payload.answer,
-            company_name: payload.companyName,
+            user_and_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId,
             day: payload.day,
-            gakutika_id: payload.gakutikaId,
           },
         },
       }).then((response) => {
@@ -336,9 +342,8 @@ const questionModule = {
           question: {
             query: payload.query,
             answer: payload.answer,
-            company_name: payload.companyName,
+            user_and_company_and_gakutika_id: payload.userAndCompanyAndGakutikaId,
             day: payload.day,
-            gakutika_id: payload.gakutikaId,
           },
         },
       }).then((response) => {
@@ -478,6 +483,25 @@ const userAndCompaniesModule = {
   },
 };
 
+const userAndCompanyAndGakutikaModule = {
+  namespaced: true,
+  actions: {
+    searchUserAndCompanyAndGakutikaByCompanyNameAndUserId(context, payload) {
+      return api({
+        method: "get",
+        url: "/user_and_company_and_gakutika/search_by_company_name_and_user_id",
+        params: {
+          "company_name": payload.companyName,
+          "gakutika_id": payload.gakutikaId,
+        }
+      }).then((response) => {
+        return response;
+        // return {"defaultCompanyName": [{"company_name" : "予想される質問の場合はこちらを選択", "id": context.rootGetters['gakutikas/getGakutika'].user_and_default_company_and_gakutika_id}], "resultCompanyName" : response.data};
+      })
+    }
+  }
+}
+
 const store = new Vuex.Store({
   modules: {
     auth: authModule,
@@ -485,6 +509,7 @@ const store = new Vuex.Store({
     gakutikas: gakutikasModule,
     questions: questionModule,
     userAndCompanies: userAndCompaniesModule,
+    userAndCompanyAndGakutikas: userAndCompanyAndGakutikaModule,
   },
 });
 

@@ -25,11 +25,11 @@
           ></v-textarea>
         </validation-provider>
         <v-autocomplete
-            :no-filter="true"
-            :items="companyEntries"
-            :search-input.sync="search"
-            v-model="companyName"
-            label="質問された企業名(空白の場合は予想される質問)"
+            :items="companyNameEntries"
+            item-text="company_name"
+            item-value="id"
+            v-model="userAndCompanyAndGakutikaId"
+            label="質問された企業名(予想される質問の場合は，「予想される質問」と入力してください)"
             prepend-icon="mdi-domain"
             hide-no-data
         ></v-autocomplete>
@@ -66,7 +66,7 @@ export default {
       query: "",
       answer: "",
       menu: false,
-      companyName: "",
+      userAndCompanyAndGakutikaId: "",
       day: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -79,7 +79,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    companyEntries: {
+    companyNameEntries: {
       type: Array,
     },
   },
@@ -91,7 +91,7 @@ export default {
             this.$emit("create-button-click", {
               query: this.query,
               answer: this.answer,
-              companyName: this.companyName !="" ?  this.companyName : "予想される質問",
+              userAndCompanyAndGakutikaId: this.userAndCompanyAndGakutikaId,
               day: this.day,
               gakutikaId: this.$route.params.id,
             });
@@ -111,6 +111,7 @@ export default {
   },
   watch: {
     search: function (inputName) {
+      console.log("searchForm");
       // Items have already been loaded
       if (inputName === "") return;
 

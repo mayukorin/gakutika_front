@@ -71,6 +71,7 @@
         <QuestionCreateCard
           slot="formCard"
           @created="questionFormShowFlag = false"
+          :question-company-name-entries="questionCompanyNameEntries"
         />
       </form-dialog>
       <!--
@@ -173,6 +174,11 @@ export default {
         return this.$store.getters["userAndCompanies/getUserAndCompanies"];
       },
     },
+    questionCompanyNameEntries: {
+      get() {
+        return this.$store.getters["gakutikas/getQuestionCompanyNameEntries"];
+      }
+    }
   },
 };
 </script>
