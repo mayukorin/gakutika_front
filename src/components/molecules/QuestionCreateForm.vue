@@ -71,7 +71,6 @@ export default {
         .toISOString()
         .substr(0, 10),
       startMonth: new Date().toISOString().substr(0, 7),
-      search: null,
     };
   },
   props: {
@@ -108,15 +107,6 @@ export default {
       this[field] = value;
       console.log(this.startMonth);
     },
-  },
-  watch: {
-    search: function (inputName) {
-      console.log("searchForm");
-      // Items have already been loaded
-      if (inputName === "") return;
-
-      this.$emit("input-company-name", inputName);
-    },
-  },
+  }
 };
 </script>

@@ -38,12 +38,11 @@
           </v-icon>
           話す企業追加
         </Button>
-        <userAndCompanyCreateCard
+        <UserAndCompanyAndGakutikaInputCompanyNameCreateCard
           slot="formCard"
           store-action-name="gakutikas/fetchGakutika"
-          create-store-action-name="createUserAndCompanyAndGakutika"
-          :gakutika-title="gakutika.title"
           :gakutika-id="gakutika.id"
+          :user-and-company-entries="userAndCompanyEntries"
           @created="userAndCompanyFormShowFlag = false"
         />
       </form-dialog>
@@ -52,6 +51,7 @@
         :user-and-companies="userAndCompanies"
         :gakutika-id="gakutika.id"
         store-action-name="gakutikas/fetchGakutika"
+        :gakutika-title-entries="gakutikaTitleEntries"
       />
       <br />
       <h3 class="success--text mr-3 ml-1 title">質問一覧</h3>
@@ -118,7 +118,7 @@ import GakutikaUpdateCard from "@/components/organisms/GakutikaUpdateCard";
 import QuestionList from "@/components/organisms/QuestionList";
 import QuestionCreateCard from "@/components/organisms/QuestionCreateCard";
 import CompanyList from "@/components/organisms/CompanyList";
-import UserAndCompanyCreateCard from "@/components/organisms/UserAndCompanyCreateCard";
+import UserAndCompanyAndGakutikaInputCompanyNameCreateCard from "@/components/organisms/UserAndCompanyAndGakutikaInputCompanyNameCreateCard";
 
 export default {
   name: "GakutikaAndQuestionShowCard",
@@ -131,7 +131,7 @@ export default {
     QuestionList,
     QuestionCreateCard,
     CompanyList,
-    UserAndCompanyCreateCard,
+    UserAndCompanyAndGakutikaInputCompanyNameCreateCard,
   },
   data() {
     return {
@@ -146,6 +146,12 @@ export default {
     this.$store
       .dispatch("gakutikas/fetchGakutika", {
         gakutikaId: this.$route.params.id,
+      })
+      .then(() => {
+        return this.$store.dispatch("gakutikas/fetchGakutikaList");
+      })
+      .then(() => {
+        return this.$store.dispatch("userAndCompanies/fetchuserAndCompanies");
       })
       .then(() => {
         this.loading = false;
@@ -171,12 +177,22 @@ export default {
     },
     userAndCompanies: {
       get() {
-        return this.$store.getters["userAndCompanies/getUserAndCompanies"];
+        return this.$store.getters["gakutikas/getGakutika"].user_and_companies;
       },
     },
     questionCompanyNameEntries: {
       get() {
         return this.$store.getters["gakutikas/getQuestionCompanyNameEntries"];
+      }
+    },
+    gakutikaTitleEntries: {
+      get() {
+        return this.$store.getters["gakutikas/getGakutikasSorted"];
+      }
+    },
+    userAndCompanyEntries: {
+      get() {
+        return this.$store.getters["userAndCompanies/getUserAndCompanies"];
       }
     }
   },

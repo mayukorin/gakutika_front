@@ -12,6 +12,7 @@
         @gakutika-show-button-click="handleFetchGakutika"
         :gakutika-id="gakutikaId"
         :store-action-name="storeActionName"
+        :gakutika-title-entries="gakutikaTitleEntries"
       />
     </v-expansion-panels>
   </div>
@@ -35,6 +36,9 @@ export default {
     storeActionName: {
       type: String,
     },
+    gakutikaTitleEntries: {
+      type: Array,
+    }
   },
   methods: {
     handleDeleteUserAndCompanyAndGakutika: function (
