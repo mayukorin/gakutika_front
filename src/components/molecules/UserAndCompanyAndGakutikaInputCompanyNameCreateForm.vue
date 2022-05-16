@@ -2,17 +2,13 @@
   <v-form>
     <validation-observer ref="observer">
       <form @submit.prevent="submit">
-        <validation-provider
-          v-slot="{ errors }"
-          name="学チカのタイトル"
-          rules="required"
-        >
+        <validation-provider v-slot="{ errors }" name="企業名" rules="required">
           <v-autocomplete
-            :items="gakutikaTitleEntries"
-            v-model="gakutikaId"
-            item-text="title"
+            :items="userAndCompanyEntries"
+            item-text="company_name"
             item-value="id"
-            label="学チカのタイトル"
+            v-model="userAndCompanyId"
+            label="企業名"
             prepend-icon="mdi-domain"
             :error-messages="errors"
             hide-no-data
@@ -29,32 +25,22 @@
 import Button from "@/components/atoms/Button.vue";
 
 export default {
-  name: "UserAndCompanyAndGakutikaCreateForm",
+  name: "UserAndCompanyAndGakutikaInputCompanyNameCreateForm",
   components: {
     Button,
   },
   props: {
-    companyName: {
-      type: String,
-    },
     loadFlag: {
       type: Boolean,
       default: false,
     },
-    gakutikaEntries: {
+    userAndCompanyEntries: {
       type: Array,
-    },
-    gakutikaTitleEntries: {
-      type: Array,
-    },
-    userAndCompanyId: {
-      type: Number,
-      default: 0,
     },
   },
   data() {
     return {
-      gakutikaId: "",
+      userAndCompanyId: "",
     };
   },
   methods: {
@@ -65,15 +51,10 @@ export default {
             console.log(this.loadFlag);
             this.$emit("create-button-click", {
               userAndCompanyId: this.userAndCompanyId,
-              gakutikaIdToCreateUserAndCompanyAndGakutika: this.gakutikaId,
             });
           });
         }
       });
-    },
-    handleDaySet: function (...args) {
-      let [field, value] = args;
-      this[field] = value;
     },
   }
 };

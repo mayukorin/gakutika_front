@@ -199,11 +199,13 @@ const gakutikasModule = {
       }).then((response) => {
         console.log(response.data);
         context.commit("setGakutika", { gakutika: response.data });
+        /*
         context.commit(
           "userAndCompanies/setUserAndCompanies",
           { userAndCompanies: response.data.user_and_companies },
           { root: true }
         );
+        */
         context.commit(
           "questions/setQuestions",
           { questions: response.data.questions },
@@ -404,13 +406,13 @@ const userAndCompaniesModule = {
         url: "/user_and_company_and_gakutikas",
         data: {
           user_and_company_and_gakutika: {
-            company_name: payload.companyName,
-            gakutika_title: payload.gakutikaTitle,
-            latest_interview_day: payload.latestInterviewDay,
+            user_and_company_id: payload.userAndCompanyId,
+            gakutika_id: payload.gakutikaIdToCreateUserAndCompanyAndGakutika,
           },
         },
       }).then((response) => {
         console.log(response);
+        console.log(payload.actionName);
         context.dispatch(payload.actionName, payload, { root: true });
       });
     },

@@ -29,6 +29,7 @@
               @updated="updateFormShowFlag = false"
               :gakutika-id="gakutikaId"
               :store-action-name="storeActionName"
+              :gakutika-title-entries="gakutikaTitleEntries"
             />
           </form-dialog>
         </v-col>
@@ -89,8 +90,9 @@
             slot="formCard"
             @created="formShowFlag = false"
             :company-name="userAndCompany.company.name"
-            :gakutika-id="gakutikaId"
+            :user-and-company-id="userAndCompany.id"
             :store-action-name="storeActionName"
+            :gakutika-title-entries="gakutikaTitleEntries"
           />
         </form-dialog>
       </div>
@@ -174,6 +176,9 @@ export default {
     storeActionName: {
       type: String,
     },
+    gakutikaTitleEntries: {
+      type: Array,
+    }
   },
   data() {
     return {

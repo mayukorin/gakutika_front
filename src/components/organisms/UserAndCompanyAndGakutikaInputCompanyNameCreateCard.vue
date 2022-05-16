@@ -1,62 +1,47 @@
 <template>
   <v-card>
     <v-card-title>
-      <span class="headline">話す学チカ追加</span>
+      <span class="headline">話す企業追加</span>
     </v-card-title>
     <v-card-text>
-      <UserAndCompanyAndGakutikaCreateForm
+      <UserAndCompanyAndGakutikaInputCompanyNameCreateForm
         @create-button-click="handleCreate"
-        :gakutika-entries="gakutikaEntries"
-        :company-name="companyName"
         :load-flag="loadFlag"
-        :gakutika-title-entries="gakutikaTitleEntries"
-        :user-and-company-id="userAndCompanyId"
+        :user-and-company-entries="userAndCompanyEntries"
       />
     </v-card-text>
   </v-card>
 </template>
 <script>
-import UserAndCompanyAndGakutikaCreateForm from "@/components/molecules/UserAndCompanyAndGakutikaCreateForm";
+import UserAndCompanyAndGakutikaInputCompanyNameCreateForm from "@/components/molecules/UserAndCompanyAndGakutikaInputCompanyNameCreateForm";
 export default {
-  name: "UserAndCompanyAndGakutikaCreateCard",
+  name: "UserAndCompanyAndGakutikaInputCompanyNameCreateCard",
   components: {
-    UserAndCompanyAndGakutikaCreateForm,
+    UserAndCompanyAndGakutikaInputCompanyNameCreateForm,
   },
   props: {
-    companyName: {
-      type: String,
-    },
     gakutikaId: {
-      type: Number,
-      default: 0,
-    },
-    userAndCompanyId: {
       type: Number,
       default: 0,
     },
     storeActionName: {
       type: String,
     },
-    gakutikaTitleEntries: {
+    userAndCompanyEntries: {
       type: Array,
-    }
+    },
   },
   data() {
     return {
       loadFlag: false,
-      isSearchFlag: false,
-      gakutikaEntries: [],
-      inputGakutikaTitle: "",
     };
   },
   methods: {
     handleCreate: function (userAndCompanyAndGakutikaInfo) {
       this.loadFlag = true;
-      let gakutikaIdOnThisPage = this.$route.params.id;
       return this.$store
         .dispatch("userAndCompanies/createUserAndCompanyAndGakutika", {
-          gakutikaIdToCreateUserAndCompanyAndGakutika: userAndCompanyAndGakutikaInfo.gakutikaIdToCreateUserAndCompanyAndGakutika,
-          gakutikaId: gakutikaIdOnThisPage,
+          gakutikaId: this.gakutikaId,
           userAndCompanyId: userAndCompanyAndGakutikaInfo.userAndCompanyId,
           actionName: this.storeActionName,
         })
